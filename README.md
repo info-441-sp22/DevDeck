@@ -16,6 +16,9 @@ As college students and developers ourselves, we noticed that there were not any
 # Technical Description
 
 ## Architecture Diagram
+![image of architectural diagram](imgs/draft-architecture-diagram.png)
+[Miro Board Diagram](https://miro.com/app/board/uXjVO3_-HAU=/?share_link_id=256322717893)
+
 ## Feature Priorites and User Stories
 
 | Priority | User | Description | Technical Implementation |
