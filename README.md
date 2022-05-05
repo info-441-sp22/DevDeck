@@ -37,3 +37,37 @@ As college students and developers ourselves, we noticed that there were not any
 
 
 ## API Endpoints
+
+-   ‘/deck’
+	- GET -  ‘{id}’
+		- Get the generated feed (or ‘deck’) of a specific account by filtering for the query parameter, ‘id’.
+-   ‘/posts’
+    -   GET  - ‘ /{id}’
+		-   Get the post with the specified ‘id’ value.
+	-   POST - ‘/’
+		-   Upload a post with the user-inputted information in the body.
+	-   PUT - ‘/edit’
+		-   Edit an existing post with input values as body.
+	-   DELETE - ‘/{id}’
+		-   Delete the post with the specified ‘id’ value.
+	-   ‘/likes’
+		-   GET -  ‘/{id}’
+			-   Get all the likes of the current post.
+		-   POST -  ‘/’
+			-   When triggered, add a like to the current post.
+		-   DELETE -  ‘/’
+			-   When triggered, remove the like from the current post.
+	-   ‘/comments’
+		-   GET -  ‘/{id}’
+			-   Get all the comments of the current post.
+		-   POST  -  ‘/’
+			-   Add a comment to a specific post with the comment information in the body.
+		-   DELETE - ‘/{id}’
+			-   Delete the comment with the specified comment ‘id’.
+-   ‘/users’
+	-   GET  -  ‘/:id’’
+		-   Get the account information with the specified ‘id’.
+	-   POST  -  ‘/’
+		-   Create a new account with the new user information in the body.
+	-   PUT -  ‘/edit’
+		-   Update user account information based on the specified user ID’ in the body.
