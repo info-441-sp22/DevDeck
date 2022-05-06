@@ -38,13 +38,12 @@ As college students and developers ourselves, we noticed that there were not any
 
 ## API Endpoints
 
--   ‘/deck’
-	- GET -  ‘{id}’
-		- Get the generated feed (or ‘deck’) of a specific account by filtering for the query parameter, ‘id’.
 -   ‘/posts’
     -   GET  - ‘ /{id}’
-		-   Get the post with the specified ‘id’ value.
-		-   Get the related information including likes and comment of the given post
+        -   Get the generated feed (or ‘deck’) of a specific account by filtering for the query parameter, ‘id’.
+    	-   If there is an query parameter with post id
+    		-   Get the post with the specified ‘id’ value.
+    		-   Get the related information including likes and comment of the given post
 	-   POST - ‘/’
 		-   Upload a post with the user-inputted information in the body.
 	-   PUT - ‘/edit’
