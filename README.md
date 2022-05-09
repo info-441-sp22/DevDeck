@@ -39,23 +39,22 @@ As college students and developers ourselves, we noticed that there were not any
 ## API Endpoints
 
 -   ‘/posts’
-    -   GET  - ‘ /{id}’
-        -   Get the generated feed (or ‘deck’) of a specific account by filtering for the query parameter, ‘id’.
-    	-   If there is an query parameter with post id
-    		-   Get the post with the specified ‘id’ value.
-    		-   Get the related information including likes and comment of the given post
-	-   POST - ‘/’
+    -   GET	-	‘ /:id’
+        -   Get the generated feed (or ‘deck’) of a specific account by filtering for the userID, ‘id’, in the query parameter. With each post gotten, its related information including likes and comments are also retrieved.
+ 	-	GET		-	'/'
+	 	-	If there isn’t a query parameter with the post id, then the server will return all posts for our “Explore” page.
+	-   POST	-	‘/’
 		-   Upload a post with the user-inputted information in the body.
-	-   PUT - ‘/edit’
-		-   Edit an existing post with input values as body.
-		-   Add a comment with the comment information in the body or a like to the specific post.
-		-   Remove a comment or a like from the given post.
-	-   DELETE - ‘/{id}’
-		-   Delete the post with the specified ‘id’ value.
+	-   PUT	-	‘/edit’-   
+		- Edit an existing post with input values as body.
+		- Add a comment with the comment information in the body or a like to the specific post.
+		- Remove a comment or a like from the given post,
+	-   DELETE	-	‘/:id’
+		- Delete the post with ‘id’ as the postID of the specific post that is going to be deleted.
 -   ‘/users’
-	-   GET  -  ‘/:id’’
-		-   Get the account information with the specified ‘id’.
-	-   POST  -  ‘/’
-		-   Create a new account with the new user information in the body.
-	-   PUT -  ‘/edit’
-		-   Update user account information based on the specified user ID’ in the body.
+	-   GET	-	‘/:id’
+		-   Get the account information with the query parameter, ‘id’, as the userID of the specific user being retrieved.
+	-   POST	-	‘/’
+		- Create a new user account with the user-inputted information in the body.
+	-   PUT	-	‘/edit’
+		- Update user account information based on the information (userID, email, etc.) specified in the body.
