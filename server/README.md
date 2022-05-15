@@ -16,7 +16,7 @@ As college students and developers ourselves, we noticed that there were not any
 # Technical Description
 
 ## Architecture Diagram
-![image of architectural diagram](imgs/draft-architecture-diagram.jpg)
+![image of architectural diagram](public/imgs/draft-architecture-diagram.jpg)
 [Miro Board Diagram w/ Additional ERD Diagram](https://miro.com/app/board/uXjVO3_-HAU=/?share_link_id=256322717893)
 
 ## Feature Priorites and User Stories
