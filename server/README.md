@@ -4,11 +4,11 @@ __Authors:__ Melina Perraut, Max Bennett, Elbert Cheng, Susan Yang
 
 # Project Description
 
-When people think of social media, most of them will say: Facebook. When people think of networking, most of them will say: LinkedIn. How about places to share the cool development project you made for INFO 340 (Client-Side Development)? Our target audience will be _developers who want to showcase a portfolio containing their work_. Rather than creating a professional, formal application like _LinkedIn_, we aspire to create a social media platform similar to _Instagram_ and _DevPost_ where developers can post their development projects and share it to the world.
+When people think of social media, most of them will say: Facebook. When people think of networking, most of them will say: LinkedIn. How about places to share the cool front-end project you made for your client-side development class or the personal website you built over the summer? Our target audience will be _developers who want to showcase a portfolio containing their work_. Rather than creating a professional, formal application like LinkedIn, we aspire to create a social media platform similar to Instagram and DevPost where developers can post their development projects and share it to the world.
 
-In the collegiate sense, we want to help college students to show off their development projects to other students, strangers, and even recruiters with our _DevDeck_! Our college student stakeholders can also use our platform to advertise their brilliant ideas, promote their programming skills, and ultimately nurture their professional development. Our users can also discover projects and topics from posts of people they follow which may inspire them to create more unique projects.
+In the collegiate sense, we want to help college students to show off their development projects to other students, strangers, and even recruiters with our platform _DevDeck_! Our college student stakeholders can also use our platform to advertise their brilliant ideas, promote their programming skills, and ultimately nurture their professional development. Additionally, our users can discover projects and topics from posts of people they follow which may inspire them to create more unique projects.
 
-As college students and developers ourselves, we noticed that there were not any mainstream platforms to show off projects and portfolios other than _Reddit_ subreddits. With our application, we want to build interest into development projects around the world in the same fashion that social media does and give our users the ability to attract collaborators and potential sponsors through their project posts. Every day, a new idea is created and _does not get the exposure it deserves._ 
+As college students and developers ourselves, we noticed that there were not any mainstream platforms to show off projects and portfolios other than Reddit subreddits. With our application, we want to build interest into development projects around the world in the same fashion that social media does and give our users the ability to attract collaborators and potential sponsors through their project posts. Every day, a new development project is created and _does not get the exposure it deserves_. 
 
 **So play your cards right with DevDeck, and show the world your winning hand.**
 
@@ -38,36 +38,23 @@ As college students and developers ourselves, we noticed that there were not any
 
 ## API Endpoints
 
--   ‘/deck’
-	- GET -  ‘{id}’
-		- Get the generated feed (or ‘deck’) of a specific account by filtering for the query parameter, ‘id’.
 -   ‘/posts’
-    -   GET  - ‘ /{id}’
-		-   Get the post with the specified ‘id’ value.
-	-   POST - ‘/’
+    -   GET	-	‘ /:id’
+        -   Get the generated feed (or ‘deck’) of a specific account by filtering for the userID, ‘id’, in the query parameter. With each post gotten, its related information including likes and comments are also retrieved.
+ 	-	GET		-	'/'
+	 	-	If there isn’t a query parameter with the post id, then the server will return all posts for our “Explore” page.
+	-   POST	-	‘/’
 		-   Upload a post with the user-inputted information in the body.
-	-   PUT - ‘/edit’
-		-   Edit an existing post with input values as body.
-	-   DELETE - ‘/{id}’
-		-   Delete the post with the specified ‘id’ value.
-	-   ‘/likes’
-		-   GET -  ‘/{id}’
-			-   Get all the likes of the current post.
-		-   POST -  ‘/’
-			-   When triggered, add a like to the current post.
-		-   DELETE -  ‘/’
-			-   When triggered, remove the like from the current post.
-	-   ‘/comments’
-		-   GET -  ‘/{id}’
-			-   Get all the comments of the current post.
-		-   POST  -  ‘/’
-			-   Add a comment to a specific post with the comment information in the body.
-		-   DELETE - ‘/{id}’
-			-   Delete the comment with the specified comment ‘id’.
+	-   PUT	-	‘/edit’-   
+		- Edit an existing post with input values as body.
+		- Add a comment with the comment information in the body or a like to the specific post.
+		- Remove a comment or a like from the given post,
+	-   DELETE	-	‘/:id’
+		- Delete the post with ‘id’ as the postID of the specific post that is going to be deleted.
 -   ‘/users’
-	-   GET  -  ‘/:id’’
-		-   Get the account information with the specified ‘id’.
-	-   POST  -  ‘/’
-		-   Create a new account with the new user information in the body.
-	-   PUT -  ‘/edit’
-		-   Update user account information based on the specified user ID’ in the body.
+	-   GET	-	‘/:id’
+		-   Get the account information with the query parameter, ‘id’, as the userID of the specific user being retrieved.
+	-   POST	-	‘/’
+		- Create a new user account with the user-inputted information in the body.
+	-   PUT	-	‘/edit’
+		- Update user account information based on the information (userID, email, etc.) specified in the body.
