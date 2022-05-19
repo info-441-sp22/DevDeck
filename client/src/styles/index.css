@@ -12,6 +12,12 @@ code {
     monospace;
 }
 
+.appContainer { /* flexbox for page layout (so footer sticks to bottom of page) */
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
 /* navbar & footer */
 .bg-custom {
   background-color: #808080;
@@ -26,9 +32,10 @@ code {
   height: 45px;
 }
 
-/* .logo {
+.logo {
   font-weight: bold;
-} */
+  color: white;
+}
 
 .footer {
   bottom: 0;
@@ -47,11 +54,20 @@ code {
 }
 
 .github-icon:hover {
-  color: black;
+  color: gray;
 }
 
-.appContainer { /* flexbox for page layout (so footer sticks to bottom of page) */
-  display: flex;
-  min-height: 100vh;
-  flex-direction: column;
+/* user profile section */
+.nav-profile-pic {
+  width: auto;
+  display: block;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 50%;
+}
+
+/* profile pic in navbar */
+.profile-pic-navbar {
+  border-radius: 50%;
 }
