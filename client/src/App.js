@@ -1,6 +1,15 @@
-import { Link, Outlet } from "react-router-dom";
+import { useEffect } from "react";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 
 export default function App() {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (window.location.pathname === '/') {
+            navigate('/home');
+        }
+    });
+
     return (
         <div>
             <h1>Dev Deck</h1>
@@ -11,6 +20,7 @@ export default function App() {
                 <Link to="/project">Project Details</Link>
             </nav>
             <Outlet />
+            
         </div>
     )
 }
