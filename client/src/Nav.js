@@ -22,13 +22,13 @@ function NavBar() {
                     <Nav.Link as={NavLink} to="/profile" activeClassName="active">Profile</Nav.Link>
                     <Nav.Link as={NavLink} to="/project" activeClassName="active">Project Details</Nav.Link>
                 </Nav>
-                {/* <Navbar.Brand as={Link} exact to="/profile" className="nav-profile-pic"><img
-                    src="img/default-profile.jpg"
-                    height="45"
-                    width="45"
+                <Navbar.Brand as={Link} exact to="/profile" className="nav-profile-pic"><img
+                    src="imgs/profile.png"
+                    height="35"
+                    width="35"
                     className="mr-3 profile-pic-navbar"
                     alt="User's profile"
-                /></Navbar.Brand> */}
+                /></Navbar.Brand>
             </Navbar.Collapse>
         </Navbar>
     )

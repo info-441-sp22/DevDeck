@@ -11,3 +11,47 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* navbar & footer */
+.bg-custom {
+  background-color: #808080;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.12), 
+  0 2px 2px rgba(0,0,0,0.12), 
+  0 4px 4px rgba(0,0,0,0.12), 
+  0 8px 8px rgba(0,0,0,0.12),
+  0 16px 16px rgba(0,0,0,0.12);
+}
+
+.navbar-height {
+  height: 45px;
+}
+
+/* .logo {
+  font-weight: bold;
+} */
+
+.footer {
+  bottom: 0;
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  background-color: #d1d1d17c;
+}
+
+.footer .contact-info {
+  color:rgba(85, 85, 85, 0.336)
+}
+
+.github-icon {
+  color: black;
+}
+
+.github-icon:hover {
+  color: black;
+}
+
+.appContainer { /* flexbox for page layout (so footer sticks to bottom of page) */
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
