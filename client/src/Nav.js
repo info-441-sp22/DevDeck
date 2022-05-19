@@ -20,7 +20,7 @@ function NavBar() {
                 <Nav className="mr-auto">
                     <Nav.Link as={NavLink} exact to="/" activeClassName="active">Home</Nav.Link>
                     <Nav.Link as={NavLink} to="/profile" activeClassName="active">Profile</Nav.Link>
-                    <Nav.Link as={NavLink} to="/about" activeClassName="active">About</Nav.Link>
+                    <Nav.Link as={NavLink} to="/project" activeClassName="active">Project Details</Nav.Link>
                 </Nav>
                 {/* <Navbar.Brand as={Link} exact to="/profile" className="nav-profile-pic"><img
                     src="img/default-profile.jpg"
