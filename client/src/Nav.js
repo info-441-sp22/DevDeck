@@ -9,7 +9,7 @@ function NavBar() {
     return (
         <Navbar bg="custom" variant="dark" expand="sm" sticky="top" className="nav-bar">
             <Navbar.Brand as={Link} exact to="/" className="logo"><img
-                src="imgs/Logo.png"
+                src="imgs/DevDeck_card.png"
                 height="45"
                 width="35"
                 className="mr-3"
@@ -23,7 +23,7 @@ function NavBar() {
                     <Nav.Link as={NavLink} to="/project" activeClassName="active">Project Details</Nav.Link>
                 </Nav>
                 <Navbar.Brand as={Link} exact to="/profile" className="nav-profile-pic"><img
-                    src="imgs/profile.png"
+                    src="imgs/profile.png"                    
                     height="35"
                     width="35"
                     className="mr-3 profile-pic-navbar"
