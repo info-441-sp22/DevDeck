@@ -28,9 +28,9 @@ code {
   0 16px 16px rgba(0,0,0,0.12);
 }
 
-/* .navbar-height {
+.navbar-height {
   height: 45px;
-} */
+}
 
 .logo {
   font-weight: bold;
@@ -38,7 +38,7 @@ code {
 }
 
 .footer {
-  position:absolute;
+  /* position: fixed; */
   text-align: center;
   bottom: 0;
   width: 100%;  
@@ -60,14 +60,14 @@ code {
 }
 
 /* user profile section */
-/* .nav-profile-pic {
+.nav-profile-pic {
   width: auto;
   display: block;
   margin-top: 10px;
   margin-left: auto;
   margin-right: auto;
   border-radius: 50%;
-} */
+}
 
 /* profile pic in navbar */
 /* .profile-pic-navbar {
