@@ -12,7 +12,8 @@ code {
     monospace;
 }
 
-.appContainer { /* flexbox for page layout (so footer sticks to bottom of page) */
+/* flexbox for page layout (so footer sticks to bottom of page) */
+.appContainer { 
   display: flex;
   min-height: 100vh;
   flex-direction: column;
