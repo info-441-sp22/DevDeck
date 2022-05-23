@@ -23,7 +23,7 @@ function NavBar() {
                     <Nav.Link as={NavLink} to="/project" activeClassName="active">Project Details</Nav.Link>
                 </Nav>
                 <Navbar.Brand as={Link} exact to="/profile" className="nav-profile-pic"><img
-                    src="imgs/profile.png"                    
+                    src="imgs/profile_default.png"                    
                     height="35"
                     width="35"
                     className="mr-3 profile-pic-navbar"
