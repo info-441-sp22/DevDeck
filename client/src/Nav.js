@@ -16,8 +16,8 @@ function NavBar() {
                 className="mr-3"
                 alt="DevDeck Logo"
             />DevDeck</Navbar.Brand>
-            {/* <Navbar.Toggle aria-controls="basic-navbar-nav" /> */}
-            {/* <Navbar.Collapse id="basic-navbar-nav"> */}
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
                     <Nav.Link as={NavLink} exact to="/">Home</Nav.Link>
                     <Nav.Link as={NavLink} to="/profile">Profile</Nav.Link>
@@ -32,7 +32,7 @@ function NavBar() {
                     className="mr-3 profile-pic-navbar"
                     alt="User's profile"
                 /></Navbar.Brand>
-            {/* </Navbar.Collapse> */}
+            </Navbar.Collapse>
         </Navbar>
     )
 }
