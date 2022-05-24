@@ -1,3 +1,5 @@
+export const DEBUG = true;
+
 import express from 'express';
 import path from 'path';
 import cookieParser from 'cookie-parser';
@@ -14,13 +16,20 @@ import { dirname } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 export const __dirname = dirname(__filename);
 
-export const DEBUG = true;
+// Local file imports
+import models from './models.js';
+
 var app = express();
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+// MongoDB
+app.use((req, res, next) => {
+    req.models = models;
+    next();
+});
 
 const oneDay = 1000 * 60 * 60 * 24;
 app.use(sessions({

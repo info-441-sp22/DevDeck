@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
-import { DEBUG } from "./app";
+// import { DEBUG } from "./app.js";
+
+const DEBUG = true;
 
 connectDB();
 
@@ -12,7 +14,8 @@ async function connectDB() {
   // Windows: mongod.exe --dbpath="c:\code\mongodbData\testdb"
   // Mac: brew services start mongodb-community@5.0
   if (DEBUG) {
-    await mongoose.connect('mongodb://localhost:27017/devdeck');
+    console.log('connecting locally...');
+    await mongoose.connect('mongodb://127.0.0.1:27017/devdeck');
   } else {
     await mongoose.connect('mongodb+srv://password12345:password12345@cluster0.0yecb.mongodb.net/devdeck');
   }
@@ -22,16 +25,16 @@ async function connectDB() {
     first_name: String,
     last_name: String,
     username: String,
+    password: String,
     email: String,
     description: String,
     created_date: Date,
     followers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
     following: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-    posts: [String], // use reference instead of string?
+    posts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }], 
     urls: [String],
     skillset: [String]
-  })
-  models.Post = mongoose.model('User', userSchema)
+  });
 
   const postSchema = new mongoose.Schema({
     username: String,
@@ -43,15 +46,16 @@ async function connectDB() {
     likes: [String]
   })
 
-  models.Post = mongoose.model('Post', postSchema)
-
   const commentSchema = new mongoose.Schema({
     username: String,
     comment: String,
     post: { type: mongoose.Schema.Types.ObjectId, ref: "Post" },
     created_date: Date,
   })
-  models.Comment = mongoose.model('Comment', commentSchema)
+
+  models.Post = mongoose.model('Post', postSchema);
+  models.User = mongoose.model('User', userSchema);
+  models.Comment = mongoose.model('Comment', commentSchema);
 
   console.log("finished creating models");
 }
