@@ -18,8 +18,41 @@ async function connectDB() {
   }
   console.log("connected to mongodb");
 
-  //Add schemas and models
-  
+  const userSchema = new mongoose.Schema({
+    first_name: String,
+    last_name: String,
+    username: String,
+    email: String,
+    description: String,
+    created_date: Date,
+    followers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+    following: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+    posts: [String], // use reference instead of string?
+    urls: [String],
+    skillset: [String]
+  })
+  models.Post = mongoose.model('User', userSchema)
+
+  const postSchema = new mongoose.Schema({
+    username: String,
+    created_date: Date,
+    title: String,
+    description: String,
+    collaborators: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+    techStack: [String],
+    likes: [String]
+  })
+
+  models.Post = mongoose.model('Post', postSchema)
+
+  const commentSchema = new mongoose.Schema({
+    username: String,
+    comment: String,
+    post: { type: mongoose.Schema.Types.ObjectId, ref: "Post" },
+    created_date: Date,
+  })
+  models.Comment = mongoose.model('Comment', commentSchema)
+
   console.log("finished creating models");
 }
 

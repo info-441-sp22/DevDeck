@@ -6,6 +6,7 @@ import sessions from 'express-session';
 
 import indexRouter from './routes/index.js';
 import usersRouter from './routes/users.js';
+import apiRouter from './routes/api/api.js'; // not used yet
 
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
