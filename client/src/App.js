@@ -1,3 +1,4 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
 import NavBar from './Nav';
 import Footer from './Footer';
 import React, { useEffect } from "react";
