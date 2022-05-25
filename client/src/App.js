@@ -18,12 +18,6 @@ export default function App() {
     return (
         <div className="appContainer">
             <NavBar />
-            {/* { <nav>
-                <Link to="/home">Home</Link> |{" "}
-                <Link to="/profile">Profile</Link> |{" "}
-                <Link to="/project">Project Details</Link>
-            </nav> */}
-
             <Outlet />
             <Footer />
         </div>
