@@ -1,5 +1,6 @@
 import React from "react"; //import React Component
 import { Button } from "reactstrap";
+import CreateProjectModal from "./CreateProjectModal";
 
 export function Card() {
     return (
@@ -12,6 +13,7 @@ export function Card() {
                 Link to project?
             </Button>
         </div>
+        <CreateProjectModal></CreateProjectModal>
         </div>
     )
 }
