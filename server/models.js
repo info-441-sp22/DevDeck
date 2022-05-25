@@ -1,7 +1,4 @@
 import mongoose from "mongoose";
-// import { DEBUG } from "./app.js";
-
-const DEBUG = true;
 
 connectDB();
 
@@ -13,12 +10,7 @@ async function connectDB() {
   // Run mongo db locally with a command like:
   // Windows: mongod.exe --dbpath="c:\code\mongodbData\testdb"
   // Mac: brew services start mongodb-community@5.0
-  if (DEBUG) {
-    console.log('connecting locally...');
-    await mongoose.connect('mongodb://127.0.0.1:27017/devdeck');
-  } else {
-    await mongoose.connect('mongodb+srv://password12345:password12345@cluster0.0yecb.mongodb.net/devdeck');
-  }
+  await mongoose.connect('mongodb+srv://password12345:password12345@cluster0.0yecb.mongodb.net/devdeck');
   console.log("connected to mongodb");
 
   const userSchema = new mongoose.Schema({

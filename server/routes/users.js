@@ -14,8 +14,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/login', function(req, res, next) {
-  const username = req.body.username;
-  const plainTextPassword = req.body.password;
+  const body = req.body;
   let session = req.session;
 
   console.log(`session at start of login: ${session}`);
