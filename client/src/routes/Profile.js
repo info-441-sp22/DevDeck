@@ -1,5 +1,6 @@
 import React, { useState } from "react"; //import React Component
 import { Card } from "../components/card.js";
+import { Button } from "reactstrap";
 
 export default function ProfilePage() {
     return (
@@ -16,10 +17,10 @@ export default function ProfilePage() {
                         <div className="bio">
                             <h2>Bio:</h2>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                            sed do eiusmod tempor incididunt ut labore et dolore
-                            magna aliqua. Ut enim ad minim veniam, quis nostrud 
-                            exercitation ullamco laboris nisi ut aliquip ex ea commodo 
-                            consequat. Duis aute irure dolor in reprehenderit in voluptate.</p>
+                                sed do eiusmod tempor incididunt ut labore et dolore
+                                magna aliqua. Ut enim ad minim veniam, quis nostrud
+                                exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                                consequat. Duis aute irure dolor in reprehenderit in voluptate.</p>
                         </div>
                     </div>
                     <div class="col">
@@ -41,6 +42,12 @@ export default function ProfilePage() {
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <div className="projects container-fluid">
+                <h2>Your Deck:</h2>
+                <Button className="btn btn-secondary">Add project</Button>
+                {/* connect button to project creation modal */}
             </div>
 
             <div className="projects container-fluid">
