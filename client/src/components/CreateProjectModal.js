@@ -14,30 +14,35 @@ function CreateProjectModal(props) {
         toggle();
     }
 
+    const handleSubmit = event => { // handle submission of modal form
+        event.preventDefault()
+        // if (props.val.length > 0) { //props
+        //     props.setList((old) => [...old, props.val]); //props
+        // }
+        // props.setVal(''); //props
+    }
+
     return (
         <div>
             <Button color="secondary" onClick={toggle}>Edit</Button>
             <Modal isOpen={modal} toggle={toggle}>
-                <ModalHeader toggle={toggle}>Create a new project</ModalHeader>
-                {/* <ModalBody>
-                    <Form onSubmit={props.handleSubmit}>
-                        <label htmlFor="addBook">Add books you have below:</label>
-                        <Input type="text" value={props.val} onChange={handleOnChange}
-                            placeholder="Book Title...">
-                        </Input>
-                        <ul>
-                            {listItems}
-                        </ul>
-                        <Button
-                            className="add" color="secondary">Add to list</Button>
+                <ModalHeader toggle={toggle}>Add a new project</ModalHeader>
+                <ModalBody>
+                    <Form onSubmit={handleSubmit}>
+                        <label htmlFor="addInfo">Input your project information below:</label>
+                        {/* <Input type="text" value={props.val} onChange={handleOnChange} */}
+                        <Input type="text" value={props.val}
+                            placeholder="Project Title...">
+                        </Input>                        
+                        {/* <Button
+                            className="add" color="secondary">Add to list</Button> */}
                     </Form>
-                </ModalBody> */}
+                </ModalBody>
                 <ModalFooter>
                     <Button color="primary" onClick={handleCancel}>Cancel</Button>
                     <Button color="danger" onClick={SaveChanges}>Save changes</Button>
                 </ModalFooter>
             </Modal>
-            {/* <Button className="clear" onClick={clear} color="primary">Clear</Button> */}
         </div>
     )
 }
