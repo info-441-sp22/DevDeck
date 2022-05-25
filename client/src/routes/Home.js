@@ -1,5 +1,6 @@
 import React, { useState } from "react"; //import React Component
 import { Button } from "reactstrap";
+import { Card } from "../components/card.js";
 
 export default function HomePage() {
     return (
@@ -34,126 +35,35 @@ export default function HomePage() {
                 <div className="row recently-added">
                     <h2>Recently added projects:</h2>
                     <div class="col">
-                        <div className="card-container">
-                            <div className="card" style={{ width: '18em' }}>
-                                <img className="card-img-top" src="..." alt="Project thumbnail"></img>
-                                <div className="card-body">
-                                    <h5 className="card-title">Card title</h5>
-                                    <p className="card-text">Project description... lorem ipsum et cetera</p>
-                                    <Button className="btn btn-primary" onClick={() => console.log("Link")}>
-                                        Link to project?
-                                    </Button>
-                                </div>
-                            </div>
-                        </div>
+                        <Card />
                     </div>
                     <div class="col">
-                        <div className="card-container">
-                            <div className="card" style={{ width: '18em' }}>
-                                <img className="card-img-top" src="..." alt="Project thumbnail"></img>
-                                <div className="card-body">
-                                    <h5 className="card-title">Card title</h5>
-                                    <p className="card-text">Project description... lorem ipsum et cetera</p>
-                                    <Button className="btn btn-primary" onClick={() => console.log("Link")}>
-                                        Link to project?
-                                    </Button>
-                                </div>
-                            </div>
-                        </div>
+                        <Card />
                     </div>
                     <div class="col">
-                        <div className="card-container">
-                            <div className="card" style={{ width: '18em' }}>
-                                <img className="card-img-top" src="..." alt="Project thumbnail"></img>
-                                <div className="card-body">
-                                    <h5 className="card-title">Card title</h5>
-                                    <p className="card-text">Project description... lorem ipsum et cetera</p>
-                                    <Button className="btn btn-primary" onClick={() => console.log("Link")}>
-                                        Link to project?
-                                    </Button>
-                                </div>
-                            </div>
-                        </div>
+                        <Card />
                     </div>
                     <div class="col">
-                        <div className="card-container">
-                            <div className="card" style={{ width: '18em' }}>
-                                <img className="card-img-top" src="..." alt="Project thumbnail"></img>
-                                <div className="card-body">
-                                    <h5 className="card-title">Card title</h5>
-                                    <p className="card-text">Project description... lorem ipsum et cetera</p>
-                                    <Button className="btn btn-primary" onClick={() => console.log("Link")}>
-                                        Link to project?
-                                    </Button>
-                                </div>
-                            </div>
-                        </div>
+                        <Card />
                     </div>
                 </div>
-
 
                 <div className="row popular">
                     <h2>Popular projects:</h2>
                     <div class="col">
-                        <div className="card-container">
-                            <div className="card" style={{ width: '18em' }}>
-                                <img className="card-img-top" src="..." alt="Project thumbnail"></img>
-                                <div className="card-body">
-                                    <h5 className="card-title">Card title</h5>
-                                    <p className="card-text">Project description... lorem ipsum et cetera</p>
-                                    <Button className="btn btn-primary" onClick={() => console.log("Link")}>
-                                        Link to project?
-                                    </Button>
-                                </div>
-                            </div>
-                        </div>
+                        <Card />
                     </div>
                     <div class="col">
-                        <div className="card-container">
-                            <div className="card" style={{ width: '18em' }}>
-                                <img className="card-img-top" src="..." alt="Project thumbnail"></img>
-                                <div className="card-body">
-                                    <h5 className="card-title">Card title</h5>
-                                    <p className="card-text">Project description... lorem ipsum et cetera</p>
-                                    <Button className="btn btn-primary" onClick={() => console.log("Link")}>
-                                        Link to project?
-                                    </Button>
-                                </div>
-                            </div>
-                        </div>
+                        <Card />
                     </div>
                     <div class="col">
-                        <div className="card-container">
-                            <div className="card" style={{ width: '18em' }}>
-                                <img className="card-img-top" src="..." alt="Project thumbnail"></img>
-                                <div className="card-body">
-                                    <h5 className="card-title">Card title</h5>
-                                    <p className="card-text">Project description... lorem ipsum et cetera</p>
-                                    <Button className="btn btn-primary" onClick={() => console.log("Link")}>
-                                        Link to project?
-                                    </Button>
-                                </div>
-                            </div>
-                        </div>
+                        <Card />
                     </div>
                     <div class="col">
-                        <div className="card-container">
-                            <div className="card" style={{ width: '18em' }}>
-                                <img className="card-img-top" src="..." alt="Project thumbnail"></img>
-                                <div className="card-body">
-                                    <h5 className="card-title">Card title</h5>
-                                    <p className="card-text">Project description... lorem ipsum et cetera</p>
-                                    <Button className="btn btn-primary" onClick={() => console.log("Link")}>
-                                        Link to project?
-                                    </Button>
-                                </div>
-                            </div>
-                        </div>
+                        <Card />
                     </div>
                 </div>
             </div>
-
-
 
         </main>
     )
