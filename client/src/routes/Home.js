@@ -43,16 +43,10 @@ export default function HomePage() {
                     <div class="col">
                         <Card />
                     </div>
-                    <div class="col">
-                        <Card />
-                    </div>
                 </div>
 
                 <div className="row popular">
                     <h2>Popular projects:</h2>
-                    <div class="col">
-                        <Card />
-                    </div>
                     <div class="col">
                         <Card />
                     </div>

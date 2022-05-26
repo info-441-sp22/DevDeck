@@ -7,7 +7,7 @@ export function Card() {
 
 
     return (
-        <div className="card" style={{ width: '18em' }}>
+        <div className="card" style={{ width: '18em', padding: '0px'}}>
             <img className="card-img-top" src="..." alt="Project thumbnail"></img>
             <div className="card-body">
                 <h5 className="card-title">Card title</h5>
