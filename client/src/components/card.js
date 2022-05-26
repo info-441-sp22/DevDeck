@@ -13,12 +13,13 @@ export function Card() {
                 <h5 className="card-title">Card title</h5>
                 <p className="card-text">Project description... lorem ipsum et cetera</p>
                 <Button className="btn btn-primary" onClick={() => console.log("Link")}>
-                    Link to project?
+                    View project details
+                    {/* need to link to project details page */}
                 </Button>
-                <CreateProjectModal>
+                {/* <CreateProjectModal>
                     val={val}
                     setVal={setVal}
-                </CreateProjectModal>
+                </CreateProjectModal> */}
             </div>
             
         </div>
