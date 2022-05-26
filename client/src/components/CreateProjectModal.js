@@ -33,7 +33,10 @@ function CreateProjectModal(props) {
                         {/* <Input type="text" value={props.val} onChange={handleOnChange} */}
                         <Input type="text" value={props.val}
                             placeholder="Project Title...">
-                        </Input>                        
+                        </Input>     
+                        <Input type="text" value={props.val}
+                            placeholder="Blurb for your project...">
+                        </Input>                            
                         <Input type="text" value={props.val}
                             placeholder="Your inspiration for the project...">
                         </Input>  
