@@ -8,15 +8,16 @@ export default function HomePage() {
             <div className="home container-fluid">
                 <div className="row welcome">
                     <div className="row">
-                        <div className="welcome-text">
-                            <h1>Welcome to DevDeck</h1>
-                            <h4>DevDeck is good, here are some introductions of devdeck.
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                                sed do eiusmod tempor incididunt ut labore et dolore
-                                magna aliqua. Ut enim ad minim veniam, quis nostrud
-                                exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                consequat.</h4>
+                        {/* <!--"Blurb Box" Start--> */}
+                        <div className="blurb-box position-relative text-left bg-blurb p-3 m-sm-3 mb-sm-4" aria-label="person with laptop" style={{
+                            backgroundImage: `url("imgs/blurb_background.png")`
+                        }}>
+                            <div className="blurb-text pl-lg-4 mb-0 my-4">
+                                <h1 className="display-5 font-weight-bold">Welcome to DevDeck!</h1>
+                                <p className="font-weight-normal lead">We are a platform for developers to share their projects with the world. Etc... </p>
+                            </div>
                         </div>
+                        {/* <!--"Blurb Box" End--> */}
                     </div>
                     <div class="col">
                         <div className="featured-project">

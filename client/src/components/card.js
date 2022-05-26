@@ -14,7 +14,7 @@ export function Card() {
                 <h5 className="card-title">Card title</h5>
                 <p className="card-text">Project description... lorem ipsum et cetera</p>
                 <Button className="btn btn-primary" onClick={() => console.log("Link")}>
-                    View details
+                    View project details
                 </Button>
             </div>
             

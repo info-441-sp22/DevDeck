@@ -24,7 +24,7 @@ function CreateProjectModal(props) {
 
     return (
         <div>
-            <Button color="secondary" onClick={toggle}>Edit</Button>
+            <Button color="secondary" onClick={toggle}>Add project</Button>
             <Modal isOpen={modal} toggle={toggle}>
                 <ModalHeader toggle={toggle}>Add a new project</ModalHeader>
                 <ModalBody>
@@ -33,9 +33,13 @@ function CreateProjectModal(props) {
                         {/* <Input type="text" value={props.val} onChange={handleOnChange} */}
                         <Input type="text" value={props.val}
                             placeholder="Project Title...">
-                        </Input>                        
-                        {/* <Button
-                            className="add" color="secondary">Add to list</Button> */}
+                        </Input>     
+                        <Input type="text" value={props.val}
+                            placeholder="Blurb for your project...">
+                        </Input>                            
+                        <Input type="text" value={props.val}
+                            placeholder="Your inspiration for the project...">
+                        </Input>  
                     </Form>
                 </ModalBody>
                 <ModalFooter>
