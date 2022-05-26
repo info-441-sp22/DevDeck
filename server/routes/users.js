@@ -7,42 +7,56 @@ router.get('/', function(req, res, next) {
   let session = req.session;
 
   if (session.userId) {
-    res.send('respond with a resource for the user: ', session.userId);
+    res.send('respond with a resource for the user: ', session.username);
   } else {
     res.send('Error: must be logged in.');
   }
 });
 
-router.post('/login', function(req, res, next) {
+router.post('/login', async function(req, res, next) {
   const body = req.body;
   let session = req.session;
-
-  console.log(`session at start of login: ${session}`);
 
   if (session.userId) { // already logged in
     res.send('Error: you are already logged in as ' + session.userId);
   }
 
   // Hash the password 
+  const encryptedPassword = await encryptPassword(body.password, 10);
+  const user = await req.models.User.findOne({ username: body.username });
 
+  // console.log('password', encryptedPassword);
+  // console.log('user', user);
 
-  //@TODO handle database login stuff
-  //check username and password
-  // if(req.body.username == "kylethayer" && req.body.password == "asdasd"){
-  //   //TODO: start a session
-  //   session.userId = "kyleThayer"
-  //   console.log(`session after login: ${session}`);
-  //   res.send("you logged in")
-  // } else if (req.body.username == "other" && req.body.password == "pwd") {
-  //   session.userId = "other"
-  //   console.log(`session after login: ${session}`);
-  //   res.send("you logged in")
-
-  // } else{
-  //   //not start session
-  // console.log(`session after failed login: ${session}`);
-  //   res.send("wrong login info")
-  // }
+  // Error guard for unfound users
+  if (!user) {
+    res.status(500).json({
+      message: 'User does not exist.',
+      error: 'User with the inputted username does not exist.'
+    })
+  } else {  // User has been found
+    // Compare password
+    bcrypt.compare(body.password, user.password, (err, isMatch) => {
+      if (err) {
+        res.status(500).json({
+          error: 'Error with comparing passwords.'
+        });
+      } else if (!isMatch) {
+        res.status(401).json({
+          message: 'Invalid credentials inputted.',
+          error: 'Invalid username and/or password.'
+        })
+      } else {
+        // Start session
+        session.userId = user._id;
+        session.username = user.username;
+        res.json({
+          message: 'Successfully signed in - session started.',
+          status: 'success'
+        });
+      }
+    });
+  }
 });
 
 router.post('/logout', function(req, res, next) {
@@ -52,10 +66,10 @@ router.post('/logout', function(req, res, next) {
 
 router.post('/signup', async (req, res, next) => {
   const body = req.body;
+  console.log(body);
 
   // Encrypt the password
-  const salt = await bcrypt.genSalt(10);
-  const encryptedPassword = await bcrypt.hashSync(body.password, salt);
+  const encryptedPassword = await encryptPassword(body.password, 10);
 
   // Create new user doc
   const user = new req.models.User({ 
@@ -90,5 +104,7 @@ router.post('/signup', async (req, res, next) => {
         })
     });
 });
+
+const encryptPassword = async (plaintext, rounds) => await bcrypt.hashSync(plaintext, await bcrypt.genSalt(rounds));
 
 export default router;
