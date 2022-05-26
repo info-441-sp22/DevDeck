@@ -38,7 +38,6 @@ export default function HomePage() {
                         <Card />
                         <Card />
                         <Card />
-                        <Card />
                     </div>
                 </div>
 
@@ -48,11 +47,9 @@ export default function HomePage() {
                         <Card />
                         <Card />
                         <Card />
-                        <Card />
                     </div>
                 </div>
             </div>
-
         </main>
     )
 }
