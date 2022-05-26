@@ -7,7 +7,7 @@ export default function HomePage() {
         <main>
             <div className="home container-fluid">
                 <div className="row welcome">
-                    <div class="col">
+                    <div className="row">
                         <div className="welcome-text">
                             <h1>Welcome to DevDeck</h1>
                             <h4>DevDeck is good, here are some introductions of devdeck.
@@ -32,33 +32,24 @@ export default function HomePage() {
                     </div>
                 </div>
 
-                <div className="row recently-added">
+                <div className="recently-added">
                     <h2>Recently added projects:</h2>
-                    <div class="col">
+                    <div class="row">
                         <Card />
-                    </div>
-                    <div class="col">
                         <Card />
-                    </div>
-                    <div class="col">
                         <Card />
                     </div>
                 </div>
 
-                <div className="row popular">
+                <div className="popular">
                     <h2>Popular projects:</h2>
-                    <div class="col">
+                    <div class="row">
                         <Card />
-                    </div>
-                    <div class="col">
                         <Card />
-                    </div>
-                    <div class="col">
                         <Card />
                     </div>
                 </div>
             </div>
-
         </main>
     )
 }

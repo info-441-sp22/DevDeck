@@ -7,7 +7,7 @@ export function Card() {
 
 
     return (
-        <div className="card" style={{ width: '18em', padding: '0px'}}>
+        <div className="card" style={{ width: '18em', margin: '1rem' }}>
             <img className="card-img-top" src="..." alt="Project thumbnail"></img>
             <div className="card-body">
                 <h5 className="card-title">Card title</h5>
@@ -15,11 +15,12 @@ export function Card() {
                 <Button className="btn btn-primary" onClick={() => console.log("Link")}>
                     Link to project?
                 </Button>
+                <CreateProjectModal>
+                    val={val}
+                    setVal={setVal}
+                </CreateProjectModal>
             </div>
-            <CreateProjectModal>
-                val={val}
-                setVal={setVal}
-            </CreateProjectModal>
+            
         </div>
     )
 }
