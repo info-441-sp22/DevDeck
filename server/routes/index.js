@@ -1,12 +1,12 @@
 import express from 'express';
+import path from 'path';
 import { __dirname } from '../app.js';
 var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
   // Get welcome text, featured project, all project?
-  
-  res.sendFile('/public/client/index.html', { root: __dirname });
+  res.sendFile(path.join(__dirname, 'public', 'client', 'index.html'));
 });
 
 export default router;
