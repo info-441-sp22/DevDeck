@@ -5,6 +5,8 @@ import Footer from './Footer';
 import React, { useEffect, useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import { Link, Outlet, useNavigate } from "react-router-dom";
+import 'react-toastify/dist/ReactToastify.css';
+import './styles/index.css';
 
 const DEBUG = true;
 export const BASEPOINT = (DEBUG) ? 'http://localhost:3000' : 'http://devdeck.me';
