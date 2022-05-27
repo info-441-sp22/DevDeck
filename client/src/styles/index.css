@@ -93,6 +93,7 @@ code {
   transform: scale(1.015);
 }
 
+/* home page blurb */
 .blurb-box {
   border-radius: 25px;
   box-shadow: 0 1px 1px rgba(0,0,0,0.12), 
@@ -107,7 +108,7 @@ code {
   background-repeat: no-repeat;
 }
 
-.blurb-text {
+.blurb-text * {
   width: 340px;
-  color: white;
+  color: black;
 }
