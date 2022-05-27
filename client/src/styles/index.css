@@ -1,6 +1,10 @@
 main {
-  width: 85%;
-  margin: auto;
+  padding: 2rem 7.5%;
+  background-color: #3B3B3B;
+}
+
+main * {
+  color: white;
 }
 
 body {
@@ -81,10 +85,30 @@ code {
   border-radius: 50%;
 } */
 
-.card {
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.16), 0 1px 3px rgba(0, 0, 0, 0.23);
+.card * {
+  color: black;
 }
 
 .card:hover {
-  transform: scale(1.02);
+  transform: scale(1.015);
+}
+
+/* home page blurb */
+.blurb-box {
+  border-radius: 25px;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.12), 
+              0 2px 2px rgba(0,0,0,0.12), 
+              0 4px 4px rgba(0,0,0,0.12), 
+              0 8px 8px rgba(0,0,0,0.12),
+              0 16px 16px rgba(0,0,0,0.12);
+}
+
+.bg-blurb {
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.blurb-text * {
+  width: 340px;
+  color: black;
 }

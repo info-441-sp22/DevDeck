@@ -1,8 +1,11 @@
 import React, { useState } from "react"; //import React Component
 import { Card } from "../components/card.js";
 import { Button } from "reactstrap";
+import CreateProjectModal from "../components/CreateProjectModal";
 
 export default function ProfilePage() {
+    const [val, setVal] = useState("");
+
     return (
         <main>
             <div className="profile container-fluid">
@@ -46,7 +49,11 @@ export default function ProfilePage() {
 
             <div className="projects container-fluid">
                 <h2>Your Deck:</h2>
-                <Button className="btn btn-secondary">Add project</Button>
+                {/* <Button className="btn btn-secondary">Add project</Button> */}
+                <CreateProjectModal>
+                    val={val}
+                    setVal={setVal}
+                </CreateProjectModal>
                 {/* connect button to project creation modal */}
             </div>
 

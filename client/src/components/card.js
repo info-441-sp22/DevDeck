@@ -7,18 +7,15 @@ export function Card() {
 
 
     return (
-        <div className="card" style={{ width: '18em', margin: '1rem' }}>
+        <div className="card bg-custom" style={{ width: '18em', margin: '1rem' }}>
             <img className="card-img-top" src="..." alt="Project thumbnail"></img>
             <div className="card-body">
+                {/* TODO: Title of project => link to project page */}
                 <h5 className="card-title">Card title</h5>
                 <p className="card-text">Project description... lorem ipsum et cetera</p>
                 <Button className="btn btn-primary" onClick={() => console.log("Link")}>
-                    Link to project?
+                    View project details
                 </Button>
-                <CreateProjectModal>
-                    val={val}
-                    setVal={setVal}
-                </CreateProjectModal>
             </div>
             
         </div>
