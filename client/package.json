@@ -1,5 +1,6 @@
 {
   "name": "devdeck",
+  "homepage": "http://localhost:3000",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -16,6 +17,7 @@
     "react-dom": "^18.1.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
+    "react-toastify": "^9.0.1",
     "reactstrap": "^9.0.2",
     "web-vitals": "^2.1.4"
   },

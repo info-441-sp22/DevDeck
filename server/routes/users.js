@@ -21,12 +21,7 @@ router.post('/login', async function(req, res, next) {
     res.send('Error: you are already logged in as ' + session.userId);
   }
 
-  // Hash the password 
-  const encryptedPassword = await encryptPassword(body.password, 10);
   const user = await req.models.User.findOne({ username: body.username });
-
-  // console.log('password', encryptedPassword);
-  // console.log('user', user);
 
   // Error guard for unfound users
   if (!user) {
@@ -52,6 +47,7 @@ router.post('/login', async function(req, res, next) {
         session.username = user.username;
         res.json({
           message: 'Successfully signed in - session started.',
+          payload: user,
           status: 'success'
         });
       }
@@ -61,12 +57,14 @@ router.post('/login', async function(req, res, next) {
 
 router.post('/logout', function(req, res, next) {
   req.session.destroy();
-  res.send("You are logged out.");
+  res.json({
+    message: 'User is successfully logged out.',
+    status: 'success'
+  })
 });
 
 router.post('/signup', async (req, res, next) => {
   const body = req.body;
-  console.log(body);
 
   // Encrypt the password
   const encryptedPassword = await encryptPassword(body.password, 10);
