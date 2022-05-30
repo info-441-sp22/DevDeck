@@ -84,7 +84,7 @@ router.post('/signup', async (req, res, next) => {
     skillset: []
   });
 
-  user.save()
+  user.save() 
     .then((doc) => {
       res
         .status(201)
