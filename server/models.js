@@ -32,10 +32,12 @@ async function connectDB() {
     username: String,
     created_date: Date,
     title: String,
-    description: String,
+    blurb: String,
+    longer_description: String,
+    url_link: String,
     collaborators: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
     techStack: [String],
-    likes: [String]
+    likes: [String]    
   })
 
   const commentSchema = new mongoose.Schema({
