@@ -17,7 +17,7 @@ function CreateProjectModal(props) {
         console.log(title, blurb, longer_description, url_link, collaborators);
 
         try {
-            await fetchJSON(`api/posts`, { // ..server/routes/api/posts
+            await fetchJSON('api/posts', { // ../server/routes/api/posts
                 method: "POST",
                 body: { 
                     title: title,
