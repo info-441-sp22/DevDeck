@@ -54,7 +54,7 @@ export default function ProfilePage() {
                     val={val}
                     setVal={setVal}
                 </CreateProjectModal>
-                {/* connect button to project creation modal */}
+                <span id="postStatus"></span>
             </div>
 
             <div className="projects container-fluid">
