@@ -70,6 +70,33 @@ code {
   color: gray;
 }
 
+.login-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.login-button {
+  flex: 1;
+  margin: 5px;
+  white-space: nowrap;
+}
+
+.login-text-container {
+  display: flex;
+  flex-direction: row;
+  /* padding: 5px; */
+}
+
+.login-text-item {
+  flex: 1;
+  padding: 5px;
+  white-space: nowrap;
+}
+
+.login-text {
+  margin-top: 5px;
+}
+
 /* user profile section */
 .nav-profile-pic {
   width: auto;

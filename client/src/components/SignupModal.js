@@ -10,28 +10,27 @@ function SignupModal(props) {
   const setToastMessageCallback = props.setToastMessageCallback;
   const setToastStateCallback = props.setToastStateCallback;
   const formSchema = Yup.object().shape({
-    first_name: Yup.string(),
-    last_name: Yup.string(),
-    username: Yup.string(),
+    first_name: Yup.string()
+      .required('First name is required.'),
+    last_name: Yup.string()
+      .required('Last name is required.'),
+    username: Yup.string()
+      .required('Username is required.'),
+    email: Yup.string()
+      .required('Email is required.'),
     password: Yup.string()
       .required('Password is required.')
       .min(3, 'Password must be at 3 char long'),
     confirmPwd: Yup.string()
-      .required('Password is required.')
+      .required('Password confirmation is required.')
       .oneOf([Yup.ref('password')], 'Passwords does not match.'),
-  });
-  const formOptions = { resolver: yupResolver(formSchema) }
-  const { register, handleSubmit, reset, formState } = useForm(formOptions)
+  }).required();
+  const { register, handleSubmit, reset, formState } = useForm({
+    resolver: yupResolver(formSchema)
+  })
   const { errors } = formState
 
   const [show, setShow] = useState(false);
-  const [signupRequest, setSignupRequest] = useState({
-    first_name: '',
-    last_name: '',
-    username: '',
-    password: '',
-    email: ''
-  });
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -67,52 +66,36 @@ function SignupModal(props) {
             <Form.Group className="mb-3" controlId="signup.form">
               <Form.Label>First Name</Form.Label>
               <Form.Control
-                type="firstname"
+                type="text"
                 placeholder="ex: Glorious"
-                onChange={e => setSignupRequest((prev) => {
-                  prev.first_name = e.target.value;
-                  return prev;
-                })}
                 {...register('first_name')}
                 autoFocus
+                className={`form-control ${errors.first_name ? 'is-invalid' : ''}`}
               />
               <Form.Label>Last Name</Form.Label>
               <Form.Control
-                type="lastname"
+                type="text"
                 placeholder="ex: Unicorn"
-                onChange={e => setSignupRequest((prev) => {
-                  prev.last_name = e.target.value;
-                  return prev;
-                })}
                 {...register('last_name')}
+                className={`form-control ${errors.last_name ? 'is-invalid' : ''}`}
               />
               <Form.Label>Username</Form.Label>
               <Form.Control
-                type="username"
+                type="text"
                 placeholder="ex: glorious_unicorn"
-                onChange={e => setSignupRequest((prev) => {
-                  prev.username = e.target.value;
-                  return prev;
-                })}
                 {...register('username')}
+                className={`form-control ${errors.username ? 'is-invalid' : ''}`}
               />
               <Form.Label>Email</Form.Label>
               <Form.Control
                 type="email"
                 placeholder="ex: gloriousunicorn@uw.edu"
-                onChange={e => setSignupRequest((prev) => {
-                  prev.email = e.target.value;
-                  return prev;
-                })}
                 {...register('email')}
+                className={`form-control ${errors.email ? 'is-invalid' : ''}`}
               />
               <Form.Label>Password</Form.Label>
               <Form.Control
                 type="password"
-                onChange={e => setSignupRequest((prev) => {
-                  prev.password = e.target.value;
-                  return prev;
-                })}
                 {...register('password')}
                 className={`form-control ${errors.password ? 'is-invalid' : ''}`}
               />

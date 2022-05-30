@@ -3,7 +3,8 @@ import { BrowserRouter as Route, Link, NavLink } from 'react-router-dom';
 import {
     Navbar,
     Nav,
-    Button
+    Button,
+    Container
 } from 'react-bootstrap';
 import LoginModal from './components/LoginModal';
 import SignupModal from './components/SignupModal';
@@ -30,53 +31,63 @@ function NavBar(props) {
 
     return (
         <Navbar bg="custom" variant="dark" expand="sm" sticky="top" className="navbar">
-            <Navbar.Brand as={Link} exact to="/" className="logo">
-            <img
-                src="imgs/DevDeck_card.png"
-                height="45"
-                width="35"
-                className="mr-3"
-                alt="DevDeck Logo"
-            />DevDeck</Navbar.Brand>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="mr-auto">
-                <Nav.Link as={NavLink} exact to="/">Home</Nav.Link>
-                <Nav.Link as={NavLink} to="/profile">Profile</Nav.Link>
-                <Nav.Link as={NavLink} to="/project">Project Details</Nav.Link>
-                {/* activeClassName="active" */}
-            </Nav>
-                {/* Login/Signup Button stuff */}
-                <Navbar.Text className="ml-auto">
-                    {
-                        (!isLoggedIn)   
-                            ?   <div>
-                                    <LoginModal
-                                        setLoggedInCallback={setLoggedInCallback} 
-                                        setToastMessageCallback={setToastMessageCallback}
-                                        setToastStateCallback={setToastStateCallback}
-                                    />
-                                    <SignupModal
-                                        setLoggedInCallback={setLoggedInCallback}
-                                        setToastMessageCallback={setToastMessageCallback}
-                                        setToastStateCallback={setToastStateCallback}
-                                    />
-                                </div>
-                            :   <div>
-                                    <p>Hello, {LoginService.grabUserInfo().first_name}</p>
-                                    <Button variant="primary" onClick={handleLogOut}>Log Out</Button>
-                                </div>
-                    }
-                </Navbar.Text>
-                <Navbar.Brand as={Link} exact to="/profile" className="nav-profile-pic">
+            <Container>
+                <Navbar.Brand as={Link} exact to="/" className="logo">
                 <img
-                    src="imgs/profile_default.png"                    
-                    height="35"
+                    src="imgs/DevDeck_card.png"
+                    height="45"
                     width="35"
-                    className="mr-3 profile-pic-navbar"
-                    alt="User's profile"
-                /></Navbar.Brand>
-            </Navbar.Collapse>
+                    className="mr-3"
+                    alt="DevDeck Logo"
+                />DevDeck</Navbar.Brand>
+                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Collapse id="basic-navbar-nav">
+                    <Nav className="me-auto">
+                        <Nav.Link as={NavLink} exact to="/">Home</Nav.Link>
+                        <Nav.Link as={NavLink} to="/profile">Profile</Nav.Link>
+                        <Nav.Link as={NavLink} to="/project">Project Details</Nav.Link>
+                        {/* activeClassName="active" */}
+                    </Nav>
+                    <Nav>
+                        {
+                            (!isLoggedIn)   
+                                ?   <div className="login-container">
+                                        <div className="login-button">
+                                            <LoginModal
+                                                setLoggedInCallback={setLoggedInCallback} 
+                                                setToastMessageCallback={setToastMessageCallback}
+                                                setToastStateCallback={setToastStateCallback}
+                                            />
+                                        </div>
+                                        <div className="login-button">
+                                            <SignupModal
+                                                setLoggedInCallback={setLoggedInCallback}
+                                                setToastMessageCallback={setToastMessageCallback}
+                                                setToastStateCallback={setToastStateCallback}
+                                            />
+                                        </div>
+                                    </div>
+                                :   <div className="login-text-container">
+                                        <div className="login-text-item login-text">
+                                            <p>Hello, {LoginService.grabUserInfo().first_name}</p>
+                                        </div>
+                                        <div className="login-text-item">
+                                            <Button variant="primary" onClick={handleLogOut}>Log Out</Button>
+                                        </div>
+                                    </div>
+                        }
+                    <Nav.Link href="/profile">
+                        <img
+                            src="imgs/profile_default.png"                    
+                            height="35"
+                            width="35"
+                            className="mr-3 profile-pic-navbar"
+                            alt="User's profile"
+                        />
+                    </Nav.Link>
+                    </Nav>
+                </Navbar.Collapse>
+            </Container>
         </Navbar>
     )
 }
