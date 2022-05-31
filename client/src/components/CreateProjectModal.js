@@ -76,6 +76,7 @@ function CreateProjectModal(props) {
                         </Input>
                         <Input type="text" id="collabInput"
                             placeholder="Project collaborators (enter as [collaborator1, collaborator2...])">
+                                {/* TO EDIT: if users have a devdeck account, ask them to put in their username instead of full name */}
                         </Input>
                     </Form>
                 </ModalBody>
