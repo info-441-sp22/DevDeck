@@ -12,10 +12,13 @@ function UserDeck(props) {
     console.log("Username", props.username); // username is undefined 
     // findPosts();
 
-    return (        
+    return (
         <div>            
             <Button color="primary">Test UserDeck</Button>
+
+            {/* <Card title={title}></Card> */}
         </div>
+        
     )
 }
 

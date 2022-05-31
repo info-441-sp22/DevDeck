@@ -100,12 +100,10 @@ export default function ProfilePage(props) {
             <div className="projects container-fluid">
                 <h2>Your Deck:</h2>
                 <CreateProjectModal>
-                    val={val}
-                    setVal={setVal}
                 </CreateProjectModal>
                 <span id="postStatus"></span>
-                <UserDeck>
-                    username={username}
+                <UserDeck 
+                    username={username}>
                 </UserDeck>
             </div>
 
