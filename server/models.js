@@ -49,6 +49,15 @@ async function connectDB() {
     created_date: Date,
   })
 
+  const imageSchema = new mongoose.Schema({
+    img: {
+      username: String,
+      image_type: String,
+      data: Buffer,
+      content_type: String
+    }
+  })
+
   models.Post = mongoose.model('Post', postSchema);
   models.User = mongoose.model('User', userSchema);
   models.Comment = mongoose.model('Comment', commentSchema);

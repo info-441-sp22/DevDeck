@@ -1,5 +1,18 @@
 import express from 'express';
 import bcrypt from 'bcryptjs';
+import fs from 'fs';
+// Image upload stuff
+import multer from 'multer';
+const storage = multer.diskStorage({
+  destination: function (req, res, cb) {
+      cb(null, './uploads/')
+  },
+  filename: (req, file, cb) => {
+    const ext = file.mimetype.split('/')[1];
+    cb(null, `uploads/${file.originalname}-${Date.now()}.${ext}`);
+  }
+});
+const upload = multer({ storage: storage });
 var router = express.Router();
 
 /* GET users listing. */
@@ -25,6 +38,38 @@ router.get('/', async (req, res, next) => {
     status: 'success'
   });
 });
+
+router.post('/imgUpload', upload.single('image'), async (req, res, next) => {
+  // Error guard - wrong image file type
+  if (!req.file.originalname.match('/\.(jpg|JPG|jpeg|JPEG]png|PNG)$/)')) {
+    res.send({
+      message: 'Only image files (jpg, jpeg, png) are allowed!'
+    });
+  }
+
+  const body = req.body;
+  // const image = new req.models.Image({
+  //   username: body.username,
+  //   image_type: body.imageType,
+  //   data: fs.readFileSync(req.file.path),
+  //   content_type: 'images/jpg' 
+  // });
+  console.log(req.file);
+  // const image = new req.models.Image(req.file)
+
+  // // Save image
+  // image.save();
+
+  // // Debug
+  // const uploadedImage = req.models.Image.findOne({ username: body.username });
+
+  // console.log(uploadedImage);
+
+  res.json({
+    message: 'Image uploaded.',
+    status: 'success'
+  })
+;});
 
 /* Signup/Login Stuff */
 router.post('/login', async function(req, res, next) {

@@ -6,6 +6,7 @@ import { LoginService } from "../services/LoginService.js";
 import { ProfileService } from "../services/ProfileService.js";
 import { useLocation, useParams } from "react-router-dom";
 import LoadingComponent from "../components/LoadingComponent.js";
+import { ImageService } from "../services/ImageService.js";
 
 export default function ProfilePage(props) {
     const { username } = useParams();
@@ -15,6 +16,17 @@ export default function ProfilePage(props) {
     const [isLoading, setLoading] = useState(true);
 
     // Grab URL query param
+    const uploadImageHandler = (event) => {
+        const imageData = new FormData();
+        imageData.append('image', event.target.files[0]);
+        // const request = {
+        //     username: LoginService.getUserCredentials().username,
+        //     image_type: 'profile_image',
+        //     data: imageData
+        // }
+        // console.log(event.target.files[0]);
+        ImageService.uploadImage(imageData);
+    }
 
     useEffect(() => {
         if (isClientUser) console.log('This is the client user page.');
@@ -41,6 +53,13 @@ export default function ProfilePage(props) {
                 <div className="row">
                     <div class="col">
                         <div className="profile-img">
+                            <input
+                                type="file"
+                                id="profile_img_upload"
+                                name="profile_img"
+                                accept="image/*"
+                                onChange={uploadImageHandler}
+                            />
                             <h2>{profileInfo.first_name + ' ' + profileInfo.last_name}</h2>
                             <h3>@{profileInfo.username}</h3>
                         </div>
