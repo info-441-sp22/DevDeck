@@ -16,9 +16,9 @@ root.render(
   <BrowserRouter>
     <Routes>
       <Route path='/' element={<App />}>
-        <Route exact path='home' element={<HomePage />} />
-        <Route exact path='profile' element={<ProfilePage />} />
-        <Route exact path='project' element={<ProjectDetails />} />
+        <Route path='home' element={<HomePage />} />
+        <Route path='profile/:username' element={<ProfilePage />} />
+        <Route path='project' element={<ProjectDetails />} />
       </Route>
     </Routes>
   </BrowserRouter>

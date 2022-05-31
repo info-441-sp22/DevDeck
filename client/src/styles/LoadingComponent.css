@@ -1,0 +1,15 @@
+.spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 88vh;
+}
+
+.spinner-item {
+    flex: 1;
+    justify-content: center;
+    align-self: 'center';
+    max-height: 50px;
+    max-width: 50px;
+}

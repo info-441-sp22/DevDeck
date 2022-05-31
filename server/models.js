@@ -19,6 +19,7 @@ async function connectDB() {
     username: String,
     password: String,
     email: String,
+    bio: String,
     description: String,
     created_date: Date,
     followers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
@@ -32,10 +33,13 @@ async function connectDB() {
     username: String,
     created_date: Date,
     title: String,
-    description: String,
-    collaborators: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-    techStack: [String],
-    likes: [String]
+    blurb: String,
+    longer_description: String,
+    url_link: String,
+    collaborators: [String],
+    // collaborators: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+    // techStack: [String],
+    likes: [String]    
   })
 
   const commentSchema = new mongoose.Schema({
@@ -43,6 +47,15 @@ async function connectDB() {
     comment: String,
     post: { type: mongoose.Schema.Types.ObjectId, ref: "Post" },
     created_date: Date,
+  })
+
+  const imageSchema = new mongoose.Schema({
+    img: {
+      username: String,
+      image_type: String,
+      data: Buffer,
+      content_type: String
+    }
   })
 
   models.Post = mongoose.model('Post', postSchema);
