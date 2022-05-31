@@ -15,7 +15,7 @@ router.post('/', async function (req, res, next) {
   } else {
     try {
       const newPost = new req.models.Post({
-        username: session.account.username, // perhaps not the right way to get it
+        username: session.username, // perhaps not the right way to get it
         created_date: new Date(),
         title: req.body.title,
         blurb: req.body.blurb,
