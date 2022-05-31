@@ -19,6 +19,7 @@ async function connectDB() {
     username: String,
     password: String,
     email: String,
+    bio: String,
     description: String,
     created_date: Date,
     followers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
