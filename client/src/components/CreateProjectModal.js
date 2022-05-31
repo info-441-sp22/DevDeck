@@ -62,19 +62,19 @@ function CreateProjectModal(props) {
                     <Form onSubmit={handleSubmit}>
                         <label htmlFor="addInfo">Input your project information below:</label>
                         {/* <Input type="text" value={props.val} onChange={handleOnChange} */}
-                        <Input type="text" value={props.val} id="titleInput"
+                        <Input type="text" id="titleInput"
                             placeholder="Project Title">
                         </Input>
-                        <Input type="text" value={props.val} id="blurbInput"
+                        <Input type="text" id="blurbInput"
                             placeholder="Blurb for your project">
                         </Input>
-                        <Input type="text" value={props.val} id="longerDescrInput"
+                        <Input type="text" id="longerDescrInput"
                             placeholder="Longer description of your project (inspiration, challenges, etc)">
                         </Input>
-                        <Input type="text" value={props.val} id="urlInput"
+                        <Input type="text" id="urlInput"
                             placeholder="Link to your project">
                         </Input>
-                        <Input type="text" value={props.val} id="collabInput"
+                        <Input type="text" id="collabInput"
                             placeholder="Project collaborators (enter as [collaborator1, collaborator2...])">
                         </Input>
                     </Form>
