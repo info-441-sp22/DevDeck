@@ -45,6 +45,9 @@ router.post('/login', async function(req, res, next) {
         // Start session
         session.userId = user._id;
         session.username = user.username;
+        // Authenticate user
+        session.isAuthenticated = true;
+
         res.json({
           message: 'Successfully signed in - session started.',
           payload: user,

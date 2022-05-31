@@ -6,7 +6,7 @@ var router = express.Router();
 
 /* POST posts. */
 router.post('/', async function (req, res, next) {
-  let session = req.session
+  let session = req.session;
   if (!session.isAuthenticated) { // upadte authentication check accoding to new log in method
     res.status(401).json({
       status: "error",
