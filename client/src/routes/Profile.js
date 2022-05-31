@@ -1,10 +1,16 @@
-import React, { useState } from "react"; //import React Component
+import React, { useEffect, useState } from "react"; //import React Component
 import { Card } from "../components/card.js";
 import { Button } from "reactstrap";
 import CreateProjectModal from "../components/CreateProjectModal";
+import { LoginService } from "../services/LoginService.js";
 
 export default function ProfilePage() {
     const [val, setVal] = useState("");
+    const [userInfo, setUserInfo] = useState(LoginService.getUserCredentials());
+
+    useEffect(() => {
+        console.log(userInfo);
+    })
 
     return (
         <main>

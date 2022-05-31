@@ -43,8 +43,7 @@ function NavBar(props) {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        <Nav.Link as={NavLink} exact to="/">Home</Nav.Link>
-                        <Nav.Link as={NavLink} to="/profile">Profile</Nav.Link>
+                        {/* @TODO take out */}
                         <Nav.Link as={NavLink} to="/project">Project Details</Nav.Link>
                         {/* activeClassName="active" */}
                     </Nav>
@@ -69,22 +68,22 @@ function NavBar(props) {
                                     </div>
                                 :   <div className="login-text-container">
                                         <div className="login-text-item login-text">
-                                            <p>Hello, {LoginService.grabUserInfo().first_name}</p>
+                                            <p>Hello, {LoginService.getUserCredentials().first_name}.</p>
                                         </div>
                                         <div className="login-text-item">
                                             <Button variant="primary" onClick={handleLogOut}>Log Out</Button>
                                         </div>
+                                        <Nav.Link as={NavLink} to="/profile">
+                                            <img
+                                                src="imgs/profile_default.png"                    
+                                                height="35"
+                                                width="35"
+                                                className="mr-3 profile-pic-navbar"
+                                                alt="User's profile"
+                                            />
+                                        </Nav.Link>
                                     </div>
                         }
-                    <Nav.Link href="/profile">
-                        <img
-                            src="imgs/profile_default.png"                    
-                            height="35"
-                            width="35"
-                            className="mr-3 profile-pic-navbar"
-                            alt="User's profile"
-                        />
-                    </Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Container>

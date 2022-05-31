@@ -1,7 +1,7 @@
 import { BASEPOINT } from "../App.js";
 
 export class LoginService {
-    static LOGIN_BASEPOINT = () => BASEPOINT + '/users';
+    static LOGIN_BASEPOINT = () => BASEPOINT + '/api/users';
 
     static LogIn = async (loginRequest) => {
         // Send the request
@@ -69,5 +69,5 @@ export class LoginService {
         return responsePayload.message;
     }
 
-    static grabUserInfo = () => JSON.parse(sessionStorage.getItem('user'));
+    static getUserCredentials = () => JSON.parse(sessionStorage.getItem('user'));
 }
