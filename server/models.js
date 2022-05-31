@@ -36,8 +36,9 @@ async function connectDB() {
     blurb: String,
     longer_description: String,
     url_link: String,
-    collaborators: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-    techStack: [String],
+    collaborators: [String],
+    // collaborators: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+    // techStack: [String],
     likes: [String]    
   })
 
