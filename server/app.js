@@ -9,7 +9,7 @@ import sessions from 'express-session';
 
 import indexRouter from './routes/index.js';
 import usersRouter from './routes/users.js';
-import apiRouter from './routes/api/api.js'; // not used yet
+import apiRouter from './routes/api/api.js';
 
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
@@ -45,6 +45,7 @@ app.use(sessions({
 app.use(express.static('public'));
 
 app.use('/', indexRouter);
+app.use('/api', apiRouter);
 app.use('/users', usersRouter);
 
 export default app;
