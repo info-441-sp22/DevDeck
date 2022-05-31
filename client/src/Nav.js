@@ -73,7 +73,7 @@ function NavBar(props) {
                                         <div className="login-text-item">
                                             <Button variant="primary" onClick={handleLogOut}>Log Out</Button>
                                         </div>
-                                        <Nav.Link as={NavLink} to="/profile">
+                                        <Nav.Link as={NavLink} to={"/profile/" + LoginService.getUserCredentials().username}>
                                             <img
                                                 src="imgs/profile_default.png"                    
                                                 height="35"

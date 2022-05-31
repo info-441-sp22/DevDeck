@@ -3,50 +3,74 @@ import { Card } from "../components/card.js";
 import { Button } from "reactstrap";
 import CreateProjectModal from "../components/CreateProjectModal";
 import { LoginService } from "../services/LoginService.js";
+import { ProfileService } from "../services/ProfileService.js";
+import { useLocation, useParams } from "react-router-dom";
+import LoadingComponent from "../components/LoadingComponent.js";
 
-export default function ProfilePage() {
+export default function ProfilePage(props) {
+    const { username } = useParams();
+    const isClientUser = LoginService.getUserCredentials().username === username;
     const [val, setVal] = useState("");
-    const [userInfo, setUserInfo] = useState(LoginService.getUserCredentials());
+    const [profileInfo, setProfileInfo] = useState(null);
+    const [isLoading, setLoading] = useState(true);
+
+    // Grab URL query param
 
     useEffect(() => {
-        console.log(userInfo);
-    })
+        if (isClientUser) console.log('This is the client user page.');
+        // Load the profile data
+        if (isLoading) {
+            ProfileService.getProfile(username)
+                .then((data) => {
+                    setProfileInfo(data);
+                    setLoading(false);
+                })
+                .catch(err => {  // Handle error page
+                    console.log(err);
+                });
+        }
+    }, [isLoading]);    // change `isLoading` to refresh the data loading
 
     return (
-        <main>
+    <div>
+    {
+        (isLoading)
+            ? <LoadingComponent />
+            :   <main>
             <div className="profile container-fluid">
                 <div className="row">
                     <div class="col">
                         <div className="profile-img">
-                            <h2>Kyle Thayer</h2>
-                            <h3>@kyle_slayer</h3>
+                            <h2>{profileInfo.first_name + ' ' + profileInfo.last_name}</h2>
+                            <h3>@{profileInfo.username}</h3>
                         </div>
                     </div>
                     <div class="col">
                         <div className="bio">
                             <h2>Bio:</h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                                sed do eiusmod tempor incididunt ut labore et dolore
-                                magna aliqua. Ut enim ad minim veniam, quis nostrud
-                                exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                consequat. Duis aute irure dolor in reprehenderit in voluptate.</p>
+                            <p>{profileInfo.bio}</p>
                         </div>
                     </div>
                     <div class="col">
                         <div className="skills">
                             <ul>
-                                <li>Node.js</li>
-                                <li>R</li>
-                                <li>Python</li>
+                                {
+                                    profileInfo.urls.map((url) => {
+                                        const tokens = url.split(':');
+                                        return <li><a href={tokens[1]}>{tokens[0]}</a></li>
+                                    })
+                                }
                             </ul>
                         </div>
                     </div>
                     <div class="col">
                         <div className="links">
                             <ul>
-                                <li>GitHub</li>
-                                <li>LinkedIn</li>
-                                <li>Personal</li>
+                                {
+                                    profileInfo.skillset.map((skill) => {
+                                        return <li>{skill}</li>;
+                                    })
+                                }
                             </ul>
                         </div>
                     </div>
@@ -70,5 +94,6 @@ export default function ProfilePage() {
                 </div>
             </div>
         </main>
-    )
+    }
+    </div>)
 }

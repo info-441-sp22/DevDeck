@@ -50,7 +50,7 @@ code {
 .footer {
   /* position: fixed; */
   /* text-align: center; */
-  /* position: absolute; */
+  position: absolute;
   bottom: 0;
   width: 100%;  
   height: 35px;
