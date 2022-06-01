@@ -2,6 +2,8 @@ import express from 'express';
 import mongoose from "mongoose";
 import multer from 'multer';
 import GridFsBucket from 'gridfs-stream';
+import path from 'path';
+import { __dirname } from '../../app.js';
 
 var router = express.Router();
 const storage = multer.diskStorage({
@@ -9,6 +11,7 @@ const storage = multer.diskStorage({
     callback(null, `uploads`);
   },
   filename: function (req, file, callback) {
+    const username = req.session.username;
     callback(null, `${username}-${Date.now()}-${file.originalname}.${file.mimetype.split('/')[1]}`);
   }
 });
@@ -27,45 +30,41 @@ const upload = multer({
 });
 
 router.post('/profile', upload.single('file'), async (req, res) => {
-  console.log(req.file);
-  // if (!req.file) {
-  //   // Status error
-  //   return res.status(404).json({
-  //     error: 'No file was received.',
-  //     message: 'Please send over a valid file.'
-  //   });
+  // Error guard for no file provided
+  if (!req.file) {
+    // Status error
+    return res.status(404).json({
+      error: 'No file was received.',
+      message: 'Please send over a valid file.'
+    });
 
-  // } else {
-  //   // Save the connection into the DB
-  //   const filename = req.file.filename;
-  //   const username = req.session.username;
-  //   console.log(req.session);
+  } else {
+    // Save the connection into the DB
+    const filename = req.file.filename;
+    const username = req.session.username;
 
-  //   // @TODO handle project image things
-  //   const existingProfileImage = await req.models.Image.findOne({ username: username, purpose: 'profile' });
+    // @TODO handle project image things
+    const existingProfileImage = await req.models.Image.findOne({ username: username, purpose: 'profile' });
 
-  //   if (existingProfileImage) { // Error guard, profile image already exists
-  //     // Delete the image connection
-  //     await req.models.Image.deleteOne({ username: username, purpose: 'profile' });
-  //   }
+    if (existingProfileImage) { // Error guard, profile image already exists
+      // Delete the image connection
+      await req.models.Image.deleteOne({ username: username, purpose: 'profile' });
+    }
 
-  //   const image = new req.models.Image({
-  //     username: username,
-  //     filename: filename,
-  //     purpose: 'profile',
-  //     created_date: Date.now()
-  //   });
+    const image = new req.models.Image({
+      username: username,
+      filename: filename,
+      purpose: 'profile',
+      created_date: Date.now()
+    });
 
-  //   console.log('saving...');
-  //   console.log(image);
+    image.save();
 
-  //   image.save();
-
-  //   return res.json({
-  //     message: 'Image has been successfully uploaded.',
-  //     status: 'success'
-  //   })
-  // }
+    return res.json({
+      message: 'Image has been successfully uploaded.',
+      status: 'success'
+    })
+  }
 });
 
 router.get('/', async (req, res) => {
@@ -86,6 +85,7 @@ router.get('/', async (req, res) => {
 
 router.get('/profile', async (req, res) => {
   const username = req.query.username;
+  console.log(username);
   const image = await req.models.Image.findOne({ username: username, purpose: 'profile' });
 
   console.log(image);
@@ -96,10 +96,10 @@ router.get('/profile', async (req, res) => {
       message: 'User needs to upload a profile image.'
     });
   }
-  const tokens = image.path.split('.');
+  const tokens = image.filename.split('.');
 
   res.set('Content-Type', `image/${tokens[tokens.length - 1]}`);
-  res.sendFile(path.join(__dirname, 'public', 'imgs', 'uploads', ));
+  res.sendFile(path.join(__dirname, 'uploads', image.filename));
 });
 
 // let gfs;

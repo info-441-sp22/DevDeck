@@ -12,13 +12,11 @@ router.get('/debug', async (req, res, next) => {
   if (!username) {
     res.send('You are not signed in.');
   } else {
-    console.log(req.session);
     res.send('Hello, ' + username);
   }
 });
 
 router.get('/', async (req, res, next) => {
-  console.log(req.session);
   const username = req.query.username;
 
   // Error guard for empty query
