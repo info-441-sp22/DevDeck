@@ -3,6 +3,10 @@ import { BASEPOINT } from "../App.js";
 export class LoginService {
     static LOGIN_BASEPOINT = () => BASEPOINT + '/api/users';
 
+    static handleUserUnauthenticated = async () => {
+        
+    }
+
     static LogIn = async (loginRequest) => {
         // Send the request
         const response = await fetch(
@@ -10,6 +14,7 @@ export class LoginService {
             {
                 method: "POST",
                 body: JSON.stringify(loginRequest),
+                credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -34,6 +39,7 @@ export class LoginService {
             {
                 method: "POST",
                 body: JSON.stringify(signupRequest),
+                credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -64,10 +70,12 @@ export class LoginService {
         const responsePayload = await response.json();
 
         // Delete the user info in the storage
-        sessionStorage.removeItem('user');
+        LoginService.removeUserCredentials();
 
         return responsePayload.message;
     }
 
+    /** Session Storage functions */
     static getUserCredentials = () => JSON.parse(sessionStorage.getItem('user'));
+    static removeUserCredentials = () => sessionStorage.removeItem('user');
 }

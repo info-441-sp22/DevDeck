@@ -10,6 +10,8 @@ async function connectDB() {
   // Run mongo db locally with a command like:
   // Windows: mongod.exe --dbpath="c:\code\mongodbData\testdb"
   // Mac: brew services start mongodb-community@5.0
+  console.log(process.env.DB);
+
   await mongoose.connect('mongodb+srv://password12345:password12345@cluster0.0yecb.mongodb.net/devdeck');
   console.log("connected to mongodb");
 
@@ -50,17 +52,16 @@ async function connectDB() {
   })
 
   const imageSchema = new mongoose.Schema({
-    img: {
-      username: String,
-      image_type: String,
-      data: Buffer,
-      content_type: String
-    }
+    username: String,
+    filename: String,
+    purpose: String,
+    created_date: Date
   })
 
   models.Post = mongoose.model('Post', postSchema);
   models.User = mongoose.model('User', userSchema);
   models.Comment = mongoose.model('Comment', commentSchema);
+  models.Image = mongoose.model('Image', imageSchema);
 
   console.log("finished creating models");
 }

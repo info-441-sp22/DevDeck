@@ -15,28 +15,24 @@ export default function ProfilePage(props) {
     const isClientUser = LoginService.getUserCredentials().username === username;
     const [val, setVal] = useState("");
     const [profileInfo, setProfileInfo] = useState(null);
+    const [profileImage, setProfileImage] = useState(null);
     const [isLoading, setLoading] = useState(true);
 
     // Grab URL query param
     const uploadImageHandler = (event) => {
-        const imageData = new FormData();
-        imageData.append('image', event.target.files[0]);
-        // const request = {
-        //     username: LoginService.getUserCredentials().username,
-        //     image_type: 'profile_image',
-        //     data: imageData
-        // }
-        // console.log(event.target.files[0]);
-        ImageService.uploadImage(imageData);
+        const request = new FormData();
+        request.append('file', event.target.files[0]);
+        ImageService.uploadProfileImage(request);
     }
 
     useEffect(() => {
-        if (isClientUser) console.log('This is the client user page.');
         // Load the profile data
         if (isLoading) {
             ProfileService.getProfile(username)
-                .then((data) => {
-                    setProfileInfo(data);
+                .then((payload) => {
+                    console.log(payload);
+                    setProfileInfo(payload.user_info);
+                    // setProfileImage(payload.profile_img);
                     setLoading(false);
                 })
                 .catch(err => {  // Handle error page
@@ -63,16 +59,17 @@ export default function ProfilePage(props) {
                     <div className="col">
                         <div className="profile-img">
                             {
-                                (isClientUser)
-                                    ? <input
-                                    type="file"
-                                    id="profile_img_upload"
-                                    name="profile_img"
-                                    accept="image/*"
-                                    onChange={uploadImageHandler}
-                                />
+                                (profileImage)
+                                    ? <img src={profileImage} alt="Profile" />
                                     : <></>
                             }
+                            <input
+                                type="file"
+                                id="profile_img_upload"
+                                name="profile_img"
+                                accept="image/*"
+                                onChange={uploadImageHandler}
+                            />
                             <h2>{profileInfo.first_name + ' ' + profileInfo.last_name}</h2>
                             <h3>@{profileInfo.username}</h3>
                         </div>
@@ -100,7 +97,7 @@ export default function ProfilePage(props) {
                             <ul>
                                 {
                                     profileInfo.urls.map((url) => {
-                                        const tokens = url.split(':');
+                                        const tokens = url.split('+');
                                         return <li><a href={tokens[1]}>{tokens[0]}</a></li>
                                     })
                                 }

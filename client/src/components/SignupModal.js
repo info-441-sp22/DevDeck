@@ -44,7 +44,7 @@ function SignupModal(props) {
         setLoggedInCallback(true);
       })
       .catch((error) => {
-        console.log(error);
+        console.log(JSON.stringify(error));
         setToastMessageCallback('' + error);
         setToastStateCallback('error');
         setLoggedInCallback(false);

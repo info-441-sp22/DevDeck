@@ -9,7 +9,8 @@ export function Card(props) {
             <img className="card-img-top" src="..." alt="Project thumbnail"></img>
             <div className="card-body">
                 <h5 className="card-title">{props.title}</h5>
-                <p className="card-text">{props.blurb}</p>
+                {/* <p className="card-text">{props.username}</p> */}
+                {/* <p className="card-text">{props.blurb}</p> */}
                 {/* add in necessary props fields/project info -> only include title & blurb in card */}
                 <Button className="btn btn-primary" onClick={() => console.log("Link")}>
                     View project details

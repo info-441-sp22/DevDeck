@@ -19,7 +19,7 @@ function CreateProjectModal(props) {
         console.log(title, blurb, longer_description, url_link, collaborators);
 
         // try {
-            await fetchJSON(BASEPOINT + '/api/posts', { //'api/posts'
+            await fetchJSON(BASEPOINT + '/api/posts', {
                 method: "POST",
                 body: { 
                     title: title,

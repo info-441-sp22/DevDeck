@@ -10,12 +10,12 @@ export default function ProjectDetails() {
                     Link to project
                 </Button>
                 <div className="row">
-                    <div class="col">
+                    <div className="col">
                         <div className="thumbnail">
                             <img src="imgs/thumbnail_default.png" alt="project thumbnail"></img>
                         </div>
                     </div>
-                    <div class="col">
+                    <div className="col">
                         <div className="blurb">
                             <h2>Blurb:</h2>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
@@ -25,7 +25,7 @@ export default function ProjectDetails() {
                                 consequat. Duis aute irure dolor in reprehenderit in voluptate.</p>
                         </div>
                     </div>
-                    <div class="col">                        
+                    <div className="col">                        
                         <div className="collaborators">
                             <h2>Collaborators:</h2>
                             <p>Link to collaborators' profiles</p>
