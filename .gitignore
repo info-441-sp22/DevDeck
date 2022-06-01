@@ -2,3 +2,4 @@
 *.vs/
 *.DS_Store
 *server/public/imgs/uploads/
+*server/uploads

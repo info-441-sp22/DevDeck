@@ -18,12 +18,14 @@ export class ProfileService {
         const responsePayload = await response.json();
 
         // Get the profile image
-        // const imagePayload = await ImageService.getProfileImage({ username: username });
+        const imagePayload = await ImageService.getProfileImage({ username: username });
+
+        console.log(imagePayload);
 
         if (!responsePayload.error) {   // If no error is encountered
             return {
                 user_info: responsePayload.payload,
-                // profile_img: imagePayload
+                profile_img: imagePayload
             }
         } else {    // If an error is encountered
             // Return error payload with message
@@ -31,19 +33,20 @@ export class ProfileService {
         }
     }
 
-    static putProfile = async (username, bio) => {
+    static postProfile = async (username, bio) => {
         const response = await fetch(
             ProfileService.PROFILE_BASEPOINT() + '/?username=' + encodeURIComponent(username),
             {
-                method: "PUT",
+                method: "POST",
                 credentials: 'include',
+                mode: 'cors',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: {
-                    "username": username,
-                    "bio": bio
-                }
+                body: JSON.stringify({
+                    username: username,
+                    bio: bio
+                })
             }
         );
         const responsePayload = await response.json();

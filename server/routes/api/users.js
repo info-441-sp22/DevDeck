@@ -154,7 +154,7 @@ router.post('/signup', async (req, res, next) => {
     });
 });
 
-router.put('/', async function(req, res, next) {
+router.post('/', async function(req, res, next) {
   if (req.session.isAuthenticated) {
       let user = await req.models.User.findOne({username: req.body.username})
       try {
