@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"; //import React Component
+import React, { createRef, useEffect, useState } from "react"; //import React Component
 import { Card } from "../components/Card.js";
 import { Button } from "reactstrap";
 import CreateProjectModal from "../components/CreateProjectModal";
@@ -9,6 +9,7 @@ import { useLocation, useParams } from "react-router-dom";
 import LoadingComponent from "../components/LoadingComponent.js";
 import { ImageService } from "../services/ImageService.js";
 import { fetchJSON } from "../utils/utils.js";
+import { toast } from "react-toastify";
 
 export default function ProfilePage(props) {
     const { username } = useParams();
@@ -16,13 +17,20 @@ export default function ProfilePage(props) {
     const [val, setVal] = useState("");
     const [profileInfo, setProfileInfo] = useState(null);
     const [profileImage, setProfileImage] = useState(null);
+    const [profileImageTemp, setProfileImageTemp] = useState(null);
     const [isLoading, setLoading] = useState(true);
 
-    // Grab URL query param
-    const uploadImageHandler = (event) => {
+    // Image Handlers
+    const uploadImageHandler = async (event) => {
         const request = new FormData();
         request.append('file', event.target.files[0]);
-        ImageService.uploadProfileImage(request);
+        await ImageService.uploadProfileImage(request);
+        toast.info('Profile image uploaded.');
+        setLoading(true);
+    }
+
+    const onClickImageSubmitHandler = async () => {
+        document.getElementById('profile_img_upload').click();
     }
 
     useEffect(() => {
@@ -60,7 +68,11 @@ export default function ProfilePage(props) {
                         <div className="profile-img">
                             {
                                 (profileImage)
-                                    ? <img src={profileImage} alt="Profile" />
+                                    ? <img 
+                                        src={profileImage} 
+                                        alt="Profile" 
+                                        className="nav-profile-pic"
+                                    />
                                     : <></>
                             }
                             <input
@@ -70,6 +82,11 @@ export default function ProfilePage(props) {
                                 accept="image/*"
                                 onChange={uploadImageHandler}
                             />
+                            <Button
+                                type="button"
+                                onClick={() => onClickImageSubmitHandler()}>
+                                Change Image
+                            </Button>
                             <h2>{profileInfo.first_name + ' ' + profileInfo.last_name}</h2>
                             <h3>@{profileInfo.username}</h3>
                         </div>

@@ -20,7 +20,7 @@ export class ImageService {
 
     static getProfileImage = async (request) => {
         const response = await fetch(
-            ImageService.IMAGE_BASEPOINT() + '/profile?=' + encodeURIComponent(request.username),
+            ImageService.IMAGE_BASEPOINT() + '/profile?username=' + encodeURIComponent(request.username),
             {
                 method: 'GET',
                 credentials: 'include',
@@ -29,9 +29,9 @@ export class ImageService {
                 }
             }
         );
-        const responsePayload = await response.json();
+        const responseBlob = await response.blob(); 
 
-        return responsePayload.payload;
+        return URL.createObjectURL(responseBlob);
     }
 
     static arrayBufferToBase64 = (buffer) => {
