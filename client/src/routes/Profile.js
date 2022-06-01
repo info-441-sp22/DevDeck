@@ -8,6 +8,7 @@ import { ProfileService } from "../services/ProfileService.js";
 import { useLocation, useParams } from "react-router-dom";
 import LoadingComponent from "../components/LoadingComponent.js";
 import { ImageService } from "../services/ImageService.js";
+import { fetchJSON } from "../utils/utils.js";
 
 export default function ProfilePage(props) {
     const { username } = useParams();
@@ -44,6 +45,13 @@ export default function ProfilePage(props) {
         }
     }, [isLoading]);    // change `isLoading` to refresh the data loading
 
+    async function updateUserInfo(e) {
+        // e.preventDefault();
+        let bio = document.getElementById(`userBio`).value;
+        ProfileService.putProfile(username, bio)
+        setLoading(true); // Just need to refresh page
+      }
+
     return (
     <div>
     {
@@ -52,26 +60,42 @@ export default function ProfilePage(props) {
             :   <main>
             <div className="profile container-fluid">
                 <div className="row">
-                    <div class="col">
+                    <div className="col">
                         <div className="profile-img">
-                            <input
-                                type="file"
-                                id="profile_img_upload"
-                                name="profile_img"
-                                accept="image/*"
-                                onChange={uploadImageHandler}
-                            />
+                            {
+                                (isClientUser)
+                                    ? <input
+                                    type="file"
+                                    id="profile_img_upload"
+                                    name="profile_img"
+                                    accept="image/*"
+                                    onChange={uploadImageHandler}
+                                />
+                                    : <></>
+                            }
                             <h2>{profileInfo.first_name + ' ' + profileInfo.last_name}</h2>
                             <h3>@{profileInfo.username}</h3>
                         </div>
                     </div>
-                    <div class="col">
+                    <div className="col">
                         <div className="bio">
                             <h2>Bio:</h2>
                             <p>{profileInfo.bio}</p>
+                            {
+                                (isClientUser)
+                                    ?  <div>
+                                        <input
+                                            type="text"
+                                            id="userBio"
+                                            name="userBio"
+                                        />
+                                        <Button size="sm" onClick={() => {updateUserInfo()}}>Update bio</Button>
+                                    </div>
+                                    : <></>
+                            }
                         </div>
                     </div>
-                    <div class="col">
+                    <div className="col">
                         <div className="skills">
                             <ul>
                                 {
@@ -83,7 +107,7 @@ export default function ProfilePage(props) {
                             </ul>
                         </div>
                     </div>
-                    <div class="col">
+                    <div className="col">
                         <div className="links">
                             <ul>
                                 {
