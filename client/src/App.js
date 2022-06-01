@@ -7,6 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import 'react-toastify/dist/ReactToastify.css';
 import './styles/index.css';
+import { LoginService } from './services/LoginService';
 
 const DEBUG = true;
 export const BASEPOINT = (DEBUG) ? 'http://localhost:3000' : 'http://devdeck.me';
@@ -15,6 +16,7 @@ function App() {
     const [isLoggedIn, setLoggedIn] = useState(false);
     const [toastMessage, setToastMessage] = useState();
     const [toastState, setToastState] = useState('');
+    const [credentials, setCredentials] = useState();
 
     const navigate = useNavigate();
 
@@ -22,7 +24,17 @@ function App() {
         if (window.location.pathname === '/') {
             navigate('/home');
         }
-    });
+
+        console.log(isLoggedIn);
+
+        if (isLoggedIn) {
+            console.log('setting credentials...');
+            setCredentials(LoginService.getUserCredentials());
+        } else {
+            console.log('clearing credentials...');
+            setCredentials();
+        }
+    }, [isLoggedIn]);
 
     useEffect(() => {
         if (toastMessage) {
@@ -41,11 +53,14 @@ function App() {
         <div className="appContainer">
             <NavBar
                 isLoggedIn={isLoggedIn}
+                credentials={credentials}
                 setLoggedInCallback={setLoggedIn}
                 setToastMessageCallback={setToastMessage}
                 setToastStateCallback={setToastState}
             />
-            <Outlet />
+            <Outlet context={
+                { isLoggedIn, setLoggedIn, credentials, setCredentials }
+            } />
             <Footer />
             <ToastContainer />
         </div>

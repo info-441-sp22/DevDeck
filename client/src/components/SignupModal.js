@@ -36,18 +36,16 @@ function SignupModal(props) {
   const handleShow = () => setShow(true);
 
   const onClickSubmit = async (data) => {
-    LoginService.SignUp(data)
+    LoginService.SignUp(data, setLoggedInCallback)
       .then((payload) => {
         // toast to user the success
         setToastMessageCallback('' + payload);
         setToastStateCallback('info');
-        setLoggedInCallback(true);
       })
       .catch((error) => {
         console.log(JSON.stringify(error));
         setToastMessageCallback('' + error);
         setToastStateCallback('error');
-        setLoggedInCallback(false);
       });
   }
 
