@@ -33,6 +33,7 @@ app.use(cors({
 }));
 app.use(cookieParser());
 app.use(upload.array());
+app.use(cors({ origin: '*' }));
 
 // MongoDB
 app.use((req, res, next) => {

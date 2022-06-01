@@ -5,7 +5,7 @@
 
 import React, { useState, useEffect } from "react"; //import React Component
 // import { Button } from "reactstrap";
-import { Card } from "../components/Card.js";
+import { Card } from "./Card.js";
 import { fetchJSON } from '../utils/utils.js';
 import { BASEPOINT } from "../App";
 
