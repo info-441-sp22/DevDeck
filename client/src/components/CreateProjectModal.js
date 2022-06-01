@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, Input } from 'reactstrap';
+import { fetchJSON } from '../utils/utils.js';
 
 function CreateProjectModal(props) {
     const [modal, setModal] = useState(false);
@@ -89,6 +90,7 @@ function CreateProjectModal(props) {
     )
 }
 
+/*
 async function fetchJSON(route, options){
     let response
     try{
@@ -144,5 +146,6 @@ async function displayError(){
     document.getElementById('errorInfo').innerText= ''
     document.getElementById('errorInfo').style.opacity = 0
 }
+*/
 
 export default CreateProjectModal;

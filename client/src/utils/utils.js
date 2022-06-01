@@ -1,5 +1,5 @@
 
-const escapeHTML = str => !str ? str : str.replace(/[&<>'"]/g, 
+export const escapeHTML = str => !str ? str : str.replace(/[&<>'"]/g, 
 tag => ({
     '&': '&amp;',
     '<': '&lt;',
@@ -9,7 +9,7 @@ tag => ({
 }[tag]));
 
 
-async function fetchJSON(route, options){
+export async function fetchJSON(route, options){
     let response
     try{
         response = await fetch(route, {
@@ -56,7 +56,7 @@ async function fetchJSON(route, options){
     return responseJson
 }
 
-async function displayError(){
+export async function displayError(){
 document.getElementById('errorInfo').innerText = 'Error: action failed (see console for more information)'
 document.getElementById('errorInfo').style.opacity = 1
 // pause 4 seconds
