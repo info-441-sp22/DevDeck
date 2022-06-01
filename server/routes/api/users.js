@@ -1,6 +1,7 @@
 import express from 'express';
 import bcrypt from 'bcryptjs';
 import fs from 'fs';
+
 // Image upload stuff
 import multer from 'multer';
 const storage = multer.diskStorage({
@@ -176,18 +177,18 @@ router.put('/', async function(req, res, next) {
   if (req.session.isAuthenticated) {
       let user = await req.models.User.findOne({username: req.body.username})
       try {
-          user.bio = req.body.bio
-          await user.save()
+          user.bio = req.body.bio;
+          await user.save();
           res.json({"status": "success"});
       } catch (error) {
-          console.log(error)
-          res.status(500).json({"status": "error", "error": error})
+          console.log(error);
+          res.status(500).json({"status": "error", "error": error});
       }
   } else {
       res.status(401).json({
           status: "error",
           error: "not logged in"
-      })
+      });
   }
 });
 
