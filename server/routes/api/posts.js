@@ -22,6 +22,7 @@ router.post('/', async function (req, res, next) {
         blurb: req.body.blurb,
         longer_description: req.body.longer_description,
         url_link: req.body.url_link,
+        tech_stack: req.body.tech_stack,
         collaborators: req.body.collaborators, // assuming we get it in an array
         likes: []
       })
