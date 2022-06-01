@@ -125,7 +125,7 @@ export default function ProfilePage(props) {
                 <h2>Your Deck:</h2>
                 <CreateProjectModal>
                 </CreateProjectModal>
-                <span id="postStatus"></span>
+                {/* <span id="postStatus"></span> */}
                 <UserDeck 
                     username={username}>
                 </UserDeck>
