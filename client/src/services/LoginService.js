@@ -18,7 +18,6 @@ export class LoginService {
             // Remove the session
             LoginService.removeUserCredentials('user');
             setLoggedInCallback(false);
-            toast.error(responseHeartbeat.error);
         }
 
         // User is logged in

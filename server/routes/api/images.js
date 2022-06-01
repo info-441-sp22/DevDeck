@@ -4,6 +4,7 @@ import multer from 'multer';
 import GridFsBucket from 'gridfs-stream';
 import path from 'path';
 import { __dirname } from '../../app.js';
+import { unlinkSync } from 'fs';
 
 var router = express.Router();
 const storage = multer.diskStorage({
@@ -44,13 +45,14 @@ router.post('/profile', upload.single('file'), async (req, res) => {
     const username = req.session.username;
     console.log('username', username);
 
-    // @TODO handle project image things
     const existingProfileImage = await req.models.Image.findOne({ username: username, purpose: 'profile' });
 
     if (existingProfileImage) { // Error guard, profile image already exists
-      console.log(existingProfileImage);
       // Delete the image connection
       await req.models.Image.deleteOne({ username: username, purpose: 'profile' });
+
+      // Delete the image in uploads
+      unlinkSync(path.join(__dirname, 'uploads', existingProfileImage.filename));
     }
 
     const image = new req.models.Image({
@@ -87,17 +89,13 @@ router.get('/', async (req, res) => {
 
 router.get('/profile', async (req, res) => {
   const username = req.query.username;
-  console.log(username);
   const image = await req.models.Image.findOne({ username: username, purpose: 'profile' });
 
-  console.log(image);
-
   if (!image) { // Error guard - image not found
-    return res.json({
-      error: 'Profile image for the specified user is not found.',
-      message: 'User needs to upload a profile image.'
-    });
+    res.set('Content-Type', `image/png`);
+    return res.sendFile(path.join(__dirname, 'uploads', 'blank_profile_image.png'));
   }
+
   const tokens = image.filename.split('.');
 
   res.set('Content-Type', `image/${tokens[tokens.length - 1]}`);

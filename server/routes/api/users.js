@@ -61,8 +61,6 @@ router.post('/login', async function(req, res, next) {
   const body = req.body;
   let session = req.session;
 
-  console.log(session);
-
   // if (session.userId) { // already logged in
   //   return res.send('Error: you are already logged in as ' + session.userId);
   // }

@@ -18,12 +18,12 @@ export class ProfileService {
         const responsePayload = await response.json();
 
         // Get the profile image
-        // const imagePayload = await ImageService.getProfileImage({ username: username });
+        const imagePayload = await ImageService.getProfileImage({ username: username });
 
         if (!responsePayload.error) {   // If no error is encountered
             return {
                 user_info: responsePayload.payload,
-                // profile_img: imagePayload
+                profile_img: imagePayload
             }
         } else {    // If an error is encountered
             // Return error payload with message

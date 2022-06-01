@@ -16,8 +16,6 @@ function App() {
     const [isLoggedIn, setLoggedIn] = useState(false);
     const [toastMessage, setToastMessage] = useState();
     const [toastState, setToastState] = useState('');
-    const [firstName, setFirstName] = useState('');
-    const [username, setUsername] = useState('');
     const [credentials, setCredentials] = useState();
 
     const navigate = useNavigate();
@@ -26,6 +24,8 @@ function App() {
         if (window.location.pathname === '/') {
             navigate('/home');
         }
+
+        console.log(isLoggedIn);
 
         if (isLoggedIn) {
             console.log('setting credentials...');
