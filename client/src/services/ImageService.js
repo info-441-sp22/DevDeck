@@ -1,15 +1,15 @@
 import { BASEPOINT } from "../App";
 
 export class ImageService {
-    static LOGIN_BASEPOINT = () => BASEPOINT + '/api/users';
+    static IMAGE_BASEPOINT = () => BASEPOINT + '/api/images';
 
-    static uploadImage = async (request) => {
+    static uploadProfileImage = async (request) => {
         // console.log(request);
-        console.log('hit');
         const response = await fetch(
-            ImageService.LOGIN_BASEPOINT() + '/imgUpload',
+            ImageService.IMAGE_BASEPOINT() + '/profile',
             {
                 method: "POST",
+                credentials: 'include',
                 body: request,
                 headers: {
                     'Accept': 'multipart/form-data'
@@ -17,8 +17,21 @@ export class ImageService {
             }
         );
     }
-    static downloadImages = (request) => {
 
+    static getProfileImage = async (request) => {
+        const response = await fetch(
+            ImageService.IMAGE_BASEPOINT() + '/profile?=' + encodeURIComponent(request.username),
+            {
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+        );
+        const responsePayload = await response.json();
+
+        return responsePayload.payload;
     }
 
     static arrayBufferToBase64 = (buffer) => {

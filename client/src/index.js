@@ -18,7 +18,7 @@ root.render(
       <Route path='/' element={<App />}>
         <Route path='home' element={<HomePage />} />
         <Route path='profile/:username' element={<ProfilePage />} />
-        <Route path='project' element={<ProjectDetails />} />
+        <Route path='project/' element={<ProjectDetails />} />
       </Route>
     </Routes>
   </BrowserRouter>

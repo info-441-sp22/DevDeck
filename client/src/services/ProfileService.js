@@ -1,4 +1,5 @@
 import { BASEPOINT } from "../App";
+import { ImageService } from "./ImageService";
 
 export class ProfileService {
     static PROFILE_BASEPOINT = () => BASEPOINT + '/api/users';
@@ -8,6 +9,7 @@ export class ProfileService {
             ProfileService.PROFILE_BASEPOINT() + '/?username=' + encodeURIComponent(username),
             {
                 method: "GET",
+                credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -15,8 +17,14 @@ export class ProfileService {
         );
         const responsePayload = await response.json();
 
+        // Get the profile image
+        // const imagePayload = await ImageService.getProfileImage({ username: username });
+
         if (!responsePayload.error) {   // If no error is encountered
-            return responsePayload.payload;
+            return {
+                user_info: responsePayload.payload,
+                // profile_img: imagePayload
+            }
         } else {    // If an error is encountered
             // Return error payload with message
             throw new Error(responsePayload.error);
