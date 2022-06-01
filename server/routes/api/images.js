@@ -9,6 +9,7 @@ const storage = multer.diskStorage({
     callback(null, `uploads`);
   },
   filename: function (req, file, callback) {
+    const username = req.session.username;
     callback(null, `${username}-${Date.now()}-${file.originalname}.${file.mimetype.split('/')[1]}`);
   }
 });

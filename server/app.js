@@ -2,12 +2,9 @@ export const DEBUG = true;
 
 import express from 'express';
 import cors from 'cors';
-import path from 'path';
-import multer from 'multer';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import sessions from 'express-session';
-import Grid from 'gridfs-stream';
 
 import indexRouter from './routes/index.js';
 import apiRouter from './routes/api/api.js';
@@ -22,7 +19,6 @@ export const __dirname = dirname(__filename);
 import models from './models.js';
 
 var app = express();
-var upload = multer();
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -32,7 +28,6 @@ app.use(cors({
     credentials: true
 }));
 app.use(cookieParser());
-app.use(upload.array());
 
 // MongoDB
 app.use((req, res, next) => {
