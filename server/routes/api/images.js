@@ -28,45 +28,41 @@ const upload = multer({
 });
 
 router.post('/profile', upload.single('file'), async (req, res) => {
-  console.log(req.file);
-  // if (!req.file) {
-  //   // Status error
-  //   return res.status(404).json({
-  //     error: 'No file was received.',
-  //     message: 'Please send over a valid file.'
-  //   });
+  // Error guard for no file provided
+  if (!req.file) {
+    // Status error
+    return res.status(404).json({
+      error: 'No file was received.',
+      message: 'Please send over a valid file.'
+    });
 
-  // } else {
-  //   // Save the connection into the DB
-  //   const filename = req.file.filename;
-  //   const username = req.session.username;
-  //   console.log(req.session);
+  } else {
+    // Save the connection into the DB
+    const filename = req.file.filename;
+    const username = req.session.username;
 
-  //   // @TODO handle project image things
-  //   const existingProfileImage = await req.models.Image.findOne({ username: username, purpose: 'profile' });
+    // @TODO handle project image things
+    const existingProfileImage = await req.models.Image.findOne({ username: username, purpose: 'profile' });
 
-  //   if (existingProfileImage) { // Error guard, profile image already exists
-  //     // Delete the image connection
-  //     await req.models.Image.deleteOne({ username: username, purpose: 'profile' });
-  //   }
+    if (existingProfileImage) { // Error guard, profile image already exists
+      // Delete the image connection
+      await req.models.Image.deleteOne({ username: username, purpose: 'profile' });
+    }
 
-  //   const image = new req.models.Image({
-  //     username: username,
-  //     filename: filename,
-  //     purpose: 'profile',
-  //     created_date: Date.now()
-  //   });
+    const image = new req.models.Image({
+      username: username,
+      filename: filename,
+      purpose: 'profile',
+      created_date: Date.now()
+    });
 
-  //   console.log('saving...');
-  //   console.log(image);
+    image.save();
 
-  //   image.save();
-
-  //   return res.json({
-  //     message: 'Image has been successfully uploaded.',
-  //     status: 'success'
-  //   })
-  // }
+    return res.json({
+      message: 'Image has been successfully uploaded.',
+      status: 'success'
+    })
+  }
 });
 
 router.get('/', async (req, res) => {

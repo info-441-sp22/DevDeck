@@ -18,13 +18,26 @@ export const __dirname = dirname(__filename);
 // Local file imports
 import models from './models.js';
 
+const allowedOrigins = ['http://localhost:3001', 'http://devdeck.me'];
 var app = express();
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors({
-    origin: (DEBUG) ? 'http://localhost:3001' : 'http://devdeck.me',  
+    origin: (origin, callback) => {
+        // allow requests with no origin 
+        // (like mobile apps or curl requests)
+        if(!origin) return callback(null, true);
+        if(allowedOrigins.indexOf(origin) === -1){
+        var msg = 'The CORS policy for this site does not ' +
+                    'allow access from the specified Origin.';
+        return callback(new Error(msg), false);
+        }
+        return callback(null, true);
+    },
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    // origin: '*',
     credentials: true
 }));
 app.use(cookieParser());
