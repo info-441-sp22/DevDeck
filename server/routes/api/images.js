@@ -12,7 +12,7 @@ const storage = multer.diskStorage({
   },
   filename: function (req, file, callback) {
     const username = req.session.username;
-    callback(null, `${username}-${Date.now()}-${file.originalname}.${file.mimetype.split('/')[1]}`);
+    callback(null, `${Date.now()}-${file.originalname}.${file.mimetype.split('/')[1]}`);
   }
 });
 const upload = multer({
@@ -42,11 +42,13 @@ router.post('/profile', upload.single('file'), async (req, res) => {
     // Save the connection into the DB
     const filename = req.file.filename;
     const username = req.session.username;
+    console.log('username', username);
 
     // @TODO handle project image things
     const existingProfileImage = await req.models.Image.findOne({ username: username, purpose: 'profile' });
 
     if (existingProfileImage) { // Error guard, profile image already exists
+      console.log(existingProfileImage);
       // Delete the image connection
       await req.models.Image.deleteOne({ username: username, purpose: 'profile' });
     }
