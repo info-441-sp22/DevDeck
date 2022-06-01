@@ -26,13 +26,15 @@ function NavBar(props) {
     }
 
     useState(() => {
-        
+        // Handle navbar session dynamics
+        setLoggedInCallback(!LoginService.getUserCredentials() ? false : true);
+        // @TODO handle unauthenticated 401
     }, [isLoggedIn]);
 
     return (
         <Navbar bg="custom" variant="dark" expand="sm" sticky="top" className="navbar">
             <Container>
-                <Navbar.Brand as={Link} exact to="/" className="logo">
+                <Navbar.Brand as={Link} to="/" className="logo">
                 <img
                     src="imgs/DevDeck_card.png"
                     height="45"

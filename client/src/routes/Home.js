@@ -1,8 +1,10 @@
 import React, { useState } from "react"; //import React Component
 import { Button } from "reactstrap";
 import { Card } from "../components/Card.js";
+import { LoginService } from "../services/LoginService.js";
 
 export default function HomePage() {
+    
     return (
         <main>
             <div className="home container-fluid">
@@ -23,10 +25,10 @@ export default function HomePage() {
                         </div>
                         {/* <!--"Blurb Box" End--> */}
                     </div>
-                    <div class="col">
+                    <div className="col">
                         <div className="featured-project">
                             <h2>Featured projects:</h2>
-                            <div class="row">
+                            <div className="row">
                                 <Card />
                                 <Card />
                                 <Card />
@@ -37,7 +39,7 @@ export default function HomePage() {
 
                 <div className="recently-added">
                     <h2>Recently added projects:</h2>
-                    <div class="row">
+                    <div className="row">
                         <Card />
                         <Card />
                         <Card />
@@ -46,7 +48,7 @@ export default function HomePage() {
 
                 <div className="popular">
                     <h2>Popular projects:</h2>
-                    <div class="row">
+                    <div className="row">
                         <Card />
                         <Card />
                         <Card />
