@@ -8,6 +8,7 @@ import { ProfileService } from "../services/ProfileService.js";
 import { useLocation, useParams } from "react-router-dom";
 import LoadingComponent from "../components/LoadingComponent.js";
 import { ImageService } from "../services/ImageService.js";
+import { fetchJSON } from "../utils/utils.js";
 
 export default function ProfilePage(props) {
     const { username } = useParams();
@@ -40,6 +41,13 @@ export default function ProfilePage(props) {
         }
     }, [isLoading]);    // change `isLoading` to refresh the data loading
 
+    async function updateUserInfo(e) {
+        // e.preventDefault();
+        let bio = document.getElementById(`userBio`).value;
+        ProfileService.putProfile(username, bio)
+        setLoading(true); // Just need to refresh page
+      }
+
     return (
     <div>
     {
@@ -52,7 +60,7 @@ export default function ProfilePage(props) {
                         <div className="profile-img">
                             {
                                 (profileImage)
-                                    ? <img src={profileImage} />
+                                    ? <img src={profileImage} alt="Profile" />
                                     : <></>
                             }
                             <input
@@ -70,6 +78,18 @@ export default function ProfilePage(props) {
                         <div className="bio">
                             <h2>Bio:</h2>
                             <p>{profileInfo.bio}</p>
+                            {
+                                (isClientUser)
+                                    ?  <div>
+                                        <input
+                                            type="text"
+                                            id="userBio"
+                                            name="userBio"
+                                        />
+                                        <Button size="sm" onClick={() => {updateUserInfo()}}>Update bio</Button>
+                                    </div>
+                                    : <></>
+                            }
                         </div>
                     </div>
                     <div className="col">
