@@ -2,6 +2,8 @@ import express from 'express';
 import mongoose from "mongoose";
 import multer from 'multer';
 import GridFsBucket from 'gridfs-stream';
+import path from 'path';
+import { __dirname } from '../../app.js';
 
 var router = express.Router();
 const storage = multer.diskStorage({
@@ -83,6 +85,7 @@ router.get('/', async (req, res) => {
 
 router.get('/profile', async (req, res) => {
   const username = req.query.username;
+  console.log(username);
   const image = await req.models.Image.findOne({ username: username, purpose: 'profile' });
 
   console.log(image);
@@ -93,10 +96,10 @@ router.get('/profile', async (req, res) => {
       message: 'User needs to upload a profile image.'
     });
   }
-  const tokens = image.path.split('.');
+  const tokens = image.filename.split('.');
 
   res.set('Content-Type', `image/${tokens[tokens.length - 1]}`);
-  res.sendFile(path.join(__dirname, 'public', 'imgs', 'uploads', ));
+  res.sendFile(path.join(__dirname, 'uploads', image.filename));
 });
 
 // let gfs;
