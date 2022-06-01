@@ -1,24 +1,21 @@
-import React, { createRef, useEffect, useState } from "react"; //import React Component
-import { Card } from "../components/Card.js";
+import React, { createRef, useEffect, useState } from "react"; 
 import { Button } from "reactstrap";
 import CreateProjectModal from "../components/CreateProjectModal";
 import UserDeck from "../components/UserDeck";
 import { LoginService } from "../services/LoginService.js";
 import { ProfileService } from "../services/ProfileService.js";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useOutletContext, useParams } from "react-router-dom";
 import LoadingComponent from "../components/LoadingComponent.js";
 import { ImageService } from "../services/ImageService.js";
-import { fetchJSON } from "../utils/utils.js";
 import { toast } from "react-toastify";
 
 export default function ProfilePage(props) {
     const { username } = useParams();
-    const isClientUser = LoginService.getUserCredentials().username === username;
-    const [val, setVal] = useState("");
+    const {isLoggedIn, setLoggedIn} = useOutletContext();
     const [profileInfo, setProfileInfo] = useState(null);
     const [profileImage, setProfileImage] = useState(null);
-    const [profileImageTemp, setProfileImageTemp] = useState(null);
     const [isLoading, setLoading] = useState(true);
+    const [isClientUser, setIsClientUser] = useState(false);
 
     // Image Handlers
     const uploadImageHandler = async (event) => {
@@ -36,18 +33,26 @@ export default function ProfilePage(props) {
     useEffect(() => {
         // Load the profile data
         if (isLoading) {
+            LoginService.authenticationHeartbeat(setLoggedIn);
             ProfileService.getProfile(username)
                 .then((payload) => {
-                    console.log(payload);
                     setProfileInfo(payload.user_info);
                     // setProfileImage(payload.profile_img);
+                    // Check to see if it is the client viewing their page
+                    setIsClientUser((
+                        LoginService.getUserCredentials() &&
+                        LoginService.getUserCredentials().username === payload.user_info.username
+                        ? true
+                        : false));
                     setLoading(false);
                 })
                 .catch(err => {  // Handle error page
                     console.log(err);
                 });
         }
-    }, [isLoading]);    // change `isLoading` to refresh the data loading
+
+        if (!isLoggedIn) setIsClientUser(false);
+    }, [isLoading, isLoggedIn]);    // change `isLoading` to refresh the data loading
 
     async function updateUserInfo(e) {
         // e.preventDefault();
@@ -75,18 +80,24 @@ export default function ProfilePage(props) {
                                     />
                                     : <></>
                             }
-                            <input
-                                type="file"
-                                id="profile_img_upload"
-                                name="profile_img"
-                                accept="image/*"
-                                onChange={uploadImageHandler}
-                            />
-                            <Button
-                                type="button"
-                                onClick={() => onClickImageSubmitHandler()}>
-                                Change Image
-                            </Button>
+                            {
+                                (isClientUser)
+                                    ? <div>
+                                        <input
+                                            type="file"
+                                            id="profile_img_upload"
+                                            name="profile_img"
+                                            accept="image/*"
+                                            onChange={uploadImageHandler}
+                                        />
+                                        <Button
+                                            type="button"
+                                            onClick={() => onClickImageSubmitHandler()}>
+                                            Change Image
+                                        </Button>
+                                    </div>
+                                    : <></>
+                            }
                             <h2>{profileInfo.first_name + ' ' + profileInfo.last_name}</h2>
                             <h3>@{profileInfo.username}</h3>
                         </div>

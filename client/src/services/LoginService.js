@@ -1,13 +1,31 @@
+import { toast } from "react-toastify";
 import { BASEPOINT } from "../App.js";
 
 export class LoginService {
     static LOGIN_BASEPOINT = () => BASEPOINT + '/api/users';
 
-    static handleUserUnauthenticated = async () => {
-        
+    static authenticationHeartbeat = async (setLoggedInCallback) => {
+        const response = await fetch(
+            LoginService.LOGIN_BASEPOINT() + '/heartbeat',
+            {
+                method: 'GET',
+                credentials: 'include'
+            }
+        );
+        const responseHeartbeat = await response.json();
+
+        if (responseHeartbeat.error) {
+            // Remove the session
+            LoginService.removeUserCredentials('user');
+            setLoggedInCallback(false);
+            toast.error(responseHeartbeat.error);
+        }
+
+        // User is logged in
+        setLoggedInCallback(true);
     }
 
-    static LogIn = async (loginRequest) => {
+    static LogIn = async (loginRequest, setLoggedInCallback) => {
         // Send the request
         const response = await fetch(
             LoginService.LOGIN_BASEPOINT() + '/login',
@@ -25,6 +43,7 @@ export class LoginService {
         if (!responsePayload.error) {   // If no error is encountered
             // Store the user information that is grabbed
             sessionStorage.setItem('user', JSON.stringify(responsePayload.payload));
+            setLoggedInCallback(true);
             return responsePayload.message;
         } else {    // If an error is encountered
             // Return error payload with message
@@ -32,7 +51,7 @@ export class LoginService {
         }
     }
 
-    static SignUp = async (signupRequest) => {
+    static SignUp = async (signupRequest, setLoggedInCallback) => {
         // Send the signup request
         const signupResponse = await fetch(
             LoginService.LOGIN_BASEPOINT() + '/signup',
@@ -56,14 +75,14 @@ export class LoginService {
             password: signupRequest.password
         }
 
-        return LoginService.LogIn(loginRequest);
+        return LoginService.LogIn(loginRequest, setLoggedInCallback);
     }
 
-    static LogOut = async () => {
+    static LogOut = async (setLoggedInCallback) => {
         const response = await fetch(
             LoginService.LOGIN_BASEPOINT() + '/logout',
             {
-                method: 'POST'
+                method: 'DELETE'
             }
         );
 
@@ -71,6 +90,7 @@ export class LoginService {
 
         // Delete the user info in the storage
         LoginService.removeUserCredentials();
+        setLoggedInCallback(false);
 
         return responsePayload.message;
     }

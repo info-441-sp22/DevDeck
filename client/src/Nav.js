@@ -12,29 +12,27 @@ import { LoginService } from './services/LoginService';
 
 function NavBar(props) {
     const isLoggedIn = props.isLoggedIn;
+    const credentials = props.credentials;
     const setLoggedInCallback = props.setLoggedInCallback;
     const setToastMessageCallback = props.setToastMessageCallback;
     const setToastStateCallback = props.setToastStateCallback;
 
     const handleLogOut = async () => {
-        LoginService.LogOut()
+        LoginService.LogOut(setLoggedInCallback)
             .then((payload) => {
                 setToastMessageCallback('' + payload);
                 setToastStateCallback('info');
-                setLoggedInCallback(false)
             });
     }
 
     useState(() => {
-        // Handle navbar session dynamics
-        setLoggedInCallback(!LoginService.getUserCredentials() ? false : true);
-        // @TODO handle unauthenticated 401
-    }, [isLoggedIn]);
+
+    }, []);
 
     return (
         <Navbar bg="custom" variant="dark" expand="sm" sticky="top" className="navbar">
             <Container>
-                <Navbar.Brand as={Link} to="/" className="logo">
+                <Navbar.Brand as={Link} to="/home" className="logo">
                 <img
                     src="imgs/DevDeck_card.png"
                     height="45"
@@ -45,13 +43,11 @@ function NavBar(props) {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        {/* @TODO take out */}
                         <Nav.Link as={NavLink} to="/project">Project Details</Nav.Link>
-                        {/* activeClassName="active" */}
                     </Nav>
                     <Nav>
                         {
-                            (!isLoggedIn)   
+                            (!credentials)   
                                 ?   <div className="login-container">
                                         <div className="login-button">
                                             <LoginModal
@@ -70,12 +66,12 @@ function NavBar(props) {
                                     </div>
                                 :   <div className="login-text-container">
                                         <div className="login-text-item login-text">
-                                            <p>Hello, {LoginService.getUserCredentials().first_name}.</p>
+                                            <p>Hello, {credentials.first_name}.</p>
                                         </div>
                                         <div className="login-text-item">
                                             <Button variant="primary" onClick={handleLogOut}>Log Out</Button>
                                         </div>
-                                        <Nav.Link as={NavLink} to={"/profile/" + LoginService.getUserCredentials().username}>
+                                        <Nav.Link as={NavLink} to={"/profile/" + credentials.username}>
                                             <img
                                                 src="imgs/profile_default.png"                    
                                                 height="35"

@@ -2,6 +2,7 @@ import express from 'express';
 import bcrypt from 'bcryptjs';
 // Image upload stuff
 import multer from 'multer';
+import { authorizationRequired } from '../../middleware/auth.js';
 const upload = multer({ dest: 'uploads/' });
 var router = express.Router();
 
@@ -15,6 +16,22 @@ router.get('/debug', async (req, res, next) => {
     res.send('Hello, ' + username);
   }
 });
+
+router.get('/heartbeat', async (req, res, next) => {
+  const session = req.session;
+
+  if (session.cookie && !session.isAuthenticated) {   // If there's a cookie with no info, then it's expired
+    return res.status(401).json({
+        error: 'User session has expired.',
+        message: 'Session has expired. Please log in again.'
+    });
+  }
+
+  return res.status(200).json({
+    message: 'Session is still active.',
+    status: 'success'
+  })
+})
 
 router.get('/', async (req, res, next) => {
   const username = req.query.username;
@@ -32,7 +49,7 @@ router.get('/', async (req, res, next) => {
   user.password = null;
 
   // Return the user information
-  res.json({
+  return res.json({
     message: 'User information successfully fetched.',
     payload: user,
     status: 'success'
@@ -44,15 +61,17 @@ router.post('/login', async function(req, res, next) {
   const body = req.body;
   let session = req.session;
 
-  if (session.userId) { // already logged in
-    res.send('Error: you are already logged in as ' + session.userId);
-  }
+  console.log(session);
+
+  // if (session.userId) { // already logged in
+  //   return res.send('Error: you are already logged in as ' + session.userId);
+  // }
 
   const user = await req.models.User.findOne({ username: body.username });
 
   // Error guard for unfound users
   if (!user) {
-    res.status(404).json({
+    return res.status(404).json({
       message: 'User does not exist.',
       error: 'User with the inputted username does not exist.'
     })
@@ -60,11 +79,11 @@ router.post('/login', async function(req, res, next) {
     // Compare password
     bcrypt.compare(body.password, user.password, (err, isMatch) => {
       if (err) {
-        res.status(500).json({
+        return res.status(500).json({
           error: 'Error with comparing passwords.'
         });
       } else if (!isMatch) {
-        res.status(401).json({
+        return res.status(401).json({
           message: 'Invalid credentials inputted.',
           error: 'Invalid username and/or password.'
         })
@@ -84,7 +103,7 @@ router.post('/login', async function(req, res, next) {
           last_name: user.last_name
         }
 
-        res.json({
+        return res.json({
           message: 'Successfully signed in - session started.',
           payload: data,
           status: 'success'
@@ -94,10 +113,12 @@ router.post('/login', async function(req, res, next) {
   }
 });
 
-router.post('/logout', function(req, res, next) {
+router.delete('/logout', function(req, res, next) {
   req.session.destroy();
-  res.json({
-    message: 'User is successfully logged out.',
+  res.clearCookie('connect.sid');
+
+  return res.status(200).json({
+    message: 'User successfully logged out.',
     status: 'success'
   })
 });
@@ -152,19 +173,19 @@ router.post('/signup', async (req, res, next) => {
     });
 });
 
-router.put('/', async function(req, res, next) {
+router.put('/', authorizationRequired, async function(req, res, next) {
   if (req.session.isAuthenticated) {
       let user = await req.models.User.findOne({username: req.body.username})
       try {
           user.bio = req.body.bio;
           await user.save();
-          res.json({"status": "success"});
+          return res.json({"status": "success"});
       } catch (error) {
           console.log(error);
-          res.status(500).json({"status": "error", "error": error});
+          return res.status(500).json({"status": "error", "error": error});
       }
   } else {
-      res.status(401).json({
+      return res.status(401).json({
           status: "error",
           error: "not logged in"
       });
