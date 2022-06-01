@@ -11,33 +11,56 @@ import { BASEPOINT } from "../App";
 
 function UserDeck(props) {
     // const [val, setVal] = useState("");
+    const [cardList, setCardList] = useState([]);
     let userPosts = [];
+    let dataArray;
 
     // let postsJSON = findPosts(props)
     findPosts(props)
         .then(data => {
+            dataArray = data;
+            // console.log("dataArray", dataArray);
+
             // console.log(data)
-            for (let i = 0; i < data.length; i++) {
-                let post = data[i];
-                // console.log(post);
-                userPosts.push(<Card
-                    key={i}
-                    post={post}
-                    username={props.username}>
-                </Card>);
-            }
-            // console.log("user posts", userPosts);
+            console.log("dataArray length", dataArray.length)
+
+            // for (let i = 0; i < dataArray.length; i++) {
+            //     let post = data[i];
+            //     // console.log(post);
+            //     userPosts.push(<Card
+            //         key={i}
+            //         post={post}
+            //         username={props.username}>
+            //     </Card>);
+
+            //     // setCardList((old) => [...old, post]);
+
+            //     // let projectCard = <Card
+            //     //     key={i}
+            //     //     post={post}
+            //     //     username={props.username}>
+            //     // </Card>
+            //     // userPosts.push(projectCard)
+            // }
+            console.log("user posts", userPosts);
         })
 
     console.log("user posts", userPosts);
     // document.getElementById("testspan").innerHTML = userPosts;
 
+    // useEffect(() => {
+        
+    // })
+
     let testTitle = "Test title";
 
     return (
         <div>
-            {userPosts}
-            {/* {userPosts.map((postCard) => <div>{postCard}</div>)} */}
+            {/* {userPosts} */}
+            {/* {userPosts.map((postCard) => { return (<div>{postCard}</div>);})} */}
+            {userPosts.map(function(postCard, i) {
+                return <Card key={i}>{postCard}</Card>
+            })}
 
             {/* <Button color="primary" onClick={() => console.log("Click")}>Test UserDeck</Button> */}
             {/* <span id="testspan"></span> */}

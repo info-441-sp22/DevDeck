@@ -16,11 +16,12 @@ function CreateProjectModal(props) {
         let tech_stack = document.getElementById("techStackInput").value;
         let collaborators = document.getElementById("collabInput").value;
 
-        console.log(title, blurb, longer_description, url_link, collaborators);
+        console.log(title, blurb, longer_description, url_link, tech_stack, collaborators);
 
         // try {
             await fetchJSON(BASEPOINT + '/api/posts', {
                 method: "POST",
+                credentials: "include",
                 body: { 
                     title: title,
                     blurb: blurb,
