@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react"; //import React Component
-import { Card } from "../components/card.js";
+import { Card } from "../components/Card.js";
 import { Button } from "reactstrap";
 import CreateProjectModal from "../components/CreateProjectModal";
+import UserDeck from "../components/UserDeck";
 import { LoginService } from "../services/LoginService.js";
 import { ProfileService } from "../services/ProfileService.js";
 import { useLocation, useParams } from "react-router-dom";
@@ -99,20 +100,20 @@ export default function ProfilePage(props) {
 
             <div className="projects container-fluid">
                 <h2>Your Deck:</h2>
-                {/* <Button className="btn btn-secondary">Add project</Button> */}
                 <CreateProjectModal>
-                    val={val}
-                    setVal={setVal}
                 </CreateProjectModal>
-                <span id="postStatus"></span>
+                {/* <span id="postStatus"></span> */}
+                <UserDeck 
+                    username={username}>
+                </UserDeck>
             </div>
 
-            <div className="projects container-fluid">
+            {/* <div className="projects container-fluid">
                 <div className="row">
                     <Card />
                     <Card />
                 </div>
-            </div>
+            </div> */}
         </main>
     }
     </div>)

@@ -1,6 +1,6 @@
 import React, { useState } from "react"; //import React Component
 import { Button } from "reactstrap";
-import { Card } from "../components/card.js";
+import { Card } from "../components/Card.js";
 import { LoginService } from "../services/LoginService.js";
 
 export default function HomePage() {
