@@ -31,9 +31,9 @@ export class ProfileService {
         }
     }
 
-    static putProfile = async (username, bio) => {
+    static putProfileBio = async (username, bio) => {
         const response = await fetch(
-            ProfileService.PROFILE_BASEPOINT() + '/?username=' + encodeURIComponent(username),
+            ProfileService.PROFILE_BASEPOINT() + '/bio',
             {
                 method: "PUT",
                 credentials: 'include',
@@ -44,6 +44,33 @@ export class ProfileService {
                 body: JSON.stringify({
                     username: username,
                     bio: bio
+                })
+            }
+        );
+        const responsePayload = await response.json();
+
+        if (!responsePayload.error) {   // If no error is encountered
+            return responsePayload.payload;
+        } else {    // If an error is encountered
+            // Return error payload with message
+            throw new Error(responsePayload.error);
+        }
+    }
+
+    static putProfileLinks = async (username, name, url) => {
+        const response = await fetch(
+            ProfileService.PROFILE_BASEPOINT() + '/links',
+            {
+                method: "PUT",
+                credentials: 'include',
+                mode: 'cors',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: username,
+                    linkName: name,
+                    linkURL: url
                 })
             }
         );
