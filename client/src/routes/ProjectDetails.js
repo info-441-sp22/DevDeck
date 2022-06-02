@@ -64,6 +64,9 @@ export default function ProjectDetails() {
                         <h2>{
                             postData.title
                         }</h2>
+                        <h5><em>{
+                            postData.blurb
+                        }</em></h5>
                         <h5>Posted by: <a href="" onClick={viewUser}>{postData.username}</a></h5>
                         <Button color="primary" onClick={goToUrl}>
                             Link to project
@@ -72,15 +75,7 @@ export default function ProjectDetails() {
                             <div className="col">
                                 <div>
                                     <img className="thumbnail" src={imageUrl} alt="project thumbnail"></img>
-                                </div>
-                            </div>
-                            <div className="col">
-                                <div className="blurb">
-                                    <h3>Short blurb:</h3>
-                                    <em>{
-                                        postData.blurb
-                                    }</em>
-                                </div>
+                                </div>                                
                             </div>
                             <div className="col">
                                 <div className="techStack">
@@ -109,7 +104,7 @@ export default function ProjectDetails() {
                                     {/* {displayCollab} */}
                                     {postData.collaborators}
                                 </div>
-                                <br></br>
+                                {/* <br></br> */}
                                 {/* figure out likes & comments */}
                                 {/* <h5><em>Likes and comments info</em></h5>  */}
                             </div>
@@ -119,10 +114,13 @@ export default function ProjectDetails() {
                                     postData.longer_description
                                 }
                             </div>                            
-                        </div>
-                        <hr style={{height: '0'}}/>
+                        </div>                        
                         <br></br>
                         <Button className="btn btn-primary" onClick={returnHome}>Return to homepage</Button>
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        <hr style={{height: '0'}}/>
                     </div>
                 </main>
         }
