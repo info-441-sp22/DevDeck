@@ -49,6 +49,10 @@ export function Card(props) {
         navigate('/project/' + cardData.id);
     }
 
+    const viewUser = () => {
+        navigate('/profile/' + cardData.username);
+    }
+
     // const likes = props.cardInformation.likes;
     // const didUserLike = props.likes.includes(username => username === LoginService.getUserCredentials().username)
 
@@ -62,7 +66,7 @@ export function Card(props) {
                         <img className="card-img-top" src="..." alt="Project thumbnail"></img>
                         <div className="card-body">
                             <h5 className="card-title">{cardData.title}</h5>
-                            <p className="card-text">{cardData.username}</p>
+                            <p className="card-text">Posted by: <a href="" onclick={viewUser}>{cardData.username}</a></p>
                             <p className="card-text">{cardData.blurb}</p>
                             <Button className="btn btn-primary" onClick={onClickView}>
                                 View project details
