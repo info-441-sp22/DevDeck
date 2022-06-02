@@ -1,7 +1,30 @@
-import React, { useState } from "react"; //import React Component
+import React, { useEffect, useState } from "react"; //import React Component
+import { useOutletContext, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import { Button } from "reactstrap";
+import { LoginService } from "../services/LoginService";
+import { PostService } from "../services/PostService";
 
 export default function ProjectDetails() {
+    const { id } = useParams();
+    const { setLoggedIn, credentials } = useOutletContext();
+    const [isLoading, setLoading] = useState(true);
+    const [postData, setPostData] = useState();
+
+    useEffect(() => {
+        if (isLoading) {
+            LoginService.authenticationHeartbeat(setLoggedIn);
+            PostService.findSinglePost({ id: id })
+                .then((post) => {
+                    console.log(post);
+                    setPostData(post);
+                })
+                .error((err) => {
+                    toast.error(err);
+                });
+        }
+    }, [isLoading]);
+
     return (
         <main>
             <div className="project container-fluid">

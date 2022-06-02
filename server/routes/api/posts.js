@@ -29,6 +29,26 @@ router.post('/',  authorizationRequired, async function (req, res, next) {
   }
 });
 
+router.get('/single', async (req, res, next) => {
+  const id = req.query.id;
+
+  // Error guard for empty query
+  if (!id) res.status(400).json({ message: 'Empty post id query.', error: 'Client provided no query with endpoint.'});
+
+  // Find the id with the `id`
+  const post = await req.models.Post.findOne({ _id: id });
+
+  // Error guard for user that doesn't exist
+  if (!post) res.status(404).json({ message: 'Post info fetch failed.', error: 'Post with the id does not exist.'});
+
+  // Return the user information
+  return res.json({
+    message: 'Post information successfully fetched.',
+    payload: post,
+    status: 'success'
+  });
+});
+
 router.get('/', async function (req, res) {
   try {
     var username = req.query.username;
@@ -70,5 +90,7 @@ router.get('/', async function (req, res) {
     return res.status(500).json({ "status": "error", "error": error });
   }
 });
+
+
 
 export default router;
