@@ -5,12 +5,14 @@ import { Button } from "reactstrap";
 import LoadingComponent from "../components/LoadingComponent";
 import { LoginService } from "../services/LoginService";
 import { PostService } from "../services/PostService";
+import { useNavigate } from "react-router-dom";
 
 export default function ProjectDetails() {
     const { id } = useParams();
     const { setLoggedIn, credentials } = useOutletContext();
     const [isLoading, setLoading] = useState(true);
     const [postData, setPostData] = useState();
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (isLoading) {
@@ -24,6 +26,23 @@ export default function ProjectDetails() {
         }
     }, [isLoading]);
 
+    const goToUrl = () => { // function to lead to project url
+        window.open(postData.url_link, '_blank');
+    }
+
+    const returnHome = () => {
+        navigate('/home/');
+    }
+
+    const displayCollab = () => { // function to display project collaborators
+        let collabs = postData.collaborators;
+        let toReturn = collabs.forEach(collab => {
+            console.log(collab)
+            return <div>{collab}</div>
+        })
+        return toReturn;
+    }
+
     return (
         <>
         {
@@ -31,10 +50,11 @@ export default function ProjectDetails() {
                 ? <LoadingComponent />
                 : <main>
                     <div className="project container-fluid">
-                        {
+                        <h2>{
                             postData.title
-                        }
-                        <Button className="btn btn-primary" onClick={() => console.log("Link")}>
+                        }</h2>
+                        {/* <a href="">Link to project</a> */}
+                        <Button color="primary" onClick={goToUrl}>
                             Link to project
                         </Button>
                         <div className="row">
@@ -45,26 +65,38 @@ export default function ProjectDetails() {
                             </div>
                             <div className="col">
                                 <div className="blurb">
+                                    <h3>Short blurb:</h3>
                                     <em>{
                                         postData.blurb
                                     }</em>
                                 </div>
                             </div>
+                            <div className="col">
+                                <div className="techStack">
+                                    <h3>Tech stack:</h3>
+                                    {
+                                        postData.techStack
+                                    }
+                                </div>
+                            </div>
                             <div className="col">                        
                                 <div className="collaborators">
-                                    <h2>Collaborators:</h2>
-                                    {postData.collaborators}
+                                    <h3>Collaborators:</h3>
+                                    {displayCollab}
+                                    {/* {postData.collaborators} */}
                                 </div>
+                                <br></br>
                                 {/* figure out likes & comments */}
                                 <h5><em>Likes and comments info</em></h5> 
                             </div>
                             <div>
-                                <h2>Description:</h2>
+                                <h3>Description:</h3>
                                 {
                                     postData.longer_description
                                 }
-                            </div>
+                            </div>                            
                         </div>
+                        <Button className="btn btn-primary" onClick={returnHome}>Return to homepage</Button>
                     </div>
                 </main>
         }

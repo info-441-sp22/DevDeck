@@ -20,7 +20,7 @@ export default function HomePage() {
                     <div className="row">
                         {/* <!--"Blurb Box" Start--> */}
                         <div className="blurb-box bg-blurb p-3 m-sm-3 mb-sm-4" aria-label="person with laptop" style={{
-                            backgroundImage: `url("imgs/blurb_background3.jpg")`
+                            backgroundImage: `url("../imgs/blurb_background3.jpg")`
                         }}>
                             {/* position-relative text-left  */}
                             <div className="blurb-text pl-lg-4 mb-0 my-4">

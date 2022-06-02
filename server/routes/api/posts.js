@@ -3,21 +3,20 @@ import { authorizationRequired } from '../../middleware/auth.js';
 
 var router = express.Router();
 
-// import getURLPreview from '../utils/urlPreviews.js';
-
 /* POST posts. */
 router.post('/', async function (req, res, next) {
   let session = req.session;
 
   try {
     const newPost = new req.models.Post({
-      username: session.username, // perhaps not the right way to get it
+      username: session.username, 
       created_date: new Date(),
       title: req.body.title,
       blurb: req.body.blurb,
       longer_description: req.body.longer_description,
       url_link: req.body.url_link,
-      collaborators: req.body.collaborators, // assuming we get it in an array
+      collaborators: req.body.collaborators, 
+      techStack: req.body.techStack,
       likes: []
     })
 
