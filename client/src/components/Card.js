@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"; //import React Component
 import { useNavigate } from "react-router-dom";
 import { Button } from "reactstrap";
-import { fetchJSON, escapeHTML } from './../utils/utils.js'
+import { fetchJSON, escapeHTML } from '../utils/utils.js'
 import { LoginService } from "../services/LoginService.js";
 import { useParams } from "react-router-dom";
 
@@ -24,11 +24,12 @@ export function Card(props) {
     const cardData = props.cardData
     const currUsername = props.cardData.username;
     const [val, setVal] = useState("");
+    const navigate = useNavigate();
     // console.log("cardData", cardData)
     // console.log(cardData.username)
 
     const onClickView = () => {
-        // useNavigate('/project/' + cardData._id);
+        navigate('/project/' + cardData.id);
     }
 
     // const likes = props.cardInformation.likes;

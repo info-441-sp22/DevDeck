@@ -43,7 +43,6 @@ function NavBar(props) {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        <Nav.Link as={NavLink} to="/project">Project Details</Nav.Link>
                     </Nav>
                     <Nav>
                         {
