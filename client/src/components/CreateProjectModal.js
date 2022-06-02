@@ -2,11 +2,25 @@ import React, { useState, useEffect } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, Input } from 'reactstrap';
 import { fetchJSON } from '../utils/utils.js';
 import { BASEPOINT } from "../App";
+import { ImageService } from "../services/ImageService.js";
+import { toast } from 'react-toastify';
 
 function CreateProjectModal(props) {
     const setLoadingCallback = props.setLoadingCallback;
     const [modal, setModal] = useState(false);
     const toggle = () => setModal(!modal);
+
+    const uploadImageHandler = async (event) => {
+        const request = new FormData();
+        request.append('file', event.target.files[0]);
+        await ImageService.uploadProjectImage(request);
+        toast.info('Project image uploaded.');
+        setLoadingCallback(true);
+    }
+
+    const onClickImageSubmitHandler = async () => {
+        document.getElementById('project_img_upload').click();
+    }
 
     let saveChanges = async () => { // based on postUrl() function from websharer (index.js)
         // saving changes to project (need to connect to server/db)
@@ -83,6 +97,24 @@ function CreateProjectModal(props) {
                             placeholder="Project collaborators (enter as [a, b...])">
                             {/* TO EDIT: if users have a devdeck account, ask them to put in their username instead of full name */}
                         </Input>
+                        <div>
+                            {
+                                <div>
+                                    <input
+                                        type="file"
+                                        id="project_img_upload"
+                                        name="project_img"
+                                        accept="image/*"
+                                        onChange={uploadImageHandler}
+                                    />
+                                    <Button
+                                        type="button"
+                                        onClick={() => onClickImageSubmitHandler()}>
+                                        Change Image
+                                    </Button>
+                                </div>
+                            }
+                        </div>
                     </Form>
                 </ModalBody>
                 <ModalFooter>
