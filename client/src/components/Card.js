@@ -59,21 +59,23 @@ export function Card(props) {
                             <h5 className="card-title">{cardData.title}</h5>
                             <p className="card-text">Posted by: <a href="" onClick={viewUser}>{cardData.username}</a></p>
                             <p className="card-text">{cardData.blurb}</p>
-                            <Button className="btn btn-primary" onClick={onClickView}>
-                                View project details
-                            </Button>
-                            {/* like and unlike button */}
-                            <div>
-                                <span title={(cardData.likes) ? escapeHTML(cardData.likes.join(", ")) : ""}> {cardData.likes ? (cardData.likes.length) : 0} likes </span> &nbsp; &nbsp;
-                                <span className={`heart-button-span ${currUsername ? "" : "d-none"}`}>
-                                    {cardData.likes && cardData.likes.includes(currUsername) ?
-                                        <button className="heart_button" onClick={() => {
-                                            unlikePost(cardData.id, currUsername); 
-                                        }}> &#x2665;</button> :
-                                        <button className="heart_button" onClick={() => {
-                                            likePost(cardData.id, currUsername); 
-                                        }}> &#x2661;</button>}
-                                </span>
+                            <div className="row">
+                                {/* like and unlike button */}
+                                <div style={{flexBasis: '50%'}}>
+                                    <span title={(cardData.likes) ? escapeHTML(cardData.likes.join(", ")) : ""}> {cardData.likes ? (cardData.likes.length) : 0} likes </span> &nbsp; &nbsp;
+                                    <span className={`heart-button-span ${currUsername ? "" : "d-none"}`}>
+                                        {cardData.likes && cardData.likes.includes(currUsername) ?
+                                            <button className="heart_button" onClick={() => {
+                                                unlikePost(cardData.id, currUsername); 
+                                            }}> &#x2665;</button> :
+                                            <button className="heart_button" onClick={() => {
+                                                likePost(cardData.id, currUsername); 
+                                            }}> &#x2661;</button>}
+                                    </span>
+                                </div>
+                                <Button className="btn btn-primary" onClick={onClickView} style={{flexBasis: '50%'}}>
+                                    View details
+                                </Button>
                             </div>
                             {/* need to create new page for each card's project details */}
                         </div>

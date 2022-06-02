@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react"; //import React Component
 import { Card } from "./Card.js";
-import { fetchJSON } from '../utils/utils.js';
 import { BASEPOINT } from "../App";
 import { PostService } from "../services/PostService.js";
 import CreateProjectModal from "./CreateProjectModal.js";
