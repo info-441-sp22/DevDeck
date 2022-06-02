@@ -16,7 +16,7 @@ router.post('/', async function (req, res, next) {
       longer_description: req.body.longer_description,
       url_link: req.body.url_link,
       collaborators: req.body.collaborators, 
-      techStack: req.body.techStack,
+      techStack: req.body.tech_stack,
       likes: []
     })
 
