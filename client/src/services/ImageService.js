@@ -33,4 +33,37 @@ export class ImageService {
 
         return URL.createObjectURL(responseBlob);
     }
+
+    static getMetadataAndUploadPostImage = async (request, image) => {
+        // Get the image metadata
+        const metadataResponse = await fetch(
+            ImageService.IMAGE_BASEPOINT() + '/post/metadata',
+            {
+                method: "POST",
+                credentials: 'include',
+                body: JSON.stringify(request),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+        );
+        const responseMetadata = await metadataResponse.json();
+
+        // Upload the image
+        await this.uploadPostImage(image);
+    }
+
+    static uploadPostImage = async (file) => {
+        const response = await fetch(
+            ImageService.IMAGE_BASEPOINT() + '/post',
+            {
+                method: "POST",
+                credentials: 'include',
+                body: file,
+                headers: {
+                    'Accept': 'multipart/form-data'
+                }
+            }
+        );
+    }
 }
