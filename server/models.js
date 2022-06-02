@@ -53,6 +53,7 @@ async function connectDB() {
 
   const imageSchema = new mongoose.Schema({
     username: String,
+    post: { type: mongoose.Schema.Types.ObjectId, ref: "Post" },
     filename: String,
     purpose: String,
     created_date: Date
