@@ -20,6 +20,8 @@ router.get('/debug', async (req, res, next) => {
 router.get('/heartbeat', async (req, res, next) => {
   const session = req.session;
 
+  console.log(session);
+
   if (session.cookie && !session.isAuthenticated) {   // If there's a cookie with no info, then it's expired
     return res.status(401).json({
         error: 'User session has expired.',
@@ -112,10 +114,10 @@ router.post('/login', async function(req, res, next) {
 });
 
 router.delete('/logout', function(req, res, next) {
+  console.log(req.session);
   req.session.destroy();
-  res.clearCookie('connect.sid');
 
-  return res.status(200).json({
+  return res.cookie("connect.sid", "", { value: '', expires: new Date(), path: '/' }).status(200).json({
     message: 'User successfully logged out.',
     status: 'success'
   })

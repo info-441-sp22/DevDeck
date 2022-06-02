@@ -21,8 +21,6 @@ function UserDeck(props) {
             PostService.findPosts(request)
                 .then(data => {
                     setUserPosts(data.map((postCard, i) => {
-                        console.log(postCard);
-
                         return <Card 
                             key={i} 
                             cardData={postCard} 

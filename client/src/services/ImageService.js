@@ -21,7 +21,7 @@ export class ImageService {
     static uploadProjectImage = async (request) => {
         // console.log(request);
         const response = await fetch(
-            ImageService.IMAGE_BASEPOINT() + '/project',
+            ImageService.IMAGE_BASEPOINT() + '/post',
             {
                 method: "POST",
                 credentials: 'include',
@@ -83,7 +83,6 @@ export class ImageService {
     }
 
     static getPostImage = async (request) => {
-        console.log(request);
         const query = '?post_id=' + encodeURIComponent(request.post_id);
         const response = await fetch( 
             ImageService.IMAGE_BASEPOINT() + '/post' + query,
@@ -102,7 +101,6 @@ export class ImageService {
 
     static getPostImages = async (data) => {
         data.forEach(async (post) => post.image_url = await ImageService.getPostImage({ post_id: post.id }));
-        console.log(data);
 
         return data;
     }

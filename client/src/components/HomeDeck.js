@@ -10,7 +10,7 @@ import { PostService } from '../services/PostService.js';
 import { ImageService } from '../services/ImageService.js';
 
 function HomeDeck(props) {
-    // const [featuredPosts, setFeaturedPosts] = useState(null);
+    const [featuredPosts, setFeaturedPosts] = useState(null);
     const [popularPosts, setPopularPosts] = useState(null);
     const [recentPosts, setRecentPosts] = useState(null);
     const [isLoading, setLoading] = useState(true);
@@ -52,7 +52,7 @@ function HomeDeck(props) {
                     setLoading(false);  // <-- Remember to change loading to no load no more!
                 });
         }
-    }, [isLoading])
+    }, [isLoading, credentialsUsername])
 
     return (
         <div>

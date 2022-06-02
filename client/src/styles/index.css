@@ -142,14 +142,13 @@ code {
   transform: scale(1.015);
 }
 
-<<<<<<< HEAD
 .card-img-top {
   max-height: 200px;
   max-width: 300px;
-=======
+}
+
 .profile-img:hover {
   transform: scale(1);
->>>>>>> ded9e51f86974f9608c8a9d7d8eda517eefcf760
 }
 
 /* home page blurb */
