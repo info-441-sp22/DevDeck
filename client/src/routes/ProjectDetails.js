@@ -41,6 +41,10 @@ export default function ProjectDetails() {
         navigate('/home/');
     }
 
+    const viewUser = () => {
+        navigate('/profile/' + postData.username);
+    }
+
     // const displayCollab = () => { // function to display project collaborators
     //     let collabs = postData.collaborators;
     //     let toReturn = collabs.forEach(collab => {
@@ -60,7 +64,7 @@ export default function ProjectDetails() {
                         <h2>{
                             postData.title
                         }</h2>
-                        {/* <a href="">Link to project</a> */}
+                        <h5>Posted by: <a href="" onClick={viewUser}>{postData.username}</a></h5>
                         <Button color="primary" onClick={goToUrl}>
                             Link to project
                         </Button>
@@ -107,7 +111,7 @@ export default function ProjectDetails() {
                                 </div>
                                 <br></br>
                                 {/* figure out likes & comments */}
-                                <h5><em>Likes and comments info</em></h5> 
+                                {/* <h5><em>Likes and comments info</em></h5>  */}
                             </div>
                             <div>
                                 <h3>Description:</h3>
@@ -116,6 +120,7 @@ export default function ProjectDetails() {
                                 }
                             </div>                            
                         </div>
+                        <hr style={{height: '0'}}/>
                         <br></br>
                         <Button className="btn btn-primary" onClick={returnHome}>Return to homepage</Button>
                     </div>
