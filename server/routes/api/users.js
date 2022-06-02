@@ -153,8 +153,11 @@ router.post('/signup', async (req, res, next) => {
 });
 
 router.post('/', async function(req, res, next) {
+  console.log(req.session)
+  console.log(req.session.isAuthenticated)
   if (req.session.isAuthenticated) {
       let user = await req.models.User.findOne({username: req.body.username})
+      console.log("found user")
       try {
           user.bio = req.body.bio;
           await user.save();

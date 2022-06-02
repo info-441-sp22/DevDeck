@@ -44,7 +44,7 @@ export default function ProfilePage(props) {
     async function updateUserInfo(e) {
         // e.preventDefault();
         let bio = document.getElementById(`userBio`).value;
-        ProfileService.postProfile(username, bio)
+        ProfileService.postProfile(LoginService.getUserCredentials().username, bio)
         setLoading(true); // Just need to refresh page
       }
 
