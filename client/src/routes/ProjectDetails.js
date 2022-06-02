@@ -41,14 +41,14 @@ export default function ProjectDetails() {
         navigate('/home/');
     }
 
-    const displayCollab = () => { // function to display project collaborators
-        let collabs = postData.collaborators;
-        let toReturn = collabs.forEach(collab => {
-            console.log(collab)
-            return <div>{collab}</div>
-        })
-        return toReturn;
-    }
+    // const displayCollab = () => { // function to display project collaborators
+    //     let collabs = postData.collaborators;
+    //     let toReturn = collabs.forEach(collab => {
+    //         console.log(collab)
+    //         return <div>{collab}</div>
+    //     })
+    //     return toReturn;
+    // }
 
     return (
         <>
@@ -84,6 +84,19 @@ export default function ProjectDetails() {
                                     {
                                         postData.techStack
                                     }
+                                <ul>
+                                {
+                                    postData.techStack.map((tech) => {
+                                        const tokens = tech.split(', ');
+                                        tokens.forEach((token) => {
+                                            return <li>{token}</li>;
+                                        })
+                                        
+                                    })
+                                }
+                                </ul>
+
+                            
                                 </div>
                             </div>
                             <div className="col">                        
