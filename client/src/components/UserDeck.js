@@ -20,7 +20,6 @@ function UserDeck(props) {
     
             PostService.findPosts(request)
                 .then(data => {
-                    console.log(data)
                     // Building the card array
                     setUserPosts(data.map((postCard, i) => <Card key={i} cardData={postCard} />));
                     setLoading(false);  // <-- Remember to change loading to no load no more!

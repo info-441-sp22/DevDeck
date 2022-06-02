@@ -5,15 +5,6 @@ import { fetchJSON, escapeHTML } from './../utils/utils.js'
 import { PostService } from '../services/PostService.js';
 import { toast } from "react-toastify";
 
-const likePost = async (postID, username) => {
-    // Await login process
-    await PostService.likePost(postID, username)
-
-}
-const unlikePost = async (postID, username) => {
-    // Await login process
-    await PostService.unlikePost(postID, username)
-}
 
 // async function likePost(postID) {
 //     console.log("calling like post")
@@ -35,27 +26,29 @@ const unlikePost = async (postID, username) => {
 
 export function Card(props) {
     // const cardData = props.cardData
+    const setLoadingCallback = props.setLoadingCallback;
+    const cardData = props.cardData;
     const currUsername = props.username;
-    console.log('currUsername is', currUsername)
     const [val, setVal] = useState("");
-    const navigate = useNavigate();
-    const [cardData, setCardData] = useState(props.cardData);
-    const [isLoading, setLoading] = useState(true); // <-- I want to load!
 
-    useEffect(() => {
-        if (isLoading) {    // TODO: fix cardData.id to not be null
-            // Build request object
-            console.log("initial carddata id", cardData.id)
-            PostService.findSinglePost({ id: cardData.id })
-                .then(data => {
-                    console.log(data)
-                    // Building the card array
-                    setCardData(data);
-                    setLoading(false);  // <-- Remember to change loading to no load no more!
-                })
-                .catch(err => toast.error(err));;
-        }
-    }, [isLoading]) // <-- runs every time isLoading changes
+    const navigate = useNavigate();
+
+    // like handlers
+    const likePost = async (postID, username) => {
+        // Await login process
+        PostService.likePost(postID, username)
+            .then(() => {
+                setLoadingCallback(true);
+            });
+    
+    }
+    const unlikePost = async (postID, username) => {
+        // Await login process
+        PostService.unlikePost(postID, username)
+            .then(() => {
+                setLoadingCallback(true);
+            });
+    }
 
     const onClickView = () => {
         navigate('/project/' + cardData.id);
@@ -90,11 +83,9 @@ export function Card(props) {
                                     {cardData.likes && cardData.likes.includes(currUsername) ?
                                         <button className="heart_button" onClick={() => {
                                             unlikePost(cardData.id, currUsername); 
-                                            setLoading(true)
                                         }}> &#x2665;</button> :
                                         <button className="heart_button" onClick={() => {
                                             likePost(cardData.id, currUsername); 
-                                            setLoading(true)
                                         }}> &#x2661;</button>}
                                 </span>
                             </div>

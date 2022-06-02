@@ -12,22 +12,31 @@ function HomeDeck(props) {
     const [featuredPosts, setFeaturedPosts] = useState(null);
     const [popularPosts, setPopularPosts] = useState(null);
     const [recentPosts, setRecentPosts] = useState(null);
+    const [isLoading, setLoading] = useState(true);
     const credentialsUsername = props.credentials ? props.credentials.username : ""
 
     // Card Factory Handler
     const createTopCards = function (data) {
-        return data.map((postCard, i) => <Card key={i} cardData={postCard} username={credentialsUsername} />)
+        return data.map((postCard, i) => <Card 
+                                            key={i} 
+                                            cardData={postCard} 
+                                            username={credentialsUsername} 
+                                            setLoadingCallback={setLoading}
+                                        />)
     };
 
     useEffect(() => {
-        PostService.findAllPosts()
-            .then(allPosts => {
-                setFeaturedPosts(createTopCards(allPosts.payload.sort((post_a, post_b) => post_b.likes.length - post_a.likes.length).slice(0, 3)));
-                setPopularPosts(createTopCards(allPosts.payload.sort((post_a, post_b) => post_b.likes.length - post_a.likes.length).slice(0, 3)));
-                setRecentPosts(createTopCards(allPosts.payload.sort((post_a, post_b) => post_b.created_date - post_a.created_date).slice(0, 3)));
-                // console.log(featuredPosts)
-            })
-    }, [])
+        if (isLoading) {
+            PostService.findAllPosts()
+                .then(allPosts => {
+                    setFeaturedPosts(createTopCards(allPosts.sort((post_a, post_b) => post_b.likes.length - post_a.likes.length).slice(0, 3)));
+                    setPopularPosts(createTopCards(allPosts.sort((post_a, post_b) => post_b.likes.length - post_a.likes.length).slice(0, 3)));
+                    setRecentPosts(createTopCards(allPosts.sort((post_a, post_b) => post_b.created_date - post_a.created_date).slice(0, 3)));
+                    // console.log(featuredPosts)
+                    setLoading(false);
+                });
+        }
+    }, [isLoading])
 
     return (
         <div>
