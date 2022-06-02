@@ -34,6 +34,7 @@ export class PostService {
             method: "POST",
             body: { postID: postID, username: username }
         })
+        console.log(response)
         const responsePayload = await response.json();
 
         if (!responsePayload.error) {
@@ -45,7 +46,7 @@ export class PostService {
 
 
     static unlikePost = async (postID, username) => {
-        const response =  await fetchJSON(this.POST_BASEPOINT() + '/unlike', {
+        const response = await fetchJSON(this.POST_BASEPOINT() + '/unlike', {
             method: "POST",
             body: { postID: postID, username: username }
         })
