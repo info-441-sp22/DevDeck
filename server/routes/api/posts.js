@@ -6,7 +6,7 @@ var router = express.Router();
 // import getURLPreview from '../utils/urlPreviews.js';
 
 /* POST posts. */
-router.post('/',  authorizationRequired, async function (req, res, next) {
+router.post('/', async function (req, res, next) {
   let session = req.session;
 
   try {
@@ -37,6 +37,8 @@ router.get('/single', async (req, res, next) => {
 
   // Find the id with the `id`
   const post = await req.models.Post.findOne({ _id: id });
+
+  console.log('post', post);
 
   // Error guard for user that doesn't exist
   if (!post) res.status(404).json({ message: 'Post info fetch failed.', error: 'Post with the id does not exist.'});
@@ -83,7 +85,10 @@ router.get('/', async function (req, res) {
     }
 
     // return an array of json objects
-    return res.json(toReturn);
+    return res.json({
+      status: 'success',
+      payload: toReturn
+    });
 
   } catch (error) { // catch errors
     console.log(error);

@@ -5,7 +5,22 @@ export class PostService {
     static POST_BASEPOINT = () => BASEPOINT + '/api/posts';
 
     static findPosts = async (request) => {
-        return await fetchJSON(this.POST_BASEPOINT() + '?username=' + encodeURIComponent(request.username));
+        const username = request.username;
+
+        const response = await fetch(
+            this.POST_BASEPOINT() + '/?username=' + encodeURIComponent(username),
+            {
+                method: 'GET',
+                credentials: 'include'
+            }
+        );
+        const responsePayload = await response.json();
+
+        if (!responsePayload.error) {
+            return responsePayload.payload;
+        } else {
+            throw new Error(responsePayload.error);
+        }
     }
 
     static findAllPosts = async () => {
@@ -13,6 +28,21 @@ export class PostService {
     }
 
     static findSinglePost = async (request) => {
-        return await fetchJSON(this.POST_BASEPOINT() + '?id=' + encodeURIComponent(request.id));
+        const id = request.id;
+
+        const response = await fetch(
+            this.POST_BASEPOINT() + '/single?id=' + encodeURIComponent(id),
+            {
+                method: 'GET',
+                credentials: 'include'
+            }
+        );
+        const responsePayload = await response.json();
+
+        if (!responsePayload.error) {
+            return responsePayload.payload;
+        } else {
+            throw new Error(responsePayload.error);
+        }
     }
 }

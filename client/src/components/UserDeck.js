@@ -7,7 +7,8 @@ import { PostService } from "../services/PostService.js";
 function UserDeck(props) {
     const username = props.username ? props.username : "";
     const [userPosts, setUserPosts] = useState([]);
-    
+    // create loading state
+
     useEffect(() => {
         // Build request object
         const request = {
@@ -18,13 +19,20 @@ function UserDeck(props) {
             .then(data => {
                 console.log(data)
                 // Building the card array
-                setUserPosts(data.map((postCard, i) => <Card key={i} cardData={postCard} username={username} />));
+                setUserPosts(data.map((postCard, i) => <Card key={i} cardData={postCard} />));
+                // Set loading to false
             });
     }, [])
 
     return (
-        <div>
-            {userPosts}
+        // <div>
+        //     {userPosts}
+        // </div>
+
+        <div className="home container-fluid">
+            <div className="row">
+                {userPosts}
+            </div>
         </div>
     )
 }
