@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { BrowserRouter as Route, Link, NavLink } from 'react-router-dom';
 import {
     Navbar,
@@ -9,11 +9,10 @@ import {
 import LoginModal from './components/LoginModal';
 import SignupModal from './components/SignupModal';
 import { LoginService } from './services/LoginService';
-import { BASEPOINT } from "./App";
+import { CredentialsContext } from './App';
 
 function NavBar(props) {
-    const isLoggedIn = props.isLoggedIn;
-    const credentials = props.credentials;
+    const { credentials } = useContext(CredentialsContext);
     const setLoggedInCallback = props.setLoggedInCallback;
     const setToastMessageCallback = props.setToastMessageCallback;
     const setToastStateCallback = props.setToastStateCallback;
@@ -25,12 +24,6 @@ function NavBar(props) {
                 setToastStateCallback('info');
             });
     }
-
-    useState(() => {
-
-    }, []);
-
-    // let logoImgSrc = BASEPOINT + imgs/DevDeck_card.png
 
     return (
         <Navbar bg="custom" variant="dark" expand="sm" sticky="top" className="navbar">

@@ -60,6 +60,7 @@ app.use(sessions({
     resave: false
 }));
 app.use(express.static('public'));
+app.use(express.static('uploads'));
 
 app.use('/api', apiRouter);
 app.use('/', indexRouter);  // Make sure it's at the end

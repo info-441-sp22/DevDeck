@@ -1,17 +1,18 @@
-import React, { useState, useEffect } from "react"; //import React Component
+import React, { useState, useEffect, useContext } from "react"; //import React Component
 import { useNavigate } from "react-router-dom";
 import { Button } from "reactstrap";
 import { fetchJSON, escapeHTML } from './../utils/utils.js'
 import { PostService } from '../services/PostService.js';
 import { toast } from "react-toastify";
 import { ImageService } from "../services/ImageService.js";
+import { CredentialsContext } from "../App.js";
 
 export function Card(props) {
     // const cardData = props.cardData
     const setLoadingCallback = props.setLoadingCallback;
     const cardData = props.cardData;
     const id = props.id;
-    const currUsername = props.username;
+    const { credentials } = useContext(CredentialsContext);
     const [val, setVal] = useState("");
     const [imageUrl, setImageUrl] = useState('');
 
@@ -63,13 +64,13 @@ export function Card(props) {
                                 {/* like and unlike button */}
                                 <div style={{flexBasis: '50%'}}>
                                     <span title={(cardData.likes) ? escapeHTML(cardData.likes.join(", ")) : ""}> {cardData.likes ? (cardData.likes.length) : 0} likes </span> &nbsp; &nbsp;
-                                    <span className={`heart-button-span ${currUsername ? "" : "d-none"}`}>
-                                        {cardData.likes && cardData.likes.includes(currUsername) ?
+                                    <span className={`heart-button-span ${credentials ? "" : "d-none"}`}>
+                                        {credentials && cardData.likes && cardData.likes.includes(credentials.username) ?
                                             <button className="heart_button" onClick={() => {
-                                                unlikePost(cardData.id, currUsername); 
+                                                unlikePost(cardData.id, credentials.username); 
                                             }}> &#x2665;</button> :
                                             <button className="heart_button" onClick={() => {
-                                                likePost(cardData.id, currUsername); 
+                                                likePost(cardData.id, credentials.username); 
                                             }}> &#x2661;</button>}
                                     </span>
                                 </div>

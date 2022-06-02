@@ -2,19 +2,20 @@
 // Need to create Cards based on post fields (created in CreateProjectModal): 
 // title, blurb, longer_description, url_link, collaborators
 import { fetchJSON } from '../utils/utils.js';
-import React, { useState, useEffect } from "react"; //import React Component
+import React, { useState, useEffect, useContext } from "react"; //import React Component
 import { Button } from "reactstrap";
 import { Card } from './Card.js';
-import { BASEPOINT } from '../App.js';
+import { BASEPOINT, CredentialsContext } from '../App.js';
 import { PostService } from '../services/PostService.js';
 import { ImageService } from '../services/ImageService.js';
 
 function HomeDeck(props) {
+    const { credentials } = useContext(CredentialsContext);
     const [featuredPosts, setFeaturedPosts] = useState(null);
     const [popularPosts, setPopularPosts] = useState(null);
     const [recentPosts, setRecentPosts] = useState(null);
     const [isLoading, setLoading] = useState(true);
-    const credentialsUsername = props.credentials ? props.credentials.username : ""
+    // const credentialsUsername = props.credentials ? props.credentials.username : ""
 
     const max_posts_to_display = 5;
 
@@ -23,7 +24,6 @@ function HomeDeck(props) {
         return data.map((postCard, i) => <Card 
                                             key={i} 
                                             cardData={postCard}
-                                            username={credentialsUsername} 
                                             setLoadingCallback={setLoading}
                                         />)
     };
@@ -52,7 +52,7 @@ function HomeDeck(props) {
                     setLoading(false);  // <-- Remember to change loading to no load no more!
                 });
         }
-    }, [isLoading, credentialsUsername])
+    }, [isLoading, credentials])
 
     return (
         <div>

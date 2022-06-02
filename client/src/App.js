@@ -2,7 +2,7 @@ import './styles/index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NavBar from './Nav';
 import Footer from './Footer';
-import React, { useEffect, useState } from "react";
+import React, { createContext, useEffect, useMemo, useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import 'react-toastify/dist/ReactToastify.css';
@@ -12,11 +12,20 @@ import { LoginService } from './services/LoginService';
 const DEBUG = true;
 export const BASEPOINT = (DEBUG) ? 'http://localhost:3000' : 'https://www.devdeck.me';
 
+// Contexts
+export const CredentialsContext = createContext({
+    credentials: null,
+    setCredentials: () => {}
+});
+
 function App() {
+    // Context
+    const [credentials, setCredentials] = useState();
+    const value = useMemo(() => ({ credentials, setCredentials }), [credentials]);
+
     const [isLoggedIn, setLoggedIn] = useState(false);
     const [toastMessage, setToastMessage] = useState();
     const [toastState, setToastState] = useState('');
-    const [credentials, setCredentials] = useState();
 
     const navigate = useNavigate();
 
@@ -62,18 +71,19 @@ function App() {
 
     return (
         <div className="appContainer">
-            <NavBar
-                isLoggedIn={isLoggedIn}
-                credentials={credentials}
-                setLoggedInCallback={setLoggedIn}
-                setToastMessageCallback={setToastMessage}
-                setToastStateCallback={setToastState}
-            />
-            <Outlet context={
-                { isLoggedIn, setLoggedIn, credentials, setCredentials }
-            } />
-            <Footer />
-            <ToastContainer />
+            <CredentialsContext.Provider value={value}>
+                <NavBar
+                    isLoggedIn={isLoggedIn}
+                    setLoggedInCallback={setLoggedIn}
+                    setToastMessageCallback={setToastMessage}
+                    setToastStateCallback={setToastState}
+                />
+                <Outlet context={
+                    { isLoggedIn, setLoggedIn, credentials, setCredentials }
+                } />
+                <Footer />
+                <ToastContainer />
+            </CredentialsContext.Provider>
         </div>
     )
 }
