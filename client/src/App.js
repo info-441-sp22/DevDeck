@@ -10,7 +10,7 @@ import './styles/index.css';
 import { LoginService } from './services/LoginService';
 
 const DEBUG = true;
-export const BASEPOINT = (DEBUG) ? 'http://localhost:3000' : 'http://devdeck.me';
+export const BASEPOINT = (DEBUG) ? 'http://localhost:3000' : 'https://devdeck.me';
 
 function App() {
     const [isLoggedIn, setLoggedIn] = useState(false);

@@ -6,21 +6,24 @@ import React, { useState, useEffect } from "react"; //import React Component
 import { Button } from "reactstrap";
 import { Card } from './Card.js';
 import { BASEPOINT } from '../App.js';
+import { PostService } from '../services/PostService.js';
 
 function HomeDeck(props) {
     const [featuredPosts, setFeaturedPosts] = useState(null);
     const [popularPosts, setPopularPosts] = useState(null);
     const [recentPosts, setRecentPosts] = useState(null);
+    const credentialsUsername = props.credentials ? props.credentials.username : ""
 
     // Card Factory Handler
     const createTopCards = function (data) {
-        return data.map((postCard, i) => <Card key={i} cardData={postCard} />)
+        return data.map((postCard, i) => <Card key={i} cardData={postCard} username={credentialsUsername} />)
     };
 
     useEffect(() => {
-        findPosts()
+        PostService.findAllPosts()
             .then(allPosts => {
-                setFeaturedPosts(createTopCards(allPosts.sort((post_a, post_b) => post_b.comments.length - post_a.comments.length).slice(0, 3)));
+                console.log(allPosts)
+                setFeaturedPosts(createTopCards(allPosts.sort((post_a, post_b) => post_b.likes.length - post_a.likes.length).slice(0, 3)));
                 setPopularPosts(createTopCards(allPosts.sort((post_a, post_b) => post_b.likes.length - post_a.likes.length).slice(0, 3)));
                 setRecentPosts(createTopCards(allPosts.sort((post_a, post_b) => post_b.created_date - post_a.created_date).slice(0, 3)));
                 // console.log(featuredPosts)
@@ -51,10 +54,10 @@ function HomeDeck(props) {
     )
 }
 
-async function findPosts() {
-    let postsJSON = await fetchJSON(BASEPOINT + `/api/posts`)
-    return postsJSON;
-}
+// async function findPosts() {
+//     let postsJSON = await fetchJSON(BASEPOINT + `/api/posts`)
+//     return postsJSON;
+// }
 
 
 export default HomeDeck;

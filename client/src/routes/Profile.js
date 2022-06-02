@@ -53,12 +53,20 @@ export default function ProfilePage() {
         }
     }, [isLoading, credentials]);    // change `isLoading` to refresh the data loading
 
-    async function updateUserInfo(e) {
+    async function updateUserBio(e) {
         // e.preventDefault();
         let bio = document.getElementById(`userBio`).value;
-        await ProfileService.putProfile(LoginService.getUserCredentials().username, bio)
+        await ProfileService.putProfileBio(LoginService.getUserCredentials().username, bio)
         setLoading(true); // Just need to refresh page
-      }
+    }
+
+    async function updateUserLinks(e) {
+        // e.preventDefault();
+        let name = document.getElementById(`LinkName`).value;
+        let url = document.getElementById(`LinkURL`).value;
+        await ProfileService.putProfileLinks(LoginService.getUserCredentials().username, name, url)
+        setLoading(true); // Just need to refresh page
+    }
 
     return (
     <div>
@@ -112,8 +120,9 @@ export default function ProfilePage() {
                                             type="text"
                                             id="userBio"
                                             name="userBio"
+                                            placeholder="A little bit about you..."
                                         />
-                                        <Button size="sm" onClick={() => {updateUserInfo()}}>Update bio</Button>
+                                        <Button size="sm" onClick={() => {updateUserBio()}}>Update bio</Button>
                                     </div>
                                     : <></>
                             }
@@ -121,6 +130,7 @@ export default function ProfilePage() {
                     </div>
                     <div className="col">
                         <div className="skills">
+                            <h2>Links:</h2>
                             <ul>
                                 {
                                     profileInfo.urls.map((url) => {
@@ -129,6 +139,25 @@ export default function ProfilePage() {
                                     })
                                 }
                             </ul>
+                            {
+                                (isClientUser)
+                                    ?  <div>
+                                        <input
+                                            type="text"
+                                            id="LinkName"
+                                            name="LinkName"
+                                            placeholder="Website name"
+                                        />
+                                        <input
+                                            type="text"
+                                            id="LinkURL"
+                                            name="LinkURL"
+                                            placeholder="Website link"
+                                        />
+                                        <Button size="sm" onClick={() => {updateUserLinks()}}>Add link</Button>
+                                    </div>
+                                    : <></>
+                            }
                         </div>
                     </div>
                     <div className="col">
@@ -146,9 +175,14 @@ export default function ProfilePage() {
             </div>
 
             <div className="projects container-fluid">
-                <h2>Your Deck:</h2>
-                <CreateProjectModal>
-                </CreateProjectModal>
+                {
+                    (isClientUser)
+                        ? <div><h2>Your Deck:</h2>
+                        <CreateProjectModal>
+                        </CreateProjectModal>
+                        </div>
+                        : <div><h2>DevDeck:</h2></div>
+                }
                 {/* <span id="postStatus"></span> */}
                 <UserDeck 
                     username={username}>

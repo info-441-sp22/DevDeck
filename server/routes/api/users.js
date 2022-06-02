@@ -171,12 +171,32 @@ router.post('/signup', async (req, res, next) => {
     });
 });
 
-router.put('/', authorizationRequired, async function(req, res, next) {
+router.put('/bio', authorizationRequired, async function(req, res, next) {
   if (req.session.isAuthenticated) {
       let user = await req.models.User.findOne({username: req.body.username})
       console.log("found user")
       try {
           user.bio = req.body.bio;
+          await user.save();
+          return res.json({"status": "success"});
+      } catch (error) {
+          console.log(error);
+          return res.status(500).json({"status": "error", "error": error});
+      }
+  } else {
+      return res.status(401).json({
+          status: "error",
+          error: "not logged in"
+      });
+  }
+});
+
+router.put('/links', authorizationRequired, async function(req, res, next) {
+  if (req.session.isAuthenticated) {
+      try {
+          let user = await req.models.User.findOne({username: req.body.username})
+          console.log("found user")
+          user.urls.push(req.body.linkName + '+' + req.body.linkURL);
           await user.save();
           return res.json({"status": "success"});
       } catch (error) {

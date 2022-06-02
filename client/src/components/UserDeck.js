@@ -5,7 +5,7 @@ import { BASEPOINT } from "../App";
 import { PostService } from "../services/PostService.js";
 
 function UserDeck(props) {
-    const username = props.username;
+    const username = props.username ? props.username : "";
     const [userPosts, setUserPosts] = useState([]);
     // create loading state
 

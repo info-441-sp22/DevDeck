@@ -8,6 +8,10 @@ export class PostService {
         return await fetchJSON(this.POST_BASEPOINT() + '?username=' + encodeURIComponent(request.username));
     }
 
+    static findAllPosts = async () => {
+        return await fetchJSON(this.POST_BASEPOINT());
+    }
+
     static findSinglePost = async (request) => {
         return await fetchJSON(this.POST_BASEPOINT() + '?id=' + encodeURIComponent(request.id));
     }
