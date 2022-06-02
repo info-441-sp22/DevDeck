@@ -110,7 +110,7 @@ router.post('/like', async function (req, res, next) {
     }
 
     await post.save()
-    res.json({
+    return res.json({
       message: 'Post likes successfully updated.',
       payload: post,
       status: 'success'
@@ -136,7 +136,7 @@ router.post('/unlike', async function (req, res, next) {
     }
 
     await post.save()
-    res.json({
+    return res.json({
       message: 'Post likes successfully updated.',
       payload: post,
       status: 'success'
