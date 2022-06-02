@@ -30,18 +30,32 @@ export class PostService {
 
     static likePost = async (postID, username) => {
         // console.log('calling post service like post')
-        return await fetchJSON(this.POST_BASEPOINT() + '/like', {
+        const response =  fetchJSON(this.POST_BASEPOINT() + '/like', {
             method: "POST",
             body: { postID: postID, username: username }
         })
+        const responsePayload = await response.json();
+
+        if (!responsePayload.error) {
+            return responsePayload.payload;
+        } else {
+            throw new Error(responsePayload.error);
+        }
     }
 
 
     static unlikePost = async (postID, username) => {
-        return await fetchJSON(this.POST_BASEPOINT() + '/unlike', {
+        const response =  await fetchJSON(this.POST_BASEPOINT() + '/unlike', {
             method: "POST",
             body: { postID: postID, username: username }
         })
+        const responsePayload = await response.json();
+
+        if (!responsePayload.error) {
+            return responsePayload.payload;
+        } else {
+            throw new Error(responsePayload.error);
+        }
     }
 
     static findSinglePost = async (request) => {
