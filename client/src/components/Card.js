@@ -4,32 +4,16 @@ import { Button } from "reactstrap";
 import { fetchJSON, escapeHTML } from './../utils/utils.js'
 import { PostService } from '../services/PostService.js';
 import { toast } from "react-toastify";
-
-
-// async function likePost(postID) {
-//     console.log("calling like post")
-
-//     await fetchJSON(`api/posts/like`, {
-//         method: "POST",
-//         body: { postID: postID }
-//     })
-// }
-
-
-// async function unlikePost(postID) {
-//     console.log("calling unlike post")
-//     await fetchJSON(`api/posts/unlike`, {
-//         method: "POST",
-//         body: { postID: postID }
-//     })
-// }
+import { ImageService } from "../services/ImageService.js";
 
 export function Card(props) {
     // const cardData = props.cardData
     const setLoadingCallback = props.setLoadingCallback;
     const cardData = props.cardData;
+    const id = props.id;
     const currUsername = props.username;
     const [val, setVal] = useState("");
+    const [imageUrl, setImageUrl] = useState('');
 
     const navigate = useNavigate();
 
@@ -58,8 +42,10 @@ export function Card(props) {
         navigate('/profile/' + cardData.username);
     }
 
-    // const likes = props.cardInformation.likes;
-    // const didUserLike = props.likes.includes(username => username === LoginService.getUserCredentials().username)
+    useEffect(() => {
+        ImageService.getPostImage({ post_id: cardData.id })
+            .then((url) => setImageUrl(url));
+    }, []);
 
     return (
         <>
@@ -68,7 +54,7 @@ export function Card(props) {
                     ? <div className="card bg-custom" style={{ width: '18em', margin: '2rem' }}>
                     </div>
                     : <div className="card bg-custom" style={{ width: '18em', margin: '2rem' }}>
-                        <img className="card-img-top" src="..." alt="Project thumbnail"></img>
+                        <img className="card-img-top" src={imageUrl} alt="Project thumbnail"></img>
                         <div className="card-body">
                             <h5 className="card-title">{cardData.title}</h5>
                             <p className="card-text">Posted by: <a href="" onClick={viewUser}>{cardData.username}</a></p>

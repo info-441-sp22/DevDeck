@@ -3,6 +3,7 @@ import { Card } from "./Card.js";
 import { BASEPOINT } from "../App";
 import { PostService } from "../services/PostService.js";
 import CreateProjectModal from "./CreateProjectModal.js";
+import { ImageService } from "../services/ImageService.js";
 
 function UserDeck(props) {
     const isClientUser = props.isClientUser;
@@ -19,8 +20,13 @@ function UserDeck(props) {
     
             PostService.findPosts(request)
                 .then(data => {
-                    // Building the card array
-                    setUserPosts(data.map((postCard, i) => <Card key={i} cardData={postCard} />));
+                    setUserPosts(data.map((postCard, i) => {
+                        return <Card 
+                            key={i} 
+                            cardData={postCard} 
+                            username={username} 
+                            setLoadingCallback={setLoading}
+                        />}));
                     setLoading(false);  // <-- Remember to change loading to no load no more!
                 });
         }

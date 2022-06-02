@@ -8,14 +8,16 @@ import { toast } from 'react-toastify';
 function CreateProjectModal(props) {
     const setLoadingCallback = props.setLoadingCallback;
     const [modal, setModal] = useState(false);
+    const [postImage, setPostImage] = useState(null);
+    const [filename, setFilename] = useState('');
     const toggle = () => setModal(!modal);
 
     const uploadImageHandler = async (event) => {
-        const request = new FormData();
-        request.append('file', event.target.files[0]);
-        await ImageService.uploadProjectImage(request);
-        toast.info('Project image uploaded.');
-        setLoadingCallback(true);
+        const file = new FormData();
+        file.append('file', event.target.files[0]);
+        setPostImage(file);
+        setFilename(event.target.files[0].name);
+        toast.info('Uploading image...');
     }
 
     const onClickImageSubmitHandler = async () => {
@@ -29,11 +31,10 @@ function CreateProjectModal(props) {
         let longer_description = document.getElementById("longerDescrInput").value;
         let url_link = document.getElementById("urlInput").value;
         let tech_stack = document.getElementById("techStackInput").value;
-        console.log("Tech stack", tech_stack)
 
         let collaborators = document.getElementById("collabInput").value;
 
-        await fetchJSON(BASEPOINT + '/api/posts', {
+        const response = await fetchJSON(BASEPOINT + '/api/posts', {
             method: "POST",
             credentials: "include",
             body: {
@@ -46,6 +47,19 @@ function CreateProjectModal(props) {
             }
         })
 
+        // If the picture isn't null, handle it
+        if (postImage) {
+            // build request
+            const request = {
+                post_id: response.payload
+            };
+
+            await ImageService.getMetadataAndUploadPostImage(request, postImage);
+
+            // Clear the state
+            setPostImage(null);
+        }
+
         // resetting DOM values
         document.getElementById("titleInput").value = "";
         document.getElementById("blurbInput").value = "";
@@ -54,6 +68,8 @@ function CreateProjectModal(props) {
         document.getElementById("techStackInput").value = "";
         document.getElementById("collabInput").value = "";
         toggle();
+
+        toast.info('Post saved!');
 
         // Set loading to true
         setLoadingCallback(true);
@@ -107,10 +123,17 @@ function CreateProjectModal(props) {
                                         accept="image/*"
                                         onChange={uploadImageHandler}
                                     />
+                                    <div>
+                                        {
+                                            (postImage)
+                                                ?   <p>Image to upload: {filename}</p>
+                                                :   <></>
+                                        }
+                                    </div>
                                     <Button
                                         type="button"
                                         onClick={() => onClickImageSubmitHandler()}>
-                                        Change Image
+                                        Add Image
                                     </Button>
                                 </div>
                             }

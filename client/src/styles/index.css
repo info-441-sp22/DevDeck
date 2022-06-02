@@ -142,6 +142,11 @@ code {
   transform: scale(1.015);
 }
 
+.card-img-top {
+  max-height: 200px;
+  max-width: 300px;
+}
+
 .profile-img:hover {
   transform: scale(1);
 }
@@ -172,6 +177,14 @@ input {
 
 .heart_button{
   color:red;
+}
+
+/* Profile Details Page */
+.thumbnail {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  max-height: 300px;
+  max-width: 300px;
 }
 
 .profile-text {

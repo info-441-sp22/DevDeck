@@ -38,7 +38,7 @@ export default function ProfilePage() {
     useEffect(() => {
         // Load the profile data
         if (isLoading) {
-            LoginService.authenticationHeartbeat(setLoggedIn);
+            // LoginService.authenticationHeartbeat(setLoggedIn);
             ProfileService.getProfile(username)
                 .then((payload) => {
                     setProfileInfo(payload.user_info);

@@ -6,6 +6,7 @@ import path from 'path';
 import { __dirname } from '../../app.js';
 import { unlinkSync } from 'fs';
 
+var id_queue = [];
 var router = express.Router();
 const storage = multer.diskStorage({
   destination: function(req, file, callback) {
@@ -43,7 +44,6 @@ router.post('/profile', upload.single('file'), async (req, res) => {
     // Save the connection into the DB
     const filename = req.file.filename;
     const username = req.session.username;
-    console.log('username', username);
 
     const existingProfileImage = await req.models.Image.findOne({ username: username, purpose: 'profile' });
 
@@ -71,6 +71,87 @@ router.post('/profile', upload.single('file'), async (req, res) => {
   }
 });
 
+router.post('/post/metadata', async (req, res) => {
+  const username = req.session.username;
+  const post_id = req.body.post_id;
+
+  // Create the queue ticket
+  const queueTicket = {
+    username: username,
+    post_id: post_id
+  };
+
+  // Add to the queue
+  id_queue.push(queueTicket);
+  console.log('startidqueue', id_queue);
+  
+  // Send the ticket to the client
+  return res.json({
+    message: 'Queue ticket metadata created.',
+    status: 'success'
+  });
+});
+
+router.post('/post', upload.single('file'), async (req, res) => {
+  // Error guard for no file provided
+  if (!req.file) {
+    // Status error
+    return res.status(404).json({
+      error: 'No file was received.',
+      message: 'Please send over a valid file.'
+    });
+  } 
+  const filename = req.file.filename;
+  const username = req.session.username;
+
+  // Find the queue ticket
+  const queueTicket = id_queue.find(ticket => ticket.username === username);
+
+  // Error guard - ticket not found
+  if (!queueTicket) return res.status(404).json({
+    error: 'No queue ticket was found.',
+    message: 'Error uploading the post file.'
+  });
+
+  // Save the connection into the DB
+  const query = { 
+    username: username, 
+    post: queueTicket.post_id, 
+    purpose: 'post' 
+  };
+
+  const existingProfileImage = await req.models.Image.findOne(query);
+
+  if (existingProfileImage) { // Error guard, image already exists
+    // Delete the image connection
+    await req.models.Image.deleteOne(query);
+
+    // Delete the image in uploads
+    unlinkSync(path.join(__dirname, 'uploads', existingProfileImage.filename));
+  }
+
+  const image = new req.models.Image({
+    username: username,
+    filename: filename,
+    purpose: 'post',
+    post: queueTicket.post_id,
+    created_date: Date.now()
+  });
+
+  image.save();
+
+  // Delete the queue ticket
+  const index = id_queue.indexOf(queueTicket);
+  id_queue.splice(index, 1);
+
+  console.log('idqueue', id_queue);
+
+  return res.json({
+    message: 'Image has been successfully uploaded.',
+    status: 'success'
+  })
+});
+
 router.get('/', async (req, res) => {
   const path = req.query.path;
 
@@ -94,6 +175,25 @@ router.get('/profile', async (req, res) => {
   if (!image) { // Error guard - image not found
     res.set('Content-Type', `image/png`);
     return res.sendFile(path.join(__dirname, 'uploads', 'blank_profile_image.png'));
+  }
+
+  const tokens = image.filename.split('.');
+
+  res.set('Content-Type', `image/${tokens[tokens.length - 1]}`);
+  return res.sendFile(path.join(__dirname, 'uploads', image.filename));
+});
+
+router.get('/post', async (req, res) => {
+  const post_id = req.query.post_id;
+  const query = {
+    purpose: 'post',
+    post: post_id
+  };
+  const image = await req.models.Image.findOne(query);
+
+  if (!image) { // Error guard - image not found
+    res.set('Content-Type', `image/jpeg`);
+    return res.sendFile(path.join(__dirname, 'uploads', 'blank_post_image.jpeg'));
   }
 
   const tokens = image.filename.split('.');

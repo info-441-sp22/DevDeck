@@ -20,8 +20,12 @@ router.post('/', async function (req, res, next) {
       likes: []
     })
 
-    await newPost.save()
-    return res.json({ "status": "success" });
+    await newPost.save();
+
+    return res.json({ 
+      status: "success",
+      payload: newPost._id
+    });
   } catch (error) {
     console.log("An error occured:" + error)
     return res.status(500).json({ "status": "error", "error": error })
@@ -80,8 +84,6 @@ router.get('/', async function (req, res) {
         toReturn.push(newPost); // send back all posts
       }
     }
-
-    console.log(toReturn);
 
     // return an array of json objects
     return res.json({
