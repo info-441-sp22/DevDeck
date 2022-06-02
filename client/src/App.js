@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import './styles/index.css';
 import { LoginService } from './services/LoginService';
 
-const DEBUG = true;
+const DEBUG = false;
 export const BASEPOINT = (DEBUG) ? 'http://localhost:3000' : 'https://www.devdeck.me';
 
 function App() {
