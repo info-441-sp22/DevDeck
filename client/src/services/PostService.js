@@ -30,7 +30,7 @@ export class PostService {
 
     static likePost = async (postID, username) => {
         // console.log('calling post service like post')
-        const response =  fetchJSON(this.POST_BASEPOINT() + '/like', {
+        const response = await fetchJSON(this.POST_BASEPOINT() + '/like', {
             method: "POST",
             body: { postID: postID, username: username }
         })
