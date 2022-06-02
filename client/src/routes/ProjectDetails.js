@@ -82,8 +82,8 @@ export default function ProjectDetails() {
                             <div className="col">                        
                                 <div className="collaborators">
                                     <h3>Collaborators:</h3>
-                                    {displayCollab}
-                                    {/* {postData.collaborators} */}
+                                    {/* {displayCollab} */}
+                                    {postData.collaborators}
                                 </div>
                                 <br></br>
                                 {/* figure out likes & comments */}
@@ -96,6 +96,7 @@ export default function ProjectDetails() {
                                 }
                             </div>                            
                         </div>
+                        <br></br>
                         <Button className="btn btn-primary" onClick={returnHome}>Return to homepage</Button>
                     </div>
                 </main>
