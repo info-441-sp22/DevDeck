@@ -27,6 +27,23 @@ export class PostService {
         return await fetchJSON(this.POST_BASEPOINT());
     }
 
+
+    static likePost = async (postID, username) => {
+        // console.log('calling post service like post')
+        return await fetchJSON(this.POST_BASEPOINT() + '/like', {
+            method: "POST",
+            body: { postID: postID, username: username }
+        })
+    }
+
+
+    static unlikePost = async (postID, username) => {
+        return await fetchJSON(this.POST_BASEPOINT() + '/unlike', {
+            method: "POST",
+            body: { postID: postID, username: username }
+        })
+    }
+
     static findSinglePost = async (request) => {
         const id = request.id;
 
