@@ -1,10 +1,18 @@
 import React, { useState } from "react"; //import React Component
+import { useOutletContext } from "react-router-dom";
 import { Button } from "reactstrap";
 import { Card } from "../components/Card.js";
+import HomeDeck from "../components/HomeDeck.js";
 import { LoginService } from "../services/LoginService.js";
 
 export default function HomePage() {
-    
+    const { credentials } = useOutletContext();
+
+    // <HomeDeck credentials={credentials} />
+
+    // inside homedeck
+    // const credentials = props.credentials;
+
     return (
         <main>
             <div className="home container-fluid">
@@ -25,15 +33,15 @@ export default function HomePage() {
                         </div>
                         {/* <!--"Blurb Box" End--> */}
                     </div>
-                    <div className="col">
-                        <div className="featured-project">
-                            <h2>Featured projects:</h2>
-                            <div className="row">
-                                <Card />
-                                <Card />
-                                <Card />
-                            </div>
-                        </div>
+                </div>
+
+                <HomeDeck credentials={credentials} /> 
+                {/* <div className="featured-project">
+                    <h2>Featured projects:</h2>
+                    <div className="row">
+                        <Card />
+                        <Card />
+                        <Card />
                     </div>
                 </div>
 
@@ -53,7 +61,7 @@ export default function HomePage() {
                         <Card />
                         <Card />
                     </div>
-                </div>
+                </div> */}
             </div>
         </main>
     )
