@@ -15,6 +15,8 @@ function CreateProjectModal(props) {
         let longer_description = document.getElementById("longerDescrInput").value;
         let url_link = document.getElementById("urlInput").value;
         let tech_stack = document.getElementById("techStackInput").value;
+        console.log("Tech stack", tech_stack)
+
         let collaborators = document.getElementById("collabInput").value;
 
         await fetchJSON(BASEPOINT + '/api/posts', {

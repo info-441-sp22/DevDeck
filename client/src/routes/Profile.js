@@ -68,6 +68,14 @@ export default function ProfilePage() {
         setLoading(true); // Just need to refresh page
     }
 
+    async function updateUserSkills(e) {
+        // e.preventDefault();
+        let skill = document.getElementById(`userSkill`).value;
+        console.log(skill)
+        await ProfileService.putProfileSkills(LoginService.getUserCredentials().username, skill)
+        setLoading(true); // Just need to refresh page
+    }
+
     return (
     <div>
     {
@@ -129,7 +137,7 @@ export default function ProfilePage() {
                         </div>
                     </div>
                     <div className="col">
-                        <div className="skills">
+                        <div className="links">
                             <h2>Links:</h2>
                             <ul>
                                 {
@@ -161,7 +169,8 @@ export default function ProfilePage() {
                         </div>
                     </div>
                     <div className="col">
-                        <div className="links">
+                        <div className="skills">
+                            <h2>Skills:</h2>
                             <ul>
                                 {
                                     profileInfo.skillset.map((skill) => {
@@ -169,6 +178,19 @@ export default function ProfilePage() {
                                     })
                                 }
                             </ul>
+                            {
+                                (isClientUser)
+                                    ?  <div>
+                                        <input
+                                            type="text"
+                                            id="userSkill"
+                                            name="userSkill"
+                                            placeholder="Skill name"
+                                        />
+                                        <Button size="sm" onClick={() => {updateUserSkills()}}>Add skill</Button>
+                                    </div>
+                                    : <></>
+                            }
                         </div>
                     </div>
                 </div>

@@ -22,10 +22,9 @@ function HomeDeck(props) {
     useEffect(() => {
         PostService.findAllPosts()
             .then(allPosts => {
-                console.log(allPosts)
-                setFeaturedPosts(createTopCards(allPosts.sort((post_a, post_b) => post_b.likes.length - post_a.likes.length).slice(0, 3)));
-                setPopularPosts(createTopCards(allPosts.sort((post_a, post_b) => post_b.likes.length - post_a.likes.length).slice(0, 3)));
-                setRecentPosts(createTopCards(allPosts.sort((post_a, post_b) => post_b.created_date - post_a.created_date).slice(0, 3)));
+                setFeaturedPosts(createTopCards(allPosts.payload.sort((post_a, post_b) => post_b.likes.length - post_a.likes.length).slice(0, 3)));
+                setPopularPosts(createTopCards(allPosts.payload.sort((post_a, post_b) => post_b.likes.length - post_a.likes.length).slice(0, 3)));
+                setRecentPosts(createTopCards(allPosts.payload.sort((post_a, post_b) => post_b.created_date - post_a.created_date).slice(0, 3)));
                 // console.log(featuredPosts)
             })
     }, [])

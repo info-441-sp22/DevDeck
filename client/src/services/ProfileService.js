@@ -83,4 +83,30 @@ export class ProfileService {
             throw new Error(responsePayload.error);
         }
     }
+
+    static putProfileSkills = async (username, skill) => {
+        const response = await fetch(
+            ProfileService.PROFILE_BASEPOINT() + '/skills',
+            {
+                method: "PUT",
+                credentials: 'include',
+                mode: 'cors',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: username,
+                    skill: skill
+                })
+            }
+        );
+        const responsePayload = await response.json();
+
+        if (!responsePayload.error) {   // If no error is encountered
+            return responsePayload.payload;
+        } else {    // If an error is encountered
+            // Return error payload with message
+            throw new Error(responsePayload.error);
+        }
+    }
 }
