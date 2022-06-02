@@ -10,7 +10,7 @@ import './styles/index.css';
 import { LoginService } from './services/LoginService';
 
 const DEBUG = true;
-export const BASEPOINT = (DEBUG) ? 'http://localhost:3000' : 'https://devdeck.me';
+export const BASEPOINT = (DEBUG) ? 'http://localhost:3000' : 'https://www.devdeck.me';
 
 function App() {
     const [isLoggedIn, setLoggedIn] = useState(false);
@@ -25,7 +25,7 @@ function App() {
             navigate('/home');
         }
 
-        console.log(isLoggedIn);
+        console.log("Logged in? ", isLoggedIn);
 
         if (isLoggedIn) {
             console.log('setting credentials...');

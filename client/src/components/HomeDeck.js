@@ -9,10 +9,12 @@ import { BASEPOINT } from '../App.js';
 import { PostService } from '../services/PostService.js';
 
 function HomeDeck(props) {
-    const [featuredPosts, setFeaturedPosts] = useState(null);
+    // const [featuredPosts, setFeaturedPosts] = useState(null);
     const [popularPosts, setPopularPosts] = useState(null);
     const [recentPosts, setRecentPosts] = useState(null);
     const credentialsUsername = props.credentials ? props.credentials.username : ""
+
+    const max_posts_to_display = 5;
 
     // Card Factory Handler
     const createTopCards = function (data) {
@@ -22,31 +24,33 @@ function HomeDeck(props) {
     useEffect(() => {
         PostService.findAllPosts()
             .then(allPosts => {
-                setFeaturedPosts(createTopCards(allPosts.payload.sort((post_a, post_b) => post_b.likes.length - post_a.likes.length).slice(0, 3)));
-                setPopularPosts(createTopCards(allPosts.payload.sort((post_a, post_b) => post_b.likes.length - post_a.likes.length).slice(0, 3)));
-                setRecentPosts(createTopCards(allPosts.payload.sort((post_a, post_b) => post_b.created_date - post_a.created_date).slice(0, 3)));
-                // console.log(featuredPosts)
+                // setFeaturedPosts(createTopCards(allPosts.payload.sort((post_a, post_b) => post_b.likes.length - post_a.likes.length).slice(0, max_posts_to_display)));
+                setPopularPosts(createTopCards(allPosts.payload.sort((post_a, post_b) => post_b.likes.length - post_a.likes.length).slice(0, max_posts_to_display)));
+                setRecentPosts(createTopCards(allPosts.payload.sort((post_a, post_b) => new Date(post_b.created_date).getTime() - new Date(post_a.created_date).getTime()).slice(0, max_posts_to_display)));
+                console.log(allPosts.payload)
             })
     }, [])
 
     return (
         <div>
-            <div>
+            {/* <div>
                 <h2>Featured projects:</h2>
                 <div className="row">
                     {featuredPosts}
                 </div>
-            </div>
-            <div>
-                <h2>Recently Added projects:</h2>
-                <div className="row">
-                    {recentPosts}
-                </div>
-            </div>
+            </div> */}
+            <hr />
             <div>
                 <h2>Popular projects:</h2>
                 <div className="row">
                     {popularPosts}
+                </div>
+            </div>
+            <hr />
+            <div>
+                <h2>Recently Added projects:</h2>
+                <div className="row">
+                    {recentPosts}
                 </div>
             </div>
         </div>

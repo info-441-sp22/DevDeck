@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react"; //import React Component
 import { Card } from "./Card.js";
-import { fetchJSON } from '../utils/utils.js';
 import { BASEPOINT } from "../App";
 import { PostService } from "../services/PostService.js";
 import CreateProjectModal from "./CreateProjectModal.js";
@@ -20,7 +19,6 @@ function UserDeck(props) {
     
             PostService.findPosts(request)
                 .then(data => {
-                    console.log(data)
                     // Building the card array
                     setUserPosts(data.map((postCard, i) => <Card key={i} cardData={postCard} />));
                     setLoading(false);  // <-- Remember to change loading to no load no more!

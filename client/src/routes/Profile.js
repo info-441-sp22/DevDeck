@@ -14,8 +14,8 @@ export default function ProfilePage() {
     const { setLoggedIn, credentials } = useOutletContext();
     const [profileInfo, setProfileInfo] = useState(null);
     const [profileImage, setProfileImage] = useState(null);
-    const [isClientUser, setIsClientUser] = useState(false);
     const [isLoading, setLoading] = useState(true);
+    const [isClientUser, setIsClientUser] = useState(false);
 
     // Editing permission handlers
     const checkClientUser = () => {
@@ -71,7 +71,6 @@ export default function ProfilePage() {
     async function updateUserSkills(e) {
         // e.preventDefault();
         let skill = document.getElementById(`userSkill`).value;
-        console.log(skill)
         await ProfileService.putProfileSkills(LoginService.getUserCredentials().username, skill)
         setLoading(true); // Just need to refresh page
     }
@@ -85,7 +84,7 @@ export default function ProfilePage() {
             <div className="profile container-fluid">
                 <div className="row">
                     <div className="col">
-                        <div className="profile-img">
+                        <div className="profile-img card bg-custom" style={{backgroundColor: '#808080'}}>
                             {
                                 (profileImage)
                                     ? <img 
@@ -97,7 +96,7 @@ export default function ProfilePage() {
                             }
                             {
                                 (isClientUser)
-                                    ? <div>
+                                    ? <div style={{alignSelf: 'center'}}>
                                         <input
                                             type="file"
                                             id="profile_img_upload"
@@ -113,8 +112,8 @@ export default function ProfilePage() {
                                     </div>
                                     : <></>
                             }
-                            <h2>{profileInfo.first_name + ' ' + profileInfo.last_name}</h2>
-                            <h3>@{profileInfo.username}</h3>
+                            <h2 className="profile-text">{profileInfo.first_name + ' ' + profileInfo.last_name}</h2>
+                            <h3 className="profile-text" style={{opacity: '0.8'}}>@{profileInfo.username}</h3>
                         </div>
                     </div>
                     <div className="col">
@@ -195,9 +194,8 @@ export default function ProfilePage() {
                     </div>
                 </div>
             </div>
-
+            <hr />
             <div className="projects container-fluid">
-                {/* <span id="postStatus"></span> */}
                 <UserDeck
                     isClientUser={isClientUser}
                     username={username}
