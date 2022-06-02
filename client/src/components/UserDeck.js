@@ -25,8 +25,14 @@ function UserDeck(props) {
     }, [])
 
     return (
-        <div>
-            {userPosts}
+        // <div>
+        //     {userPosts}
+        // </div>
+
+        <div className="home container-fluid">
+            <div className="row">
+                {userPosts}
+            </div>
         </div>
     )
 }

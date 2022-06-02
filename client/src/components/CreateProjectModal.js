@@ -17,25 +17,18 @@ function CreateProjectModal(props) {
         let tech_stack = document.getElementById("techStackInput").value;
         let collaborators = document.getElementById("collabInput").value;
 
-        console.log(title, blurb, longer_description, url_link, tech_stack, collaborators);
-
-        // try {
-            await fetchJSON(BASEPOINT + '/api/posts', {
-                method: "POST",
-                credentials: "include",
-                body: { 
-                    title: title,
-                    blurb: blurb,
-                    longer_description: longer_description,
-                    url_link: url_link,
-                    tech_stack: tech_stack,
-                    collaborators: collaborators
-                }
-            })
-        // } catch (error) {
-        //     document.getElementById("postStatus").innerText = "Error"
-        //     throw (error)
-        // }
+        await fetchJSON(BASEPOINT + '/api/posts', {
+            method: "POST",
+            credentials: "include",
+            body: {
+                title: title,
+                blurb: blurb,
+                longer_description: longer_description,
+                url_link: url_link,
+                tech_stack: tech_stack,
+                collaborators: collaborators
+            }
+        })
 
         // resetting DOM values
         document.getElementById("titleInput").value = "";
@@ -68,8 +61,6 @@ function CreateProjectModal(props) {
                 <ModalHeader toggle={toggle}>♠ Add a new project card to your deck ♠</ModalHeader>
                 <ModalBody>
                     <Form onSubmit={handleSubmit}>
-                        <label htmlFor="addInfo">Input your project information below:</label>
-                        {/* <Input type="text" value={props.val} onChange={handleOnChange} */}
                         <Input type="text" id="titleInput"
                             placeholder="Project Title">
                         </Input>
@@ -83,11 +74,11 @@ function CreateProjectModal(props) {
                             placeholder="Link to your project">
                         </Input>
                         <Input type="text" id="techStackInput"
-                            placeholder="Technologies you used to create your project">
+                            placeholder="Technologies used to create your project (enter as [a, b...])">
                         </Input>
                         <Input type="text" id="collabInput"
-                            placeholder="Project collaborators (enter as [collaborator1, collaborator2...])">
-                                {/* TO EDIT: if users have a devdeck account, ask them to put in their username instead of full name */}
+                            placeholder="Project collaborators (enter as [a, b...])">
+                            {/* TO EDIT: if users have a devdeck account, ask them to put in their username instead of full name */}
                         </Input>
                     </Form>
                 </ModalBody>
