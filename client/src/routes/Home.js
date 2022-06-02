@@ -34,34 +34,9 @@ export default function HomePage() {
                         {/* <!--"Blurb Box" End--> */}
                     </div>
                 </div>
-
+                <hr />
                 <HomeDeck credentials={credentials} />
-                {/* <div className="featured-project">
-                    <h2>Featured projects:</h2>
-                    <div className="row">
-                        <Card />
-                        <Card />
-                        <Card />
-                    </div>
-                </div>
-
-                <div className="recently-added">
-                    <h2>Recently added projects:</h2>
-                    <div className="row">
-                        <Card />
-                        <Card />
-                        <Card />
-                    </div>
-                </div>
-
-                <div className="popular">
-                    <h2>Popular projects:</h2>
-                    <div className="row">
-                        <Card />
-                        <Card />
-                        <Card />
-                    </div>
-                </div> */}
+                
             </div>
         </main>
     )

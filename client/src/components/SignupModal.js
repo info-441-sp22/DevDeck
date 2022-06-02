@@ -52,7 +52,7 @@ function SignupModal(props) {
   return (
     <>
       <Button variant="primary" onClick={handleShow}>
-        Sign Up
+        Sign up
       </Button>
 
       <Modal show={show} onHide={handleClose}>
@@ -108,7 +108,7 @@ function SignupModal(props) {
             </Form.Group>
             <Modal.Footer>
               <Button variant="primary" type="submit">
-                Sign Up
+                Sign up
               </Button>
               <Button variant="secondary" onClick={handleClose}>
                 Close

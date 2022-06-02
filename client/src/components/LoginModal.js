@@ -40,7 +40,7 @@ function LoginModal(props) {
   return (
     <>
       <Button variant="primary" onClick={handleShow}>
-        Log In
+        Log in
       </Button>
 
       <Modal show={show} onHide={handleClose}>
@@ -73,7 +73,7 @@ function LoginModal(props) {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="primary" onClick={onClickSubmit}>
-            Log In
+            Log in
           </Button>
           <Button variant="secondary" onClick={handleClose}>
             Close

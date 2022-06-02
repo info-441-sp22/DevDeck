@@ -7,12 +7,14 @@ import { LoginService } from "../services/LoginService";
 import { PostService } from "../services/PostService";
 import { useNavigate } from "react-router-dom";
 import { ImageService } from "../services/ImageService";
+import { CommentService } from "../services/CommentService.js";
 
 export default function ProjectDetails() {
     const { id } = useParams();
     const { setLoggedIn, credentials } = useOutletContext();
     const [isLoading, setLoading] = useState(true);
     const [postData, setPostData] = useState();
+    const [commentData, setCommentData] = useState();
     const [imageUrl, setImageUrl] = useState('');
     const navigate = useNavigate();
 
@@ -26,10 +28,18 @@ export default function ProjectDetails() {
                     ImageService.getPostImage({ post_id: id })
                         .then(url => {
                             setImageUrl(url);
-                            setLoading(false);
                         })
                 })
                 .catch(err => toast.error(err));
+            CommentService.getComments(id)
+                .then(data => {
+                    console.log("comment data:", data)
+                    setCommentData(data);
+                    setLoading(false);
+                })
+                .catch(err => {
+                    toast.error(err)
+                });    
         }
     }, [isLoading]);
 
@@ -39,6 +49,23 @@ export default function ProjectDetails() {
 
     const returnHome = () => {
         navigate('/home/');
+    }
+
+    async function refreshComments() {
+        // e.preventDefault();
+        await CommentService.getComments(postData._id)
+        setLoading(true); // Just need to refresh page
+    }
+
+    async function postComment() {
+        // e.preventDefault();
+        let comment = document.getElementById(`new-comment-${postData._id}`).value;
+        console.log(comment)
+        console.log(LoginService)
+        console.log(LoginService.getUserCredentials())
+        let username = LoginService.getUserCredentials().username;
+        await CommentService.postComment(postData._id, comment, username)
+        setLoading(true); // Just need to refresh page
     }
 
     // const displayCollab = () => { // function to display project collaborators
@@ -84,19 +111,17 @@ export default function ProjectDetails() {
                                     {
                                         postData.techStack
                                     }
-                                <ul>
-                                {
-                                    postData.techStack.map((tech) => {
-                                        const tokens = tech.split(', ');
-                                        tokens.forEach((token) => {
-                                            return <li>{token}</li>;
+                                    <ul>
+                                    {
+                                        postData.techStack.map((tech) => {
+                                            const tokens = tech.split(', ');
+                                            tokens.forEach((token) => {
+                                                return <li>{token}</li>;
+                                            })
+                                            
                                         })
-                                        
-                                    })
-                                }
-                                </ul>
-
-                            
+                                    }
+                                    </ul>
                                 </div>
                             </div>
                             <div className="col">                        
@@ -105,16 +130,46 @@ export default function ProjectDetails() {
                                     {/* {displayCollab} */}
                                     {postData.collaborators}
                                 </div>
-                                <br></br>
-                                {/* figure out likes & comments */}
-                                <h5><em>Likes and comments info</em></h5> 
                             </div>
-                            <div>
+                        </div>
+                        <hr style={{height: '0'}} />
+                        <div className="row">
+                            <div className="col">
                                 <h3>Description:</h3>
                                 {
                                     postData.longer_description
                                 }
-                            </div>                            
+                            </div>
+                            <div className="col">
+                                <div className="row">
+                                    <div className="col" style={{flexBasis: '50%'}}>
+                                        <h5>Comments:</h5>
+                                    </div>
+                                    <div className="col" style={{flexBasis: '50%'}}>
+                                        <Button onClick={refreshComments}>
+                                            Refresh comments
+                                        </Button>
+                                    </div>
+                                </div>
+                                <div className="post-interactions">
+                                    <div id={`comments-box-${postData._id}`} className="comments-box">
+                                        <div id={`comments-${postData._id}`}>
+                                        {
+                                            commentData.map((comment) => {
+                                                return <li>${comment}</li>
+                                            })
+                                        }
+                                        </div>
+                                        <div className={`new-comment-box ${true ? '': 'd-none'}`}>
+                                            New Comment:
+                                            <input type="text" id={`new-comment-${postData._id}`} style={{color: 'black'}}/>
+                                            <Button onClick={() => postComment(postData._id)}>
+                                                Post comment
+                                            </Button>
+                                        </div>
+                                    </div>
+                                </div> 
+                            </div> 
                         </div>
                         <br></br>
                         <Button className="btn btn-primary" onClick={returnHome}>Return to homepage</Button>
