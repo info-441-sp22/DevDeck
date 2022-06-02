@@ -65,9 +65,9 @@ export function Card(props) {
         <>
             {
                 (!cardData)
-                    ? <div className="card bg-custom" style={{ width: '18em', margin: '1rem' }}>
+                    ? <div className="card bg-custom" style={{ width: '18em', margin: '2rem' }}>
                     </div>
-                    : <div className="card bg-custom" style={{ width: '18em', margin: '1rem' }}>
+                    : <div className="card bg-custom" style={{ width: '18em', margin: '2rem' }}>
                         <img className="card-img-top" src="..." alt="Project thumbnail"></img>
                         <div className="card-body">
                             <h5 className="card-title">{cardData.title}</h5>
