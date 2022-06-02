@@ -11,8 +11,7 @@ import { toast } from "react-toastify";
 
 export default function ProfilePage() {
     const { username } = useParams();
-    const { credentials } = useOutletContext();
-    const {isLoggedIn, setLoggedIn} = useOutletContext();
+    const { setLoggedIn, credentials } = useOutletContext();
     const [profileInfo, setProfileInfo] = useState(null);
     const [profileImage, setProfileImage] = useState(null);
     const [isLoading, setLoading] = useState(true);
@@ -52,18 +51,6 @@ export default function ProfilePage() {
                     console.log(err);
                 });
         }
-
-        // If the login status changes
-        // setIsClientUser(prev => {
-        //     if (isLoggedIn) {
-        //         const isClient = checkClientUser();
-    
-        //         // The login status changed the user to be the actual client user
-        //         return !prev && isClient;
-        //     }
-        //     // Set editing permissions off for those who are not logged in
-        //     return prev;
-        // });
     }, [isLoading, credentials]);    // change `isLoading` to refresh the data loading
 
     async function updateUserInfo(e) {
