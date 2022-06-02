@@ -4,7 +4,7 @@ import { BASEPOINT } from "../App.js";
 export class LoginService {
     static LOGIN_BASEPOINT = () => BASEPOINT + '/api/users';
 
-    static authenticationHeartbeat = async (setLoggedInCallback) => {
+    static authenticationHeartbeat = async () => {
         const response = await fetch(
             LoginService.LOGIN_BASEPOINT() + '/heartbeat',
             {
@@ -17,11 +17,12 @@ export class LoginService {
         if (responseHeartbeat.error) {
             // Remove the session
             LoginService.removeUserCredentials('user');
-            setLoggedInCallback(false);
+            return false;
         }
 
         // User is logged in
-        setLoggedInCallback(true);
+        // setLoggedInCallback(true);
+        return true;
     }
 
     static LogIn = async (loginRequest, setLoggedInCallback) => {
@@ -42,7 +43,10 @@ export class LoginService {
         if (!responsePayload.error) {   // If no error is encountered
             // Store the user information that is grabbed
             sessionStorage.setItem('user', JSON.stringify(responsePayload.payload));
-            setLoggedInCallback(true);
+            setLoggedInCallback(prev => {
+                console.log(prev);
+                return true;
+            });
             return responsePayload.message;
         } else {    // If an error is encountered
             // Return error payload with message
@@ -88,6 +92,7 @@ export class LoginService {
         const responsePayload = await response.json();
 
         // Delete the user info in the storage
+        // document.cookie[0]
         LoginService.removeUserCredentials();
         setLoggedInCallback(false);
 

@@ -25,13 +25,24 @@ function App() {
             navigate('/home');
         }
 
-        console.log("Logged in? ", isLoggedIn);
+        // LoginService.authenticationHeartbeat()
+        //     .then(loggedIn => {
+        //         if (loggedIn) {
+        //             console.log('heartbeat user is logged in');
+        //             setLoggedIn(true);
+        //             setCredentials(LoginService.getUserCredentials());
+        //         } else {
+        //             console.log('heartbeat user is logged out');
+        //             setLoggedIn(false);
+        //             setCredentials();
+        //         }
+        //     })
 
-        if (isLoggedIn) {
-            console.log('setting credentials...');
+        if (isLoggedIn) {   // Send authentication heartbeat
+            // console.log('setting credentials...');
             setCredentials(LoginService.getUserCredentials());
         } else {
-            console.log('clearing credentials...');
+            // console.log('clearing credentials...');
             setCredentials();
         }
     }, [isLoggedIn]);

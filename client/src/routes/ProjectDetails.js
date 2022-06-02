@@ -6,12 +6,14 @@ import LoadingComponent from "../components/LoadingComponent";
 import { LoginService } from "../services/LoginService";
 import { PostService } from "../services/PostService";
 import { useNavigate } from "react-router-dom";
+import { ImageService } from "../services/ImageService";
 
 export default function ProjectDetails() {
     const { id } = useParams();
     const { setLoggedIn, credentials } = useOutletContext();
     const [isLoading, setLoading] = useState(true);
     const [postData, setPostData] = useState();
+    const [imageUrl, setImageUrl] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -20,7 +22,12 @@ export default function ProjectDetails() {
             PostService.findSinglePost({ id: id })
                 .then(data => {
                     setPostData(data);
-                    setLoading(false);
+                    console.log(id);
+                    ImageService.getPostImage({ post_id: id })
+                        .then(url => {
+                            setImageUrl(url);
+                            setLoading(false);
+                        })
                 })
                 .catch(err => toast.error(err));
         }
@@ -34,14 +41,18 @@ export default function ProjectDetails() {
         navigate('/home/');
     }
 
-    const displayCollab = () => { // function to display project collaborators
-        let collabs = postData.collaborators;
-        let toReturn = collabs.forEach(collab => {
-            console.log(collab)
-            return <div>{collab}</div>
-        })
-        return toReturn;
+    const viewUser = () => {
+        navigate('/profile/' + postData.username);
     }
+
+    // const displayCollab = () => { // function to display project collaborators
+    //     let collabs = postData.collaborators;
+    //     let toReturn = collabs.forEach(collab => {
+    //         console.log(collab)
+    //         return <div>{collab}</div>
+    //     })
+    //     return toReturn;
+    // }
 
     return (
         <>
@@ -53,14 +64,14 @@ export default function ProjectDetails() {
                         <h2>{
                             postData.title
                         }</h2>
-                        {/* <a href="">Link to project</a> */}
+                        <h5>Posted by: <a href="" onClick={viewUser}>{postData.username}</a></h5>
                         <Button color="primary" onClick={goToUrl}>
                             Link to project
                         </Button>
                         <div className="row">
                             <div className="col">
-                                <div className="thumbnail">
-                                    <img src="imgs/thumbnail_default.png" alt="project thumbnail"></img>
+                                <div>
+                                    <img className="thumbnail" src={imageUrl} alt="project thumbnail"></img>
                                 </div>
                             </div>
                             <div className="col">
@@ -77,6 +88,19 @@ export default function ProjectDetails() {
                                     {
                                         postData.techStack
                                     }
+                                <ul>
+                                {
+                                    postData.techStack.map((tech) => {
+                                        const tokens = tech.split(', ');
+                                        tokens.forEach((token) => {
+                                            return <li>{token}</li>;
+                                        })
+                                        
+                                    })
+                                }
+                                </ul>
+
+                            
                                 </div>
                             </div>
                             <div className="col">                        
@@ -87,7 +111,7 @@ export default function ProjectDetails() {
                                 </div>
                                 <br></br>
                                 {/* figure out likes & comments */}
-                                <h5><em>Likes and comments info</em></h5> 
+                                {/* <h5><em>Likes and comments info</em></h5>  */}
                             </div>
                             <div>
                                 <h3>Description:</h3>
@@ -96,6 +120,7 @@ export default function ProjectDetails() {
                                 }
                             </div>                            
                         </div>
+                        <hr style={{height: '0'}}/>
                         <br></br>
                         <Button className="btn btn-primary" onClick={returnHome}>Return to homepage</Button>
                     </div>

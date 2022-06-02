@@ -21,7 +21,7 @@ export class ImageService {
     static uploadProjectImage = async (request) => {
         // console.log(request);
         const response = await fetch(
-            ImageService.IMAGE_BASEPOINT() + '/project',
+            ImageService.IMAGE_BASEPOINT() + '/post',
             {
                 method: "POST",
                 credentials: 'include',
@@ -49,9 +49,43 @@ export class ImageService {
         return URL.createObjectURL(responseBlob);
     }
 
-    static getProjectImage = async (request) => {
+    static getMetadataAndUploadPostImage = async (request, image) => {
+        // Get the image metadata
+        const metadataResponse = await fetch(
+            ImageService.IMAGE_BASEPOINT() + '/post/metadata',
+            {
+                method: "POST",
+                credentials: 'include',
+                body: JSON.stringify(request),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+        );
+        const responseMetadata = await metadataResponse.json();
+
+        // Upload the image
+        await this.uploadPostImage(image);
+    }
+
+    static uploadPostImage = async (file) => {
         const response = await fetch(
-            ImageService.IMAGE_BASEPOINT() + '/project?username=' + encodeURIComponent(request.username),
+            ImageService.IMAGE_BASEPOINT() + '/post',
+            {
+                method: "POST",
+                credentials: 'include',
+                body: file,
+                headers: {
+                    'Accept': 'multipart/form-data'
+                }
+            }
+        );
+    }
+
+    static getPostImage = async (request) => {
+        const query = '?post_id=' + encodeURIComponent(request.post_id);
+        const response = await fetch( 
+            ImageService.IMAGE_BASEPOINT() + '/post' + query,
             {
                 method: 'GET',
                 credentials: 'include',
@@ -63,5 +97,11 @@ export class ImageService {
         const responseBlob = await response.blob(); 
 
         return URL.createObjectURL(responseBlob);
+    }
+
+    static getPostImages = async (data) => {
+        data.forEach(async (post) => post.image_url = await ImageService.getPostImage({ post_id: post.id }));
+
+        return data;
     }
 }

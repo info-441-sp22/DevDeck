@@ -53,6 +53,8 @@ app.use(sessions({
     secret: 'This is some secret key.',
     saveUninitialized: true,
     cookie: {
+        secure: false,
+        sameSite: "none",
         maxAge: oneDay
     },
     resave: false
