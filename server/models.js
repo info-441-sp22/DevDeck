@@ -24,9 +24,9 @@ async function connectDB() {
     bio: String,
     description: String,
     created_date: Date,
-    followers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-    following: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-    posts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }], 
+    // followers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+    // following: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+    // posts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }], 
     urls: [String],
     skillset: [String]
   });
@@ -44,12 +44,12 @@ async function connectDB() {
     likes: [String]    
   })
 
-  const commentSchema = new mongoose.Schema({
-    username: String,
-    comment: String,
-    post: { type: mongoose.Schema.Types.ObjectId, ref: "Post" },
-    created_date: Date,
-  })
+  // const commentSchema = new mongoose.Schema({
+  //   username: String,
+  //   comment: String,
+  //   post: { type: mongoose.Schema.Types.ObjectId, ref: "Post" },
+  //   created_date: Date,
+  // })
 
   const imageSchema = new mongoose.Schema({
     username: String,
@@ -60,7 +60,7 @@ async function connectDB() {
 
   models.Post = mongoose.model('Post', postSchema);
   models.User = mongoose.model('User', userSchema);
-  models.Comment = mongoose.model('Comment', commentSchema);
+  // models.Comment = mongoose.model('Comment', commentSchema);
   models.Image = mongoose.model('Image', imageSchema);
 
   console.log("finished creating models");
