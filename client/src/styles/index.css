@@ -59,7 +59,7 @@ code {
 }
 
 .footer .contact-info {
-  color:rgba(85, 85, 85, 0.336)
+  color:rgba(85, 85, 85, 0.9)
 }
 
 .github-icon {
@@ -121,6 +121,15 @@ code {
   display: none;
 }
 
+.project-img-submit-button {
+  color: black;
+
+}
+
+#project_img_upload[type="file"] {
+  display: none;
+}
+
 /* profile pic in navbar */
 /* .profile-pic-navbar {
   border-radius: 50%;
@@ -132,6 +141,11 @@ code {
 
 .card:hover {
   transform: scale(1.015);
+}
+
+.card-img-top {
+  max-height: 200px;
+  max-width: 300px;
 }
 
 /* home page blurb */
@@ -160,4 +174,12 @@ input {
 
 .heart_button{
   color:red;
+}
+
+/* Profile Details Page */
+.thumbnail {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  max-height: 300px;
+  max-width: 300px;
 }

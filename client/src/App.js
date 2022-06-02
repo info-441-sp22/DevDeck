@@ -25,13 +25,11 @@ function App() {
             navigate('/home');
         }
 
-        console.log(isLoggedIn);
-
         if (isLoggedIn) {
-            console.log('setting credentials...');
+            // console.log('setting credentials...');
             setCredentials(LoginService.getUserCredentials());
         } else {
-            console.log('clearing credentials...');
+            // console.log('clearing credentials...');
             setCredentials();
         }
     }, [isLoggedIn]);

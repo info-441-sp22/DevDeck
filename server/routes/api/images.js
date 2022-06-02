@@ -44,7 +44,6 @@ router.post('/profile', upload.single('file'), async (req, res) => {
     // Save the connection into the DB
     const filename = req.file.filename;
     const username = req.session.username;
-    console.log('username', username);
 
     const existingProfileImage = await req.models.Image.findOne({ username: username, purpose: 'profile' });
 
@@ -73,7 +72,7 @@ router.post('/profile', upload.single('file'), async (req, res) => {
 });
 
 router.post('/post/metadata', async (req, res) => {
-  const username = req.body.username;
+  const username = req.session.username;
   const post_id = req.body.post_id;
 
   // Create the queue ticket
@@ -84,11 +83,11 @@ router.post('/post/metadata', async (req, res) => {
 
   // Add to the queue
   id_queue.push(queueTicket);
+  console.log('startidqueue', id_queue);
   
   // Send the ticket to the client
   return res.json({
     message: 'Queue ticket metadata created.',
-    payload: queueTicket,
     status: 'success'
   });
 });
@@ -141,6 +140,12 @@ router.post('/post', upload.single('file'), async (req, res) => {
 
   image.save();
 
+  // Delete the queue ticket
+  const index = id_queue.indexOf(queueTicket);
+  id_queue.splice(index, 1);
+
+  console.log('idqueue', id_queue);
+
   return res.json({
     message: 'Image has been successfully uploaded.',
     status: 'success'
@@ -179,12 +184,16 @@ router.get('/profile', async (req, res) => {
 });
 
 router.get('/post', async (req, res) => {
-  const username = req.query.username;
-  const image = await req.models.Image.findOne({ username: username, purpose: 'post' });
+  const post_id = req.query.post_id;
+  const query = {
+    purpose: 'post',
+    post: post_id
+  };
+  const image = await req.models.Image.findOne(query);
 
   if (!image) { // Error guard - image not found
-    res.set('Content-Type', `image/png`);
-    return res.sendFile(path.join(__dirname, 'uploads', 'blank_profile_image.png'));
+    res.set('Content-Type', `image/jpeg`);
+    return res.sendFile(path.join(__dirname, 'uploads', 'blank_post_image.jpeg'));
   }
 
   const tokens = image.filename.split('.');

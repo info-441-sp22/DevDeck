@@ -18,6 +18,21 @@ export class ImageService {
         );
     }
 
+    static uploadProjectImage = async (request) => {
+        // console.log(request);
+        const response = await fetch(
+            ImageService.IMAGE_BASEPOINT() + '/project',
+            {
+                method: "POST",
+                credentials: 'include',
+                body: request,
+                headers: {
+                    'Accept': 'multipart/form-data'
+                }
+            }
+        );
+    }
+
     static getProfileImage = async (request) => {
         const response = await fetch(
             ImageService.IMAGE_BASEPOINT() + '/profile?username=' + encodeURIComponent(request.username),
@@ -65,5 +80,30 @@ export class ImageService {
                 }
             }
         );
+    }
+
+    static getPostImage = async (request) => {
+        console.log(request);
+        const query = '?post_id=' + encodeURIComponent(request.post_id);
+        const response = await fetch( 
+            ImageService.IMAGE_BASEPOINT() + '/post' + query,
+            {
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+        );
+        const responseBlob = await response.blob(); 
+
+        return URL.createObjectURL(responseBlob);
+    }
+
+    static getPostImages = async (data) => {
+        data.forEach(async (post) => post.image_url = await ImageService.getPostImage({ post_id: post.id }));
+        console.log(data);
+
+        return data;
     }
 }

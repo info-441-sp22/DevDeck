@@ -6,7 +6,7 @@ import { faGithub } from '@fortawesome/free-brands-svg-icons';
 function Footer() {
     return (
         // <div className="pt-5">
-            <footer className="footer">
+            <footer className="footer" style={{ position: 'relative'}}>
                 <div className="container text-center">
                     <span className="contact-info">© 2022 Melina Perraut, Max Bennett, Elbert Cheng, Susan Yang - <a
                         href="https://github.com/info-441-sp22/final-project" rel="noreferrer" target="_blank"

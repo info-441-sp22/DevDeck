@@ -7,6 +7,7 @@ import { Button } from "reactstrap";
 import { Card } from './Card.js';
 import { BASEPOINT } from '../App.js';
 import { PostService } from '../services/PostService.js';
+import { ImageService } from '../services/ImageService.js';
 
 function HomeDeck(props) {
     const [featuredPosts, setFeaturedPosts] = useState(null);
@@ -19,7 +20,7 @@ function HomeDeck(props) {
     const createTopCards = function (data) {
         return data.map((postCard, i) => <Card 
                                             key={i} 
-                                            cardData={postCard} 
+                                            cardData={postCard}
                                             username={credentialsUsername} 
                                             setLoadingCallback={setLoading}
                                         />)
@@ -29,11 +30,24 @@ function HomeDeck(props) {
         if (isLoading) {
             PostService.findAllPosts()
                 .then(allPosts => {
-                    setFeaturedPosts(createTopCards(allPosts.sort((post_a, post_b) => post_b.likes.length - post_a.likes.length).slice(0, 3)));
+                    
+                    // Random
+
+                    var randomPosts = [];
+                    var holder = [];
+
+                    while (randomPosts.length !== 3) {
+                        const index = Math.floor(Math.random() * allPosts.length);
+
+                        if (!holder.includes(index)) {
+                            randomPosts.push(allPosts[index]);
+                            holder.push(index);
+                        }
+                    }
+                    setFeaturedPosts(createTopCards(randomPosts));
                     setPopularPosts(createTopCards(allPosts.sort((post_a, post_b) => post_b.likes.length - post_a.likes.length).slice(0, 3)));
-                    setRecentPosts(createTopCards(allPosts.sort((post_a, post_b) => post_b.created_date - post_a.created_date).slice(0, 3)));
-                    // console.log(featuredPosts)
-                    setLoading(false);
+                    setRecentPosts(createTopCards(allPosts.sort((post_a, post_b) => new Date(post_b.created_date).getTime() - new Date(post_a.created_date).getTime()).slice(0, 3)));
+                    setLoading(false);  // <-- Remember to change loading to no load no more!
                 });
         }
     }, [isLoading])

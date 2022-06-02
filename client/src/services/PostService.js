@@ -1,5 +1,6 @@
 import { BASEPOINT } from "../App";
 import { fetchJSON } from "../utils/utils";
+import { ImageService } from "./ImageService";
 
 export class PostService {
     static POST_BASEPOINT = () => BASEPOINT + '/api/posts';
@@ -40,6 +41,9 @@ export class PostService {
             }
         );
         const responsePayload = await response.json();
+
+        // Get post images
+        // const imagePayload = await ImageService.getPostImages(responsePayload.payload);
 
         if (!responsePayload.error) {
             return responsePayload.payload;

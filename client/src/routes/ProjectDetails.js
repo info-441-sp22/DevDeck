@@ -6,12 +6,14 @@ import LoadingComponent from "../components/LoadingComponent";
 import { LoginService } from "../services/LoginService";
 import { PostService } from "../services/PostService";
 import { useNavigate } from "react-router-dom";
+import { ImageService } from "../services/ImageService";
 
 export default function ProjectDetails() {
     const { id } = useParams();
     const { setLoggedIn, credentials } = useOutletContext();
     const [isLoading, setLoading] = useState(true);
     const [postData, setPostData] = useState();
+    const [imageUrl, setImageUrl] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -20,7 +22,12 @@ export default function ProjectDetails() {
             PostService.findSinglePost({ id: id })
                 .then(data => {
                     setPostData(data);
-                    setLoading(false);
+                    console.log(id);
+                    ImageService.getPostImage({ post_id: id })
+                        .then(url => {
+                            setImageUrl(url);
+                            setLoading(false);
+                        })
                 })
                 .catch(err => toast.error(err));
         }
@@ -59,8 +66,8 @@ export default function ProjectDetails() {
                         </Button>
                         <div className="row">
                             <div className="col">
-                                <div className="thumbnail">
-                                    <img src="imgs/thumbnail_default.png" alt="project thumbnail"></img>
+                                <div>
+                                    <img className="thumbnail" src={imageUrl} alt="project thumbnail"></img>
                                 </div>
                             </div>
                             <div className="col">

@@ -2,11 +2,27 @@ import React, { useState, useEffect } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, Input } from 'reactstrap';
 import { fetchJSON } from '../utils/utils.js';
 import { BASEPOINT } from "../App";
+import { ImageService } from "../services/ImageService.js";
+import { toast } from 'react-toastify';
 
 function CreateProjectModal(props) {
     const setLoadingCallback = props.setLoadingCallback;
     const [modal, setModal] = useState(false);
+    const [postImage, setPostImage] = useState(null);
+    const [filename, setFilename] = useState('');
     const toggle = () => setModal(!modal);
+
+    const uploadImageHandler = async (event) => {
+        const file = new FormData();
+        file.append('file', event.target.files[0]);
+        setPostImage(file);
+        setFilename(event.target.files[0].name);
+        toast.info('Uploading image...');
+    }
+
+    const onClickImageSubmitHandler = async () => {
+        document.getElementById('project_img_upload').click();
+    }
 
     let saveChanges = async () => { // based on postUrl() function from websharer (index.js)
         // saving changes to project (need to connect to server/db)
@@ -15,11 +31,10 @@ function CreateProjectModal(props) {
         let longer_description = document.getElementById("longerDescrInput").value;
         let url_link = document.getElementById("urlInput").value;
         let tech_stack = document.getElementById("techStackInput").value;
-        console.log("Tech stack", tech_stack)
 
         let collaborators = document.getElementById("collabInput").value;
 
-        await fetchJSON(BASEPOINT + '/api/posts', {
+        const response = await fetchJSON(BASEPOINT + '/api/posts', {
             method: "POST",
             credentials: "include",
             body: {
@@ -32,6 +47,19 @@ function CreateProjectModal(props) {
             }
         })
 
+        // If the picture isn't null, handle it
+        if (postImage) {
+            // build request
+            const request = {
+                post_id: response.payload
+            };
+
+            await ImageService.getMetadataAndUploadPostImage(request, postImage);
+
+            // Clear the state
+            setPostImage(null);
+        }
+
         // resetting DOM values
         document.getElementById("titleInput").value = "";
         document.getElementById("blurbInput").value = "";
@@ -40,6 +68,8 @@ function CreateProjectModal(props) {
         document.getElementById("techStackInput").value = "";
         document.getElementById("collabInput").value = "";
         toggle();
+
+        toast.info('Post saved!');
 
         // Set loading to true
         setLoadingCallback(true);
@@ -83,6 +113,31 @@ function CreateProjectModal(props) {
                             placeholder="Project collaborators (enter as [a, b...])">
                             {/* TO EDIT: if users have a devdeck account, ask them to put in their username instead of full name */}
                         </Input>
+                        <div>
+                            {
+                                <div>
+                                    <input
+                                        type="file"
+                                        id="project_img_upload"
+                                        name="project_img"
+                                        accept="image/*"
+                                        onChange={uploadImageHandler}
+                                    />
+                                    <div>
+                                        {
+                                            (postImage)
+                                                ?   <p>Image to upload: {filename}</p>
+                                                :   <></>
+                                        }
+                                    </div>
+                                    <Button
+                                        type="button"
+                                        onClick={() => onClickImageSubmitHandler()}>
+                                        Add Image
+                                    </Button>
+                                </div>
+                            }
+                        </div>
                     </Form>
                 </ModalBody>
                 <ModalFooter>
