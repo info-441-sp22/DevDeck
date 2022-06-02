@@ -3,16 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "reactstrap";
 import { fetchJSON, escapeHTML } from './../utils/utils.js'
 import { PostService } from '../services/PostService.js';
+import { toast } from "react-toastify";
 
-const likePost = async (postID, username) => {
-    // Await login process
-    await PostService.likePost(postID, username)
-
-}
-const unlikePost = async (postID, username) => {
-    // Await login process
-    await PostService.unlikePost(postID, username)
-}
 
 // async function likePost(postID) {
 //     console.log("calling like post")
@@ -33,13 +25,30 @@ const unlikePost = async (postID, username) => {
 // }
 
 export function Card(props) {
-    const cardData = props.cardData
+    // const cardData = props.cardData
+    const setLoadingCallback = props.setLoadingCallback;
+    const cardData = props.cardData;
     const currUsername = props.username;
-    console.log('currUsername is', currUsername)
     const [val, setVal] = useState("");
+
     const navigate = useNavigate();
-    // console.log("cardData", cardData)
-    // console.log(cardData.username)
+
+    // like handlers
+    const likePost = async (postID, username) => {
+        // Await login process
+        PostService.likePost(postID, username)
+            .then(() => {
+                setLoadingCallback(true);
+            });
+    
+    }
+    const unlikePost = async (postID, username) => {
+        // Await login process
+        PostService.unlikePost(postID, username)
+            .then(() => {
+                setLoadingCallback(true);
+            });
+    }
 
     const onClickView = () => {
         navigate('/project/' + cardData.id);
@@ -56,9 +65,9 @@ export function Card(props) {
         <>
             {
                 (!cardData)
-                    ? <div className="card bg-custom" style={{ width: '18em', margin: '1rem' }}>
+                    ? <div className="card bg-custom" style={{ width: '18em', margin: '2rem' }}>
                     </div>
-                    : <div className="card bg-custom" style={{ width: '18em', margin: '1rem' }}>
+                    : <div className="card bg-custom" style={{ width: '18em', margin: '2rem' }}>
                         <img className="card-img-top" src="..." alt="Project thumbnail"></img>
                         <div className="card-body">
                             <h5 className="card-title">{cardData.title}</h5>
@@ -70,8 +79,12 @@ export function Card(props) {
                                     <span title={(cardData.likes) ? escapeHTML(cardData.likes.join(", ")) : ""}> {cardData.likes ? (cardData.likes.length) : 0} likes </span> &nbsp; &nbsp;
                                     <span className={`heart-button-span ${currUsername ? "" : "d-none"}`}>
                                         {cardData.likes && cardData.likes.includes(currUsername) ?
-                                            <button className="heart_button" onClick={() => unlikePost(cardData.id, currUsername)}> &#x2665;</button> :
-                                            <button className="heart_button" onClick={() => likePost(cardData.id, currUsername)}> &#x2661;</button>}
+                                            <button className="heart_button" onClick={() => {
+                                                unlikePost(cardData.id, currUsername); 
+                                            }}> &#x2665;</button> :
+                                            <button className="heart_button" onClick={() => {
+                                                likePost(cardData.id, currUsername); 
+                                            }}> &#x2661;</button>}
                                     </span>
                                 </div>
                                 <Button className="btn btn-primary" onClick={onClickView} style={{flexBasis: '50%'}}>

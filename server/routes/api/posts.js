@@ -37,8 +37,6 @@ router.get('/single', async (req, res, next) => {
   // Find the id with the `id`
   const post = await req.models.Post.findOne({ _id: id });
 
-  console.log('post', post);
-
   // Error guard for user that doesn't exist
   if (!post) res.status(404).json({ message: 'Post info fetch failed.', error: 'Post with the id does not exist.' });
 
@@ -83,6 +81,8 @@ router.get('/', async function (req, res) {
       }
     }
 
+    console.log(toReturn);
+
     // return an array of json objects
     return res.json({
       status: 'success',
@@ -101,7 +101,6 @@ router.post('/like', async function (req, res, next) {
   try {
     let currPostID = req.body.postID;
     let currUser = req.body.username;
-    console.log('currPostID is ', currPostID, 'currUser is', currUser)
 
     let post = await req.models.Post.findById(currPostID);
 
@@ -110,14 +109,14 @@ router.post('/like', async function (req, res, next) {
     }
 
     await post.save()
-    res.json({
+    return res.json({
       message: 'Post likes successfully updated.',
       payload: post,
       status: 'success'
     });
   } catch (error) {
     console.log("An error occured:" + error)
-    res.status(500).json({ "status": "error", "error": error })
+    return res.status(500).json({ "status": "error", "error": error })
   }
 
 });
@@ -136,14 +135,14 @@ router.post('/unlike', async function (req, res, next) {
     }
 
     await post.save()
-    res.json({
+    return res.json({
       message: 'Post likes successfully updated.',
       payload: post,
       status: 'success'
     });
   } catch (error) {
     console.log("An error occured:" + error)
-    res.status(500).json({ "status": "error", "error": error })
+    return res.status(500).json({ "status": "error", "error": error })
   }
 });
 

@@ -11,7 +11,11 @@ export class PostService {
             this.POST_BASEPOINT() + '/?username=' + encodeURIComponent(username),
             {
                 method: 'GET',
-                credentials: 'include'
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+
             }
         );
         const responsePayload = await response.json();
@@ -24,16 +28,44 @@ export class PostService {
     }
 
     static findAllPosts = async () => {
-        return await fetchJSON(this.POST_BASEPOINT());
+        const response = await fetch(
+            this.POST_BASEPOINT(),
+            {
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+
+            }
+        );
+        const responsePayload = await response.json();
+
+        if (!responsePayload.error) {
+            return responsePayload.payload;
+        } else {
+            throw new Error(responsePayload.error);
+        }
     }
 
 
     static likePost = async (postID, username) => {
-        // console.log('calling post service like post')
-        const response = await fetchJSON(this.POST_BASEPOINT() + '/like', {
-            method: "POST",
-            body: { postID: postID, username: username }
-        })
+        const request = {
+            postID: postID,
+            username: username
+        };
+        
+        const response = await fetch(
+            this.POST_BASEPOINT() + '/like', 
+            {
+                method: "POST",
+                credentials: 'include',
+                body: JSON.stringify(request),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+        );
         const responsePayload = await response.json();
 
         if (!responsePayload.error) {
@@ -45,10 +77,22 @@ export class PostService {
 
 
     static unlikePost = async (postID, username) => {
-        const response =  await fetchJSON(this.POST_BASEPOINT() + '/unlike', {
-            method: "POST",
-            body: { postID: postID, username: username }
-        })
+        const request = {
+            postID: postID,
+            username: username
+        };
+
+        const response = await fetch(
+            this.POST_BASEPOINT() + '/unlike', 
+            {
+                method: "POST",
+                credentials: 'include',
+                body: JSON.stringify(request),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+        );
         const responsePayload = await response.json();
 
         if (!responsePayload.error) {
@@ -65,7 +109,10 @@ export class PostService {
             this.POST_BASEPOINT() + '/single?id=' + encodeURIComponent(id),
             {
                 method: 'GET',
-                credentials: 'include'
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
             }
         );
         const responsePayload = await response.json();

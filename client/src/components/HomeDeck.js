@@ -12,24 +12,33 @@ function HomeDeck(props) {
     // const [featuredPosts, setFeaturedPosts] = useState(null);
     const [popularPosts, setPopularPosts] = useState(null);
     const [recentPosts, setRecentPosts] = useState(null);
+    const [isLoading, setLoading] = useState(true);
     const credentialsUsername = props.credentials ? props.credentials.username : ""
 
     const max_posts_to_display = 5;
 
     // Card Factory Handler
     const createTopCards = function (data) {
-        return data.map((postCard, i) => <Card key={i} cardData={postCard} username={credentialsUsername} />)
+        return data.map((postCard, i) => <Card 
+                                            key={i} 
+                                            cardData={postCard} 
+                                            username={credentialsUsername} 
+                                            setLoadingCallback={setLoading}
+                                        />)
     };
 
     useEffect(() => {
-        PostService.findAllPosts()
-            .then(allPosts => {
-                // setFeaturedPosts(createTopCards(allPosts.payload.sort((post_a, post_b) => post_b.likes.length - post_a.likes.length).slice(0, max_posts_to_display)));
-                setPopularPosts(createTopCards(allPosts.payload.sort((post_a, post_b) => post_b.likes.length - post_a.likes.length).slice(0, max_posts_to_display)));
-                setRecentPosts(createTopCards(allPosts.payload.sort((post_a, post_b) => new Date(post_b.created_date).getTime() - new Date(post_a.created_date).getTime()).slice(0, max_posts_to_display)));
-                console.log(allPosts.payload)
-            })
-    }, [])
+        if (isLoading) {
+            PostService.findAllPosts()
+                .then(allPosts => {
+                    // setFeaturedPosts(createTopCards(allPosts.sort((post_a, post_b) => post_b.likes.length - post_a.likes.length).slice(0, max_posts_to_display)));
+                    setPopularPosts(createTopCards(allPosts.sort((post_a, post_b) => post_b.likes.length - post_a.likes.length).slice(0, max_posts_to_display)));
+                    setRecentPosts(createTopCards(allPosts.sort((post_a, post_b) => new Date(post_b.created_date).getTime() - new Date(post_a.created_date).getTime()).slice(0, max_posts_to_display)));
+                    console.log(allPosts.payload)
+                    setLoading(false);
+                });
+        }
+    }, [isLoading])
 
     return (
         <div>
@@ -39,14 +48,14 @@ function HomeDeck(props) {
                     {featuredPosts}
                 </div>
             </div> */}
-            <hr />
+            <hr style={{height: '0'}}/>
             <div>
                 <h2>Popular projects:</h2>
                 <div className="row">
                     {popularPosts}
                 </div>
             </div>
-            <hr />
+            <hr style={{height: '0'}}/>
             <div>
                 <h2>Recently Added projects:</h2>
                 <div className="row">

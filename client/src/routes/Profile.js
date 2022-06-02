@@ -194,7 +194,7 @@ export default function ProfilePage() {
                     </div>
                 </div>
             </div>
-            <hr />
+            <hr style={{height: '0'}}/>
             <div className="projects container-fluid">
                 <UserDeck
                     isClientUser={isClientUser}
