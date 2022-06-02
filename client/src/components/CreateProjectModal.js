@@ -4,6 +4,7 @@ import { fetchJSON } from '../utils/utils.js';
 import { BASEPOINT } from "../App";
 
 function CreateProjectModal(props) {
+    const setLoggedIn = props.setLoggedInCallback;
     const [modal, setModal] = useState(false);
     const toggle = () => setModal(!modal);
 
@@ -44,6 +45,8 @@ function CreateProjectModal(props) {
         document.getElementById("techStackInput").value = "";
         document.getElementById("collabInput").value = "";
         toggle();
+
+        // Set loading to true
     }
 
     let handleCancel = () => {
