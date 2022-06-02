@@ -96,6 +96,49 @@ router.get('/', async function (req, res) {
   }
 });
 
+/* POST likes. */
+router.post('/like', async function (req, res, next) {
+  let session = req.session
+  try {
+    let currPostID = req.body.postID;
+    let currUser = req.body.username;
+    console.log('currPostID is ', currPostID, 'currUser is', currUser)
+
+    let post = await req.models.Post.findById(currPostID);
+
+    if (!post.likes.includes(currUser)) {
+      post.likes.push(currUser)
+    }
+
+    await post.save()
+    res.json({ "status": "success" });
+  } catch (error) {
+    console.log("An error occured:" + error)
+    res.status(500).json({ "status": "error", "error": error })
+  }
+
+});
+
+
+/* POST unlikes. */
+router.post('/unlike', async function (req, res, next) {
+  try {
+    let currPostID = req.body.postID;
+    let currUser = req.body.username;
+
+    let post = await req.models.Post.findById(currPostID);
+
+    if (post.likes.includes(currUser)) {
+      post.likes = post.likes.filter(item => item != currUser) // remove like of the specific user
+    }
+
+    await post.save()
+    res.json({ "status": "success" });
+  } catch (error) {
+    console.log("An error occured:" + error)
+    res.status(500).json({ "status": "error", "error": error })
+  }
+});
 
 
 export default router;

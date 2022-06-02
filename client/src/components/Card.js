@@ -2,20 +2,16 @@ import React, { useState, useEffect } from "react"; //import React Component
 import { useNavigate } from "react-router-dom";
 import { Button } from "reactstrap";
 import { fetchJSON, escapeHTML } from './../utils/utils.js'
+import { PostService } from '../services/PostService.js';
 
-const likePost = async (postID) => {
+const likePost = async (postID, username) => {
     // Await login process
-    await fetchJSON(`api/posts/like`, {
-        method: "POST",
-        body: { postID: postID }
-    })
+    await PostService.likePost(postID, username)
+
 }
-const unlikePost = async (postID) => {
+const unlikePost = async (postID, username) => {
     // Await login process
-    await fetchJSON(`api/posts/unlike`, {
-        method: "POST",
-        body: { postID: postID }
-    })
+    await PostService.unlikePost(postID, username)
 }
 
 // async function likePost(postID) {
@@ -76,8 +72,8 @@ export function Card(props) {
                                 <span title={(cardData.likes) ? escapeHTML(cardData.likes.join(", ")) : ""}> {cardData.likes ? (cardData.likes.length) : 0} likes </span> &nbsp; &nbsp;
                                 <span class={`heart-button-span ${currUsername ? "" : "d-none"}`}>
                                     {cardData.likes && cardData.likes.includes(currUsername) ?
-                                        <button class="heart_button" onClick={() => unlikePost(cardData.id)}> &#x2665;</button> :
-                                        <button class="heart_button" onClick={() => likePost(cardData.id)}> &#x2661;</button>}
+                                        <button class="heart_button" onClick={() => unlikePost(cardData.id, currUsername)}> &#x2665;</button> :
+                                        <button class="heart_button" onClick={() => likePost(cardData.id, currUsername)}> &#x2661;</button>}
                                 </span>
                             </div>
                             {/* need to create new page for each card's project details */}
