@@ -11,10 +11,11 @@ function HomeDeck(props) {
     const [featuredPosts, setFeaturedPosts] = useState(null);
     const [popularPosts, setPopularPosts] = useState(null);
     const [recentPosts, setRecentPosts] = useState(null);
+    const credentials = props.credentials
 
     // Card Factory Handler
     const createTopCards = function (data) {
-        return data.map((postCard, i) => <Card key={i} cardData={postCard} />)
+        return data.map((postCard, i) => <Card key={i} cardData={postCard} username={credentials.username} />)
     };
 
     useEffect(() => {
