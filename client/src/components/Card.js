@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from "react"; //import React Component
 import { useNavigate } from "react-router-dom";
 import { Button } from "reactstrap";
-<<<<<<< HEAD
 import { fetchJSON, escapeHTML } from './../utils/utils.js'
-=======
-import { fetchJSON, escapeHTML } from '../utils/utils.js'
-import { LoginService } from "../services/LoginService.js";
-import { useParams } from "react-router-dom";
->>>>>>> bbe971c0257db8a321777dd0a344f89ea55b6f74
 
 const likePost = async (postID) => {
     // Await login process
