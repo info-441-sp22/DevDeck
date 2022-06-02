@@ -18,7 +18,7 @@ export const __dirname = dirname(__filename);
 // Local file imports
 import models from './models.js';
 
-const allowedOrigins = ['http://localhost:3000', 'http://localhost:3001', 'http://devdeck.me'];
+const allowedOrigins = ['http://localhost:3000', 'http://localhost:3001', 'https://devdeck.me'];
 var app = express();
 
 app.use(logger('dev'));

@@ -45,8 +45,8 @@ export function Card(props) {
                     <img className="card-img-top" src="..." alt="Project thumbnail"></img>
                     <div className="card-body">
                         <h5 className="card-title">{cardData.title}</h5>
-                        <p className="card-text">{cardData.username}</p>
-                        <p className="card-text">{cardData.blurb}</p>
+                        <p className="card-text">Posted by: {cardData.username}</p>
+                        <p className="card-text"><em>{cardData.blurb}</em></p>
                         <Button className="btn btn-primary" onClick={onClickView}>
                             View project details
                         </Button>

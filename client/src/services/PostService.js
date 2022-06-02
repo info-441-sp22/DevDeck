@@ -23,6 +23,10 @@ export class PostService {
         }
     }
 
+    static findAllPosts = async () => {
+        return await fetchJSON(this.POST_BASEPOINT());
+    }
+
     static findSinglePost = async (request) => {
         const id = request.id;
 

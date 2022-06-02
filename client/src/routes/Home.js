@@ -7,8 +7,8 @@ import { LoginService } from "../services/LoginService.js";
 
 export default function HomePage() {
     const { credentials } = useOutletContext();
-
-    // <HomeDeck credentials={credentials} />
+    console.log('Home credentials', credentials)
+    // console.log('Home setLoggedIn', setLoggedIn)
 
     // inside homedeck
     // const credentials = props.credentials;
@@ -35,7 +35,7 @@ export default function HomePage() {
                     </div>
                 </div>
 
-                <HomeDeck credentials={credentials} /> 
+                <HomeDeck credentials={credentials} />
                 {/* <div className="featured-project">
                     <h2>Featured projects:</h2>
                     <div className="row">
