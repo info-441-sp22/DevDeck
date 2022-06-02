@@ -211,6 +211,25 @@ router.put('/links', authorizationRequired, async function(req, res, next) {
   }
 });
 
+router.put('/skills', authorizationRequired, async function(req, res, next) {
+  if (req.session.isAuthenticated) {
+      try {
+          let user = await req.models.User.findOne({username: req.body.username})
+          user.skillset.push(req.body.skill);
+          await user.save();
+          return res.json({"status": "success"});
+      } catch (error) {
+          console.log(error);
+          return res.status(500).json({"status": "error", "error": error});
+      }
+  } else {
+      return res.status(401).json({
+          status: "error",
+          error: "not logged in"
+      });
+  }
+});
+
 const encryptPassword = async (plaintext, rounds) => await bcrypt.hashSync(plaintext, await bcrypt.genSalt(rounds));
 
 export default router;

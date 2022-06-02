@@ -4,7 +4,7 @@ import { fetchJSON } from '../utils/utils.js';
 import { BASEPOINT } from "../App";
 
 function CreateProjectModal(props) {
-    const setLoggedIn = props.setLoggedInCallback;
+    const setLoadingCallback = props.setLoadingCallback;
     const [modal, setModal] = useState(false);
     const toggle = () => setModal(!modal);
 
@@ -42,6 +42,7 @@ function CreateProjectModal(props) {
         toggle();
 
         // Set loading to true
+        setLoadingCallback(true);
     }
 
     let handleCancel = () => {

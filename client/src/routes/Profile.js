@@ -14,8 +14,8 @@ export default function ProfilePage() {
     const { setLoggedIn, credentials } = useOutletContext();
     const [profileInfo, setProfileInfo] = useState(null);
     const [profileImage, setProfileImage] = useState(null);
-    const [isLoading, setLoading] = useState(true);
     const [isClientUser, setIsClientUser] = useState(false);
+    const [isLoading, setLoading] = useState(true);
 
     // Editing permission handlers
     const checkClientUser = () => {
@@ -65,6 +65,14 @@ export default function ProfilePage() {
         let name = document.getElementById(`LinkName`).value;
         let url = document.getElementById(`LinkURL`).value;
         await ProfileService.putProfileLinks(LoginService.getUserCredentials().username, name, url)
+        setLoading(true); // Just need to refresh page
+    }
+
+    async function updateUserSkills(e) {
+        // e.preventDefault();
+        let skill = document.getElementById(`userSkill`).value;
+        console.log(skill)
+        await ProfileService.putProfileSkills(LoginService.getUserCredentials().username, skill)
         setLoading(true); // Just need to refresh page
     }
 
@@ -129,7 +137,7 @@ export default function ProfilePage() {
                         </div>
                     </div>
                     <div className="col">
-                        <div className="skills">
+                        <div className="links">
                             <h2>Links:</h2>
                             <ul>
                                 {
@@ -161,7 +169,8 @@ export default function ProfilePage() {
                         </div>
                     </div>
                     <div className="col">
-                        <div className="links">
+                        <div className="skills">
+                            <h2>Skills:</h2>
                             <ul>
                                 {
                                     profileInfo.skillset.map((skill) => {
@@ -169,24 +178,30 @@ export default function ProfilePage() {
                                     })
                                 }
                             </ul>
+                            {
+                                (isClientUser)
+                                    ?  <div>
+                                        <input
+                                            type="text"
+                                            id="userSkill"
+                                            name="userSkill"
+                                            placeholder="Skill name"
+                                        />
+                                        <Button size="sm" onClick={() => {updateUserSkills()}}>Add skill</Button>
+                                    </div>
+                                    : <></>
+                            }
                         </div>
                     </div>
                 </div>
             </div>
 
             <div className="projects container-fluid">
-                {
-                    (isClientUser)
-                        ? <div><h2>Your Deck:</h2>
-                        <CreateProjectModal>
-                        </CreateProjectModal>
-                        </div>
-                        : <div><h2>DevDeck:</h2></div>
-                }
                 {/* <span id="postStatus"></span> */}
-                <UserDeck 
-                    username={username}>
-                </UserDeck>
+                <UserDeck
+                    isClientUser={isClientUser}
+                    username={username}
+                />
             </div>
 
             {/* <div className="projects container-fluid">

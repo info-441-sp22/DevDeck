@@ -16,7 +16,7 @@ router.post('/', async function (req, res, next) {
       longer_description: req.body.longer_description,
       url_link: req.body.url_link,
       collaborators: req.body.collaborators, 
-      techStack: req.body.techStack,
+      techStack: req.body.tech_stack,
       likes: []
     })
 
@@ -32,7 +32,7 @@ router.get('/single', async (req, res, next) => {
   const id = req.query.id;
 
   // Error guard for empty query
-  if (!id) res.status(400).json({ message: 'Empty post id query.', error: 'Client provided no query with endpoint.'});
+  if (!id) res.status(400).json({ message: 'Empty post id query.', error: 'Client provided no query with endpoint.' });
 
   // Find the id with the `id`
   const post = await req.models.Post.findOne({ _id: id });
@@ -40,7 +40,7 @@ router.get('/single', async (req, res, next) => {
   console.log('post', post);
 
   // Error guard for user that doesn't exist
-  if (!post) res.status(404).json({ message: 'Post info fetch failed.', error: 'Post with the id does not exist.'});
+  if (!post) res.status(404).json({ message: 'Post info fetch failed.', error: 'Post with the id does not exist.' });
 
   // Return the user information
   return res.json({
@@ -110,7 +110,11 @@ router.post('/like', async function (req, res, next) {
     }
 
     await post.save()
-    res.json({ "status": "success" });
+    res.json({
+      message: 'Post likes successfully updated.',
+      payload: post,
+      status: 'success'
+    });
   } catch (error) {
     console.log("An error occured:" + error)
     res.status(500).json({ "status": "error", "error": error })
@@ -132,7 +136,11 @@ router.post('/unlike', async function (req, res, next) {
     }
 
     await post.save()
-    res.json({ "status": "success" });
+    res.json({
+      message: 'Post likes successfully updated.',
+      payload: post,
+      status: 'success'
+    });
   } catch (error) {
     console.log("An error occured:" + error)
     res.status(500).json({ "status": "error", "error": error })

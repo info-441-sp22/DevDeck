@@ -62,7 +62,7 @@ export function Card(props) {
                         <img className="card-img-top" src="..." alt="Project thumbnail"></img>
                         <div className="card-body">
                             <h5 className="card-title">{cardData.title}</h5>
-                            <p className="card-text">Posted by: <a href="" onclick={viewUser}>{cardData.username}</a></p>
+                            <p className="card-text">Posted by: <a href="" onClick={viewUser}>{cardData.username}</a></p>
                             <p className="card-text">{cardData.blurb}</p>
                             <Button className="btn btn-primary" onClick={onClickView}>
                                 View project details
@@ -70,10 +70,10 @@ export function Card(props) {
                             {/* like and unlike button */}
                             <div>
                                 <span title={(cardData.likes) ? escapeHTML(cardData.likes.join(", ")) : ""}> {cardData.likes ? (cardData.likes.length) : 0} likes </span> &nbsp; &nbsp;
-                                <span class={`heart-button-span ${currUsername ? "" : "d-none"}`}>
+                                <span className={`heart-button-span ${currUsername ? "" : "d-none"}`}>
                                     {cardData.likes && cardData.likes.includes(currUsername) ?
-                                        <button class="heart_button" onClick={() => unlikePost(cardData.id, currUsername)}> &#x2665;</button> :
-                                        <button class="heart_button" onClick={() => likePost(cardData.id, currUsername)}> &#x2661;</button>}
+                                        <button className="heart_button" onClick={() => unlikePost(cardData.id, currUsername)}> &#x2665;</button> :
+                                        <button className="heart_button" onClick={() => likePost(cardData.id, currUsername)}> &#x2661;</button>}
                                 </span>
                             </div>
                             {/* need to create new page for each card's project details */}
