@@ -3,44 +3,52 @@ import { Card } from "./Card.js";
 import { fetchJSON } from '../utils/utils.js';
 import { BASEPOINT } from "../App";
 import { PostService } from "../services/PostService.js";
+import CreateProjectModal from "./CreateProjectModal.js";
 
 function UserDeck(props) {
+    const isClientUser = props.isClientUser;
     const username = props.username ? props.username : "";
     const [userPosts, setUserPosts] = useState([]);
-    // create loading state
+    const [isLoading, setLoading] = useState(true); // <-- I want to load!
 
     useEffect(() => {
-        // Build request object
-        const request = {
-            username: username
-        };
-
-        PostService.findPosts(request)
-            .then(data => {
-                console.log(data)
-                // Building the card array
-                setUserPosts(data.map((postCard, i) => <Card key={i} cardData={postCard} />));
-                // Set loading to false
-            });
-    }, [])
+        if (isLoading) {    // <-- load when I want u to load
+            // Build request object
+            const request = {
+                username: username
+            };
+    
+            PostService.findPosts(request)
+                .then(data => {
+                    console.log(data)
+                    // Building the card array
+                    setUserPosts(data.map((postCard, i) => <Card key={i} cardData={postCard} />));
+                    setLoading(false);  // <-- Remember to change loading to no load no more!
+                });
+        }
+    }, [isLoading]) // <-- runs every time isLoading changes
 
     return (
-        // <div>
-        //     {userPosts}
-        // </div>
+        <>
+            <div>
+                {
+                    (isClientUser)
+                        ? <div><h2>Your Deck:</h2>
+                        <CreateProjectModal
+                            setLoadingCallback={setLoading}
+                        />
+                        </div>
+                        : <div><h2>DevDeck:</h2></div>
+                }
 
-        <div className="home container-fluid">
-            <div className="row">
-                {userPosts}
             </div>
-        </div>
+            <div className="home container-fluid">
+                <div className="row">
+                    {userPosts}
+                </div>
+            </div>
+        </>
     )
-}
-
-// call api/posts GET endpoint, filtering for posts created by user
-async function findPosts(props) {
-    let postsJSON = await fetchJSON(BASEPOINT + `/api/posts?username=${props.username}`);
-    return postsJSON;
 }
 
 export default UserDeck;

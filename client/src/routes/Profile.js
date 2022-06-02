@@ -14,8 +14,8 @@ export default function ProfilePage() {
     const { setLoggedIn, credentials } = useOutletContext();
     const [profileInfo, setProfileInfo] = useState(null);
     const [profileImage, setProfileImage] = useState(null);
-    const [isLoading, setLoading] = useState(true);
     const [isClientUser, setIsClientUser] = useState(false);
+    const [isLoading, setLoading] = useState(true);
 
     // Editing permission handlers
     const checkClientUser = () => {
@@ -175,18 +175,11 @@ export default function ProfilePage() {
             </div>
 
             <div className="projects container-fluid">
-                {
-                    (isClientUser)
-                        ? <div><h2>Your Deck:</h2>
-                        <CreateProjectModal>
-                        </CreateProjectModal>
-                        </div>
-                        : <div><h2>DevDeck:</h2></div>
-                }
                 {/* <span id="postStatus"></span> */}
-                <UserDeck 
-                    username={username}>
-                </UserDeck>
+                <UserDeck
+                    isClientUser={isClientUser}
+                    username={username}
+                />
             </div>
 
             {/* <div className="projects container-fluid">
