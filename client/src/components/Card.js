@@ -22,7 +22,7 @@ async function unlikePost(postID) {
 
 export function Card(props) {
     const cardData = props.cardData
-    const currUsername = props.cardData.username;
+    const currUsername = props.username;
     const [val, setVal] = useState("");
     const navigate = useNavigate();
     // console.log("cardData", cardData)
