@@ -8,6 +8,7 @@ function LoginModal(props) {
   const setToastStateCallback = props.setToastStateCallback;
 
   const [show, setShow] = useState(false);
+
   const [loginRequest, setLoginRequest] = useState({
     username: '',
     password: ''
@@ -18,12 +19,11 @@ function LoginModal(props) {
 
   const onClickSubmit = async () => {
     // Await login process
-    LoginService.LogIn(loginRequest)
+    LoginService.LogIn(loginRequest, setLoggedInCallback)
       .then((payload) => {
         // toast to user the success
         setToastMessageCallback('' + payload);
         setToastStateCallback('info');
-        setLoggedInCallback(true);
       })
       .catch((error) => {
         console.log(error);

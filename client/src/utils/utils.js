@@ -13,6 +13,7 @@ export async function fetchJSON(route, options){
     let response
     try{
         response = await fetch(route, {
+            credentials: 'include',
             method: options && options.method ? options.method : "GET",
             body: options && options.body ? JSON.stringify(options.body) : undefined,
             headers: options && options.body ? {'Content-Type': 'application/json'}: undefined

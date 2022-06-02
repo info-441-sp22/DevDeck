@@ -1,45 +1,70 @@
-import React, { useEffect, useState } from "react"; //import React Component
-import { Card } from "../components/Card.js";
+import React, { createRef, useEffect, useState } from "react"; 
 import { Button } from "reactstrap";
 import CreateProjectModal from "../components/CreateProjectModal";
 import UserDeck from "../components/UserDeck";
 import { LoginService } from "../services/LoginService.js";
 import { ProfileService } from "../services/ProfileService.js";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useOutletContext, useParams } from "react-router-dom";
 import LoadingComponent from "../components/LoadingComponent.js";
 import { ImageService } from "../services/ImageService.js";
-import { fetchJSON } from "../utils/utils.js";
+import { toast } from "react-toastify";
 
-export default function ProfilePage(props) {
+export default function ProfilePage() {
     const { username } = useParams();
-    const isClientUser = LoginService.getUserCredentials().username === username;
-    const [val, setVal] = useState("");
+    const { credentials } = useOutletContext();
+    const {isLoggedIn, setLoggedIn} = useOutletContext();
     const [profileInfo, setProfileInfo] = useState(null);
     const [profileImage, setProfileImage] = useState(null);
     const [isLoading, setLoading] = useState(true);
+    const [isClientUser, setIsClientUser] = useState(false);
 
-    // Grab URL query param
-    const uploadImageHandler = (event) => {
+    // Editing permission handlers
+    const checkClientUser = () => {
+        console.log('credentials', credentials);
+        return credentials && credentials.username === username;
+    }
+    // Image Handlers
+    const uploadImageHandler = async (event) => {
         const request = new FormData();
         request.append('file', event.target.files[0]);
-        ImageService.uploadProfileImage(request);
+        await ImageService.uploadProfileImage(request);
+        toast.info('Profile image uploaded.');
+        setLoading(true);
+    }
+
+    const onClickImageSubmitHandler = async () => {
+        document.getElementById('profile_img_upload').click();
     }
 
     useEffect(() => {
         // Load the profile data
         if (isLoading) {
+            LoginService.authenticationHeartbeat(setLoggedIn);
             ProfileService.getProfile(username)
                 .then((payload) => {
-                    console.log(payload);
                     setProfileInfo(payload.user_info);
-                    // setProfileImage(payload.profile_img);
+                    setProfileImage(payload.profile_img);
+                    // Check to see if it is the client viewing their page
+                    setIsClientUser(checkClientUser());
                     setLoading(false);
                 })
                 .catch(err => {  // Handle error page
                     console.log(err);
                 });
         }
-    }, [isLoading]);    // change `isLoading` to refresh the data loading
+
+        // If the login status changes
+        // setIsClientUser(prev => {
+        //     if (isLoggedIn) {
+        //         const isClient = checkClientUser();
+    
+        //         // The login status changed the user to be the actual client user
+        //         return !prev && isClient;
+        //     }
+        //     // Set editing permissions off for those who are not logged in
+        //     return prev;
+        // });
+    }, [isLoading, credentials]);    // change `isLoading` to refresh the data loading
 
     async function updateUserInfo(e) {
         // e.preventDefault();
@@ -60,16 +85,31 @@ export default function ProfilePage(props) {
                         <div className="profile-img">
                             {
                                 (profileImage)
-                                    ? <img src={profileImage} alt="Profile" />
+                                    ? <img 
+                                        src={profileImage} 
+                                        alt="Profile" 
+                                        className="nav-profile-pic"
+                                    />
                                     : <></>
                             }
-                            <input
-                                type="file"
-                                id="profile_img_upload"
-                                name="profile_img"
-                                accept="image/*"
-                                onChange={uploadImageHandler}
-                            />
+                            {
+                                (isClientUser)
+                                    ? <div>
+                                        <input
+                                            type="file"
+                                            id="profile_img_upload"
+                                            name="profile_img"
+                                            accept="image/*"
+                                            onChange={uploadImageHandler}
+                                        />
+                                        <Button
+                                            type="button"
+                                            onClick={() => onClickImageSubmitHandler()}>
+                                            Change Image
+                                        </Button>
+                                    </div>
+                                    : <></>
+                            }
                             <h2>{profileInfo.first_name + ' ' + profileInfo.last_name}</h2>
                             <h3>@{profileInfo.username}</h3>
                         </div>

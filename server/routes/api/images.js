@@ -4,6 +4,7 @@ import multer from 'multer';
 import GridFsBucket from 'gridfs-stream';
 import path from 'path';
 import { __dirname } from '../../app.js';
+import { unlinkSync } from 'fs';
 
 var router = express.Router();
 const storage = multer.diskStorage({
@@ -12,7 +13,7 @@ const storage = multer.diskStorage({
   },
   filename: function (req, file, callback) {
     const username = req.session.username;
-    callback(null, `${username}-${Date.now()}-${file.originalname}.${file.mimetype.split('/')[1]}`);
+    callback(null, `${Date.now()}-${file.originalname}.${file.mimetype.split('/')[1]}`);
   }
 });
 const upload = multer({
@@ -42,13 +43,16 @@ router.post('/profile', upload.single('file'), async (req, res) => {
     // Save the connection into the DB
     const filename = req.file.filename;
     const username = req.session.username;
+    console.log('username', username);
 
-    // @TODO handle project image things
     const existingProfileImage = await req.models.Image.findOne({ username: username, purpose: 'profile' });
 
     if (existingProfileImage) { // Error guard, profile image already exists
       // Delete the image connection
       await req.models.Image.deleteOne({ username: username, purpose: 'profile' });
+
+      // Delete the image in uploads
+      unlinkSync(path.join(__dirname, 'uploads', existingProfileImage.filename));
     }
 
     const image = new req.models.Image({
@@ -80,127 +84,22 @@ router.get('/', async (req, res) => {
   const tokens = path.split('.');
 
   res.set('Content-Type', `image/${tokens[tokens.length - 1]}`);
-  res.sendFile(path);
+  return res.sendFile(path);
 });
 
 router.get('/profile', async (req, res) => {
   const username = req.query.username;
-  console.log(username);
   const image = await req.models.Image.findOne({ username: username, purpose: 'profile' });
 
-  console.log(image);
-
   if (!image) { // Error guard - image not found
-    return res.json({
-      error: 'Profile image for the specified user is not found.',
-      message: 'User needs to upload a profile image.'
-    });
+    res.set('Content-Type', `image/png`);
+    return res.sendFile(path.join(__dirname, 'uploads', 'blank_profile_image.png'));
   }
+
   const tokens = image.filename.split('.');
 
   res.set('Content-Type', `image/${tokens[tokens.length - 1]}`);
-  res.sendFile(path.join(__dirname, 'uploads', image.filename));
+  return res.sendFile(path.join(__dirname, 'uploads', image.filename));
 });
-
-// let gfs;
-// const conn = mongoose.connection;
-// conn.once("open", function () { // Init gfs
-//     gfs = Grid(conn.db, mongoose.mongo);
-//     gfs.collection('photos');
-// });
-
-// router.post("/upload", upload.single("file"), async (req, res) => {
-//   if (req.file === undefined) return res.send("you must select a file.");
-//   const imgUrl = `http://localhost:3000/api/images/${req.file.filename}`;
-//   return res.send(imgUrl);
-// });
-
-// router.get("/:filename", async (req, res) => {
-//   try {
-//       // const file = await gfs.files.findOne({ filename: req.params.filename });
-//       // const readStream = gfs.createReadStream(file.filename);
-//       // readStream.pipe(res);
-//       await gfs.files.find({ filename: req.params.filename })
-//         .toArray((err, files) => { 
-//           res.set('Content-Type', 'image/jpeg');
-//           console.log(files[0]);
-//           // res.send(files[0]);
-
-//           gfs.openDownloadStream(files[0]._id).pipe(res);
-//           // gfs.createReadStream({ filename: req.params.filename }).pipe(res);
-//         });
-//   } catch (error) {
-//       res.send(error);
-//   }
-// });
-
-// router.delete("/:filename", async (req, res) => {
-//   try {
-//       await gfs.files.deleteOne({ filename: req.params.filename });
-//       res.send("success");
-//   } catch (error) {
-//       console.log(error);
-//       res.send("An error occured.");
-//   }
-// });
-
-// router.post('/upload', upload.single('file'), async (req, res, next) => {
-//     if (!req.file) {
-//       // @TODO add response code
-//       res.json({
-//         message: 'You must select a file.',
-//         error: 'No file in the request.'
-//       });
-//     }
-//     // Error guard - wrong image file type
-//     // if (!req.file.originalname.match('/\.(jpg|JPG|jpeg|JPEG]png|PNG)$/)')) {
-//     //   res.send({
-//     //     message: 'Only image files (jpg, jpeg, png) are allowed!'
-//     //   });
-//     // }
-  
-//     const body = req.body;
-//     // const image = new req.models.Image({
-//     //   username: body.username,
-//     //   image_type: body.imageType,
-//     //   data: fs.readFileSync(req.file.path),
-//     //   content_type: 'images/jpg' 
-//     // });
-//     console.log(req.file);
-//     // const image = new req.models.Image(req.file)
-  
-//     // // Save image
-//     // image.save();
-  
-//     // // Debug
-//     // const uploadedImage = req.models.Image.findOne({ username: body.username });
-  
-//     // console.log(uploadedImage);
-  
-//     res.json({
-//       message: 'Image uploaded.',
-//       status: 'success'
-//     })
-//   ;});
-
-// router.get("/:filename", async (req, res) => {
-//     try {
-//         const file = await gfs.files.findOne({ filename: req.params.filename });
-//         const readStream = gfs.createReadStream(file.filename);
-//         readStream.pipe(res);
-//     } catch (error) {
-//         res.send("not found");
-//     }
-// });
-
-// router.delete("/:filename", async (req, res) => {
-//     try {
-//         await gfs.files.deleteOne({ filename: req.params.filename });
-//         res.send("success");
-//     } catch (error) {
-//         console.log(error);
-//         res.send("An error occured.");
-//     }
-// });
 
 export default router;
