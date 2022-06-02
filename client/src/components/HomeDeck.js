@@ -14,16 +14,16 @@ function HomeDeck(props) {
 
     // Card Factory Handler
     const createTopCards = function (data) {
-        return data.map((post, index) => <Card key={index} post={post} username={props.username} credentials={props.credentials} />)
+        return data.map((postCard, i) => <Card key={i} cardData={postCard} />)
     };
 
     useEffect(() => {
-        findPosts(props)
+        findPosts()
             .then(allPosts => {
                 setFeaturedPosts(createTopCards(allPosts.sort((post_a, post_b) => post_b.comments.length - post_a.comments.length).slice(0, 3)));
                 setPopularPosts(createTopCards(allPosts.sort((post_a, post_b) => post_b.likes.length - post_a.likes.length).slice(0, 3)));
                 setRecentPosts(createTopCards(allPosts.sort((post_a, post_b) => post_b.created_date - post_a.created_date).slice(0, 3)));
-                console.log(featuredPosts)
+                // console.log(featuredPosts)
             })
     }, [])
 

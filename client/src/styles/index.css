@@ -157,3 +157,7 @@ code {
 input {
   color: black;
 }
+
+.heart_button{
+  color:red;
+}
