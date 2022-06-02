@@ -117,9 +117,12 @@ export default function ProjectDetails() {
                         </div>                        
                         <br></br>
                         <Button className="btn btn-primary" onClick={returnHome}>Return to homepage</Button>
+                        {/* <br></br>
                         <br></br>
                         <br></br>
                         <br></br>
+                        <br></br>
+                        <br></br> */}
                         <hr style={{height: '0'}}/>
                     </div>
                 </main>
