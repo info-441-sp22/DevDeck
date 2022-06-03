@@ -58,7 +58,7 @@ export function Card(props) {
                         <img className="card-img-top" src={imageUrl} alt="Project thumbnail"></img>
                         <div className="card-body">
                             <h5 className="card-title">{cardData.title}</h5>
-                            <p className="card-text">Posted by: <a href="" onClick={viewUser}>{cardData.username}</a></p>
+                            <p className="card-text">Posted by: <a href="" style={{color: "#d33115"}} onClick={viewUser}>{cardData.username}</a></p>
                             <p className="card-text">{cardData.blurb}</p>
                             <div className="row">
                                 {/* like and unlike button */}
@@ -74,7 +74,7 @@ export function Card(props) {
                                             }}> &#x2661;</button>}
                                     </span>
                                 </div>
-                                <Button className="btn btn-primary" onClick={onClickView} style={{flexBasis: '50%'}}>
+                                <Button color="dark" onClick={onClickView} style={{flexBasis: '50%'}}>
                                     View details
                                 </Button>
                             </div>

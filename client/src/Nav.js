@@ -64,7 +64,7 @@ function NavBar(props) {
                                             <p>Hello, {credentials.first_name}</p>
                                         </div>
                                         <div className="login-text-item">
-                                            <Button variant="primary" onClick={handleLogOut}>Log Out</Button>
+                                            <Button variant="light" onClick={handleLogOut}>Log out</Button>
                                         </div>
                                         <Nav.Link as={NavLink} to={"/profile/" + credentials.username}>
                                             <img

@@ -51,8 +51,8 @@ function SignupModal(props) {
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
-        Sign Up
+      <Button variant="dark" onClick={handleShow}>
+        Sign up
       </Button>
 
       <Modal show={show} onHide={handleClose}>
@@ -107,8 +107,8 @@ function SignupModal(props) {
               <div className="invalid-feedback">{errors.confirmPwd?.message}</div>
             </Form.Group>
             <Modal.Footer>
-              <Button variant="primary" type="submit">
-                Sign Up
+              <Button variant="danger" type="submit">
+                Sign up
               </Button>
               <Button variant="secondary" onClick={handleClose}>
                 Close

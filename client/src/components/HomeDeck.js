@@ -69,9 +69,10 @@ function HomeDeck(props) {
                     {popularPosts}
                 </div>
             </div>
+            <hr />
             <hr style={{height: '0'}}/>
             <div>
-                <h2>Recently Added projects:</h2>
+                <h2>Recently added projects:</h2>
                 <div className="row">
                     {recentPosts}
                 </div>
