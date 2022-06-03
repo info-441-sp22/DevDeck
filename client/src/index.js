@@ -4,7 +4,7 @@ import './styles/index.css';
 import HomePage from './routes/Home.js';
 import ProfilePage from './routes/Profile.js';
 // import reportWebVitals from './reportWebVitals';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, useOutletContext } from 'react-router-dom';
 import App from './App';
 import ProjectDetails from './routes/ProjectDetails';
 
@@ -13,7 +13,7 @@ root.render(
   // <React.StrictMode>
   //   <App />
   // </React.StrictMode>
-  <BrowserRouter>
+  <BrowserRouter forceRefresh={true}>
     <Routes>
       <Route path='/' element={<App />}>
         <Route path='home' element={<HomePage />} />

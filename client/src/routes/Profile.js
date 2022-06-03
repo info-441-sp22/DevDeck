@@ -4,18 +4,20 @@ import CreateProjectModal from "../components/CreateProjectModal";
 import UserDeck from "../components/UserDeck";
 import { LoginService } from "../services/LoginService.js";
 import { ProfileService } from "../services/ProfileService.js";
-import { useLocation, useOutletContext, useParams } from "react-router-dom";
+import { useLocation, useOutletContext, useParams, useSearchParams } from "react-router-dom";
 import LoadingComponent from "../components/LoadingComponent.js";
 import { ImageService } from "../services/ImageService.js";
 import { toast } from "react-toastify";
 
 export default function ProfilePage() {
     const { username } = useParams();
+    const [searchParams] = useSearchParams();
     const { setLoggedIn, credentials } = useOutletContext();
     const [profileInfo, setProfileInfo] = useState(null);
     const [profileImage, setProfileImage] = useState(null);
     const [isLoading, setLoading] = useState(true);
     const [isClientUser, setIsClientUser] = useState(false);
+
 
     // Editing permission handlers
     const checkClientUser = () => {
@@ -35,6 +37,7 @@ export default function ProfilePage() {
     }
 
     useEffect(() => {
+        console.log(username);
         // Load the profile data
         if (isLoading) {
             // LoginService.authenticationHeartbeat(setLoggedIn);
@@ -50,7 +53,7 @@ export default function ProfilePage() {
                     console.log(err);
                 });
         }
-    }, [isLoading, credentials]);    // change `isLoading` to refresh the data loading
+    }, [isLoading, username]);    // change `isLoading` to refresh the data loading
 
     async function updateUserBio(e) {
         // e.preventDefault();

@@ -199,3 +199,8 @@ input {
   text-align: center;
   color: white;
 }
+
+.profile-pic-navbar {
+  margin-top: 8px;
+  margin-left: 5px;
+}

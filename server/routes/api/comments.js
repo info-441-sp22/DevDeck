@@ -9,7 +9,7 @@ router.post('/', async function(req, res, next) {
                 username: req.body.username,
                 comment: req.body.comment,
                 post: req.body.postID,
-                date_created: Date.now()
+                created_date: Date.now()
             })
             await newComment.save()
             res.json({"status": "success"});

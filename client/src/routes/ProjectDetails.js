@@ -8,6 +8,8 @@ import { PostService } from "../services/PostService";
 import { useNavigate } from "react-router-dom";
 import { ImageService } from "../services/ImageService";
 import { CommentService } from "../services/CommentService.js";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
 
 export default function ProjectDetails() {
     const { id } = useParams();
@@ -20,17 +22,20 @@ export default function ProjectDetails() {
 
     useEffect(() => {
         if (isLoading) {
-            LoginService.authenticationHeartbeat(setLoggedIn);
+            // Get the post info
             PostService.findSinglePost({ id: id })
                 .then(data => {
                     setPostData(data);
-                    console.log(id);
+
+                    // Get the post image
                     ImageService.getPostImage({ post_id: id })
                         .then(url => {
                             setImageUrl(url);
                         })
                 })
                 .catch(err => toast.error(err));
+
+            // Get the post comments
             CommentService.getComments(id)
                 .then(data => {
                     console.log("comment data:", data)
@@ -116,8 +121,8 @@ export default function ProjectDetails() {
                                     {
                                         postData.techStack.map((tech) => {
                                             const tokens = tech.split(', ');
-                                            tokens.forEach((token) => {
-                                                return <li>{token}</li>;
+                                            tokens.forEach((token, i) => {
+                                                return <li key={i}>{token}</li>;
                                             })                                            
                                         })
                                     }
@@ -134,7 +139,13 @@ export default function ProjectDetails() {
                             <div className="col">
                                 <h3>Likes info:</h3>
                                 <p>{postData.likes.length} likes</p>
-                                {postData.likes}
+                                {
+                                    postData.likes.map((user, i) => {
+                                        return <span key={i}>
+                                                <p><FontAwesomeIcon icon={faHeart} /> - {user}</p>
+                                            </span>;
+                                    })
+                                }
                             </div>
                         </div>
                         <hr style={{height: '0'}} />
@@ -160,9 +171,13 @@ export default function ProjectDetails() {
                                     <div id={`comments-box-${postData._id}`} className="comments-box">
                                         <div id={`comments-${postData._id}`}>
                                         {
-                                            commentData.map((comment) => {
-                                                console.log(comment)
-                                                return <li>${comment}</li>
+                                            commentData.map((comment, i) => {
+                                                return <div style={{border: "1px solid black", padding: "5px"}} key={i}>
+                                                    <h4>{comment.comment}</h4>
+                                                    <h5><i>{comment.username}</i></h5>
+                                                    <p><i>{Date(comment.created_date)}</i></p>
+                                                </div>
+                                                // @TODO fix the styling
                                             })
                                         }
                                         </div>

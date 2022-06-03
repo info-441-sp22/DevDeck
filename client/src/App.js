@@ -38,22 +38,22 @@ function App() {
             .then(loggedIn => {
                 if (loggedIn) {
                     console.log('heartbeat user is logged in');
-                    // setLoggedIn(true);
-                    // setCredentials(LoginService.getUserCredentials());
+                    setLoggedIn(true);
+                    setCredentials(LoginService.getUserCredentials());
                 } else {
                     console.log('heartbeat user is logged out');
-                    // setLoggedIn(false);
-                    // setCredentials();
+                    setLoggedIn(false);
+                    setCredentials();
                 }
-            })
+            });
 
-        if (isLoggedIn) {   // Send authentication heartbeat
-            // console.log('setting credentials...');
-            setCredentials(LoginService.getUserCredentials());
-        } else {
-            // console.log('clearing credentials...');
-            setCredentials();
-        }
+        // if (isLoggedIn) {   // Send authentication heartbeat
+        //     // console.log('setting credentials...');
+        //     setCredentials(LoginService.getUserCredentials());
+        // } else {
+        //     // console.log('clearing credentials...');
+        //     setCredentials();
+        // }
     }, [isLoggedIn]);
 
     useEffect(() => {

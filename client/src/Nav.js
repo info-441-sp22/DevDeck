@@ -66,15 +66,18 @@ function NavBar(props) {
                                         <div className="login-text-item">
                                             <Button variant="light" onClick={handleLogOut}>Log out</Button>
                                         </div>
-                                        <Nav.Link as={NavLink} to={"/profile/" + credentials.username}>
-                                            <img
-                                                src="../imgs/profile_default.png"                    
-                                                height="35"
-                                                width="35"
-                                                className="mr-3 profile-pic-navbar"
-                                                alt="User's profile"
-                                            />
-                                        </Nav.Link>
+                                        <Nav >
+                                            <a href={"/profile/" + credentials.username}>
+                                                <img
+                                                    src="../imgs/profile_default.png"                    
+                                                    height="35"
+                                                    width="35"
+                                                    className="mr-3 profile-pic-navbar"
+                                                    alt="User's profile"
+                                                    href={"/profile/" + credentials.username}
+                                                />
+                                            </a>
+                                        </Nav>
                                     </div>
                         }
                     </Nav>
