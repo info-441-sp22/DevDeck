@@ -112,7 +112,7 @@ export default function ProjectDetails() {
                                     {
                                         postData.techStack
                                     }
-                                    {/* <ul>
+                                    <ul>
                                     {
                                         postData.techStack.map((tech) => {
                                             const tokens = tech.split(', ');
@@ -121,7 +121,7 @@ export default function ProjectDetails() {
                                             })                                            
                                         })
                                     }
-                                    </ul> */}
+                                    </ul>
                                 </div>
                             </div>
                             <div className="col">                        
