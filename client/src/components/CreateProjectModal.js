@@ -107,10 +107,10 @@ function CreateProjectModal(props) {
                             placeholder="Link to your project">
                         </Input>
                         <Input type="text" id="techStackInput"
-                            placeholder="Technologies used to create your project (enter as [a, b...])">
+                            placeholder="Technologies used to create your project (enter as a, b...)">
                         </Input>
                         <Input type="text" id="collabInput"
-                            placeholder="Project collaborators (enter as [a, b...])">
+                            placeholder="Project collaborators (enter as a, b...)">
                             {/* TO EDIT: if users have a devdeck account, ask them to put in their username instead of full name */}
                         </Input>
                         <div>

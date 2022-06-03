@@ -60,12 +60,13 @@ export default function ProjectDetails() {
     async function postComment() {
         // e.preventDefault();
         let comment = document.getElementById(`new-comment-${postData._id}`).value;
-        console.log(comment)
-        console.log(LoginService)
-        console.log(LoginService.getUserCredentials())
-        let username = LoginService.getUserCredentials().username;
-        await CommentService.postComment(postData._id, comment, username)
+        console.log(credentials)
+        await CommentService.postComment(postData._id, comment, credentials.username)
         setLoading(true); // Just need to refresh page
+    }
+    
+    const viewUser = () => {
+        navigate('/profile/' + postData.username);
     }
 
     // const displayCollab = () => { // function to display project collaborators
@@ -87,7 +88,10 @@ export default function ProjectDetails() {
                         <h2>{
                             postData.title
                         }</h2>
-                        {/* <a href="">Link to project</a> */}
+                        <h5><em>{
+                            postData.blurb
+                        }</em></h5>
+                        <h5>Posted by: <a href="" onClick={viewUser}>{postData.username}</a></h5>
                         <Button color="primary" onClick={goToUrl}>
                             Link to project
                         </Button>
@@ -95,15 +99,7 @@ export default function ProjectDetails() {
                             <div className="col">
                                 <div>
                                     <img className="thumbnail" src={imageUrl} alt="project thumbnail"></img>
-                                </div>
-                            </div>
-                            <div className="col">
-                                <div className="blurb">
-                                    <h3>Short blurb:</h3>
-                                    <em>{
-                                        postData.blurb
-                                    }</em>
-                                </div>
+                                </div>                                
                             </div>
                             <div className="col">
                                 <div className="techStack">
@@ -156,6 +152,7 @@ export default function ProjectDetails() {
                                         <div id={`comments-${postData._id}`}>
                                         {
                                             commentData.map((comment) => {
+                                                console.log(comment)
                                                 return <li>${comment}</li>
                                             })
                                         }
@@ -163,7 +160,7 @@ export default function ProjectDetails() {
                                         <div className={`new-comment-box ${true ? '': 'd-none'}`}>
                                             New Comment:
                                             <input type="text" id={`new-comment-${postData._id}`} style={{color: 'black'}}/>
-                                            <Button onClick={() => postComment(postData._id)}>
+                                            <Button onClick={postComment}>
                                                 Post comment
                                             </Button>
                                         </div>
@@ -173,6 +170,13 @@ export default function ProjectDetails() {
                         </div>
                         <br></br>
                         <Button className="btn btn-primary" onClick={returnHome}>Return to homepage</Button>
+                        {/* <br></br>
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        <br></br> */}
+                        <hr style={{height: '0'}}/>
                     </div>
                 </main>
         }
