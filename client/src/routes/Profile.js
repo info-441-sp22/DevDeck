@@ -19,7 +19,6 @@ export default function ProfilePage() {
 
     // Editing permission handlers
     const checkClientUser = () => {
-        console.log('credentials', credentials);
         return credentials && credentials.username === username;
     }
     // Image Handlers

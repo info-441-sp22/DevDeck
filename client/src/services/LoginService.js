@@ -21,7 +21,6 @@ export class LoginService {
         }
 
         // User is logged in
-        // setLoggedInCallback(true);
         return true;
     }
 
@@ -85,18 +84,19 @@ export class LoginService {
         const response = await fetch(
             LoginService.LOGIN_BASEPOINT() + '/logout',
             {
-                method: 'DELETE'
+                method: 'DELETE',
+                credentials: 'include'
             }
         );
 
-        const responsePayload = await response.json();
+        const responsePayload = await response.text();
 
         // Delete the user info in the storage
         // document.cookie[0]
         LoginService.removeUserCredentials();
         setLoggedInCallback(false);
 
-        return responsePayload.message;
+        return responsePayload;
     }
 
     /** Session Storage functions */

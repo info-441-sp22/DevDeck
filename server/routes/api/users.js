@@ -7,14 +7,15 @@ const upload = multer({ dest: 'uploads/' });
 var router = express.Router();
 
 /* GET users listing. */
-router.get('/debug', async (req, res, next) => {
-  const username = req.session.username;
-
-  if (!username) {
-    res.send('You are not signed in.');
+router.get('/debug', function(req, res, next) {
+  let session = req.session
+  console.log(session);
+  if(session.username){
+    res.send('respond with a resource for the user: ' + session.username);
   } else {
-    res.send('Hello, ' + username);
+    res.send('Error: You must be logged in to see this information')
   }
+  
 });
 
 router.get('/heartbeat', async (req, res, next) => {
@@ -114,13 +115,11 @@ router.post('/login', async function(req, res, next) {
 });
 
 router.delete('/logout', function(req, res, next) {
+  console.log('before', req.session);
+  // req.session.destroy();
+  req.session.isAuthenticated = false;
   console.log(req.session);
-  req.session.destroy();
-
-  return res.cookie("connect.sid", "", { value: '', expires: new Date(), path: '/' }).status(200).json({
-    message: 'User successfully logged out.',
-    status: 'success'
-  })
+  return res.send('User successfully logged out.');
 });
 
 router.post('/signup', async (req, res, next) => {
