@@ -84,19 +84,24 @@ export class ImageService {
 
     static getPostImage = async (request) => {
         const query = '?post_id=' + encodeURIComponent(request.post_id);
-        const response = await fetch( 
-            ImageService.IMAGE_BASEPOINT() + '/post' + query,
-            {
-                method: 'GET',
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json'
+        try {
+            const response = await fetch( 
+                ImageService.IMAGE_BASEPOINT() + '/post' + query,
+                {
+                    method: 'GET',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
                 }
-            }
-        );
-        const responseBlob = await response.blob(); 
+            );
+            const responseBlob = await response.blob(); 
+    
+            return URL.createObjectURL(responseBlob);
 
-        return URL.createObjectURL(responseBlob);
+        } catch (err) {
+            throw new Error(err);
+        }
     }
 
     static getPostImages = async (data) => {

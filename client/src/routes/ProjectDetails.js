@@ -32,8 +32,9 @@ export default function ProjectDetails() {
                         .then(url => {
                             setImageUrl(url);
                         })
+                        .catch((err) => toast.error(err + ''));
                 })
-                .catch(err => toast.error(err));
+                .catch((err) => toast.error(err + ''));
 
             // Get the post comments
             CommentService.getComments(id)
@@ -42,9 +43,7 @@ export default function ProjectDetails() {
                     setCommentData(data);
                     setLoading(false);
                 })
-                .catch(err => {
-                    toast.error(err + '')
-                });    
+                .catch((err) => toast.error(err + ''));
         }
     }, [isLoading]);
 

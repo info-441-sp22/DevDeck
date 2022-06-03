@@ -52,9 +52,7 @@ function HomeDeck(props) {
                     setRecentPosts(createTopCards(allPosts.sort((post_a, post_b) => new Date(post_b.created_date).getTime() - new Date(post_a.created_date).getTime()).slice(0, max_posts_to_display)));
                     setLoading(false);  // <-- Remember to change loading to no load no more!
                 })
-                .catch(err => {
-                    toast.error(err + '');
-                });
+                .catch((err) => toast.error(err + ''));
         }
     }, [isLoading, credentials])
 
