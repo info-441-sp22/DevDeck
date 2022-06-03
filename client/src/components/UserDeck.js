@@ -6,8 +6,8 @@ import CreateProjectModal from "./CreateProjectModal.js";
 import { ImageService } from "../services/ImageService.js";
 
 function UserDeck(props) {
-    const isClientUser = props.isClientUser;
     const username = props.username ? props.username : "";
+    const isClientUser = props.isClientUser;
     const [userPosts, setUserPosts] = useState([]);
     const [isLoading, setLoading] = useState(true); // <-- I want to load!
 

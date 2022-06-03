@@ -17,7 +17,7 @@ export class LoginService {
         if (responseHeartbeat.error) {
             // Remove the session
             LoginService.removeUserCredentials('user');
-            return false;
+            throw new Error('User is logged out.');
         }
 
         // User is logged in
@@ -42,10 +42,7 @@ export class LoginService {
         if (!responsePayload.error) {   // If no error is encountered
             // Store the user information that is grabbed
             sessionStorage.setItem('user', JSON.stringify(responsePayload.payload));
-            setLoggedInCallback(prev => {
-                console.log(prev);
-                return true;
-            });
+            setLoggedInCallback(true);
             return responsePayload.message;
         } else {    // If an error is encountered
             // Return error payload with message

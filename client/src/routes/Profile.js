@@ -20,9 +20,7 @@ export default function ProfilePage() {
 
 
     // Editing permission handlers
-    const checkClientUser = () => {
-        return credentials && credentials.username === username;
-    }
+    const checkClientUser = () => credentials && credentials.username === username;
     // Image Handlers
     const uploadImageHandler = async (event) => {
         const request = new FormData();
@@ -37,23 +35,21 @@ export default function ProfilePage() {
     }
 
     useEffect(() => {
-        console.log(username);
+        // Check to see if it is the client viewing their page
+        setIsClientUser(checkClientUser());
         // Load the profile data
         if (isLoading) {
-            // LoginService.authenticationHeartbeat(setLoggedIn);
             ProfileService.getProfile(username)
                 .then((payload) => {
                     setProfileInfo(payload.user_info);
                     setProfileImage(payload.profile_img);
-                    // Check to see if it is the client viewing their page
-                    setIsClientUser(checkClientUser());
                     setLoading(false);
                 })
                 .catch(err => {  // Handle error page
                     console.log(err);
                 });
         }
-    }, [isLoading, username]);    // change `isLoading` to refresh the data loading
+    }, [isLoading, credentials]);    // change `isLoading` to refresh the data loading
 
     async function updateUserBio(e) {
         // e.preventDefault();
@@ -143,9 +139,9 @@ export default function ProfilePage() {
                             <h2>Links:</h2>
                             <ul>
                                 {
-                                    profileInfo.urls.map((url) => {
+                                    profileInfo.urls.map((url, i) => {
                                         const tokens = url.split('+');
-                                        return <li><a style={{color: "#BA1800"}} href={tokens[1]}>{tokens[0]}</a></li>
+                                        return <li key={i}><a style={{color: "#BA1800"}} href={tokens[1]}>{tokens[0]}</a></li>
                                     })
                                 }
                             </ul>
@@ -175,8 +171,8 @@ export default function ProfilePage() {
                             <h2>Skills:</h2>
                             <ul>
                                 {
-                                    profileInfo.skillset.map((skill) => {
-                                        return <li>{skill}</li>;
+                                    profileInfo.skillset.map((skill, i) => {
+                                        return <li key={i}>{skill}</li>;
                                     })
                                 }
                             </ul>

@@ -37,14 +37,13 @@ function App() {
         LoginService.authenticationHeartbeat()
             .then(loggedIn => {
                 if (loggedIn) {
-                    console.log('heartbeat user is logged in');
                     setLoggedIn(true);
                     setCredentials(LoginService.getUserCredentials());
-                } else {
-                    console.log('heartbeat user is logged out');
-                    setLoggedIn(false);
-                    setCredentials();
                 }
+            })
+            .catch((err) => {
+                setLoggedIn(false);
+                setCredentials();
             });
 
         // if (isLoggedIn) {   // Send authentication heartbeat

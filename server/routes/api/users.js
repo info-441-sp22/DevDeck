@@ -7,24 +7,11 @@ const upload = multer({ dest: 'uploads/' });
 var router = express.Router();
 
 /* GET users listing. */
-router.get('/debug', function(req, res, next) {
-  let session = req.session
-  console.log(session);
-  if(session.username){
-    res.send('respond with a resource for the user: ' + session.username);
-  } else {
-    res.send('Error: You must be logged in to see this information')
-  }
-  
-});
-
 router.get('/heartbeat', async (req, res, next) => {
   const session = req.session;
 
-  console.log(session);
-
   if (session.cookie && !session.isAuthenticated) {   // If there's a cookie with no info, then it's expired
-    return res.status(401).json({
+    return res.json({
         error: 'User session has expired.',
         message: 'Session has expired. Please log in again.'
     });
@@ -64,9 +51,9 @@ router.post('/login', async function(req, res, next) {
   const body = req.body;
   let session = req.session;
 
-  // if (session.userId) { // already logged in
-  //   return res.send('Error: you are already logged in as ' + session.userId);
-  // }
+  if (session.isAuthenticated) { // already logged in
+    return res.send('Error: you are already logged in as ' + session.username);
+  }
 
   const user = await req.models.User.findOne({ username: body.username });
 
@@ -115,10 +102,7 @@ router.post('/login', async function(req, res, next) {
 });
 
 router.delete('/logout', function(req, res, next) {
-  console.log('before', req.session);
-  // req.session.destroy();
-  req.session.isAuthenticated = false;
-  console.log(req.session);
+  req.session.destroy();
   return res.send('User successfully logged out.');
 });
 
