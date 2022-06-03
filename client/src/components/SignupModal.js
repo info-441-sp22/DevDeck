@@ -4,11 +4,10 @@ import { Button, Form, Modal } from "react-bootstrap";
 import { LoginService } from "../services/LoginService";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
+import { toast } from "react-toastify";
 
 function SignupModal(props) {
   const setLoggedInCallback = props.setLoggedInCallback;
-  const setToastMessageCallback = props.setToastMessageCallback;
-  const setToastStateCallback = props.setToastStateCallback;
   const formSchema = Yup.object().shape({
     first_name: Yup.string()
       .required('First name is required.'),
@@ -39,13 +38,10 @@ function SignupModal(props) {
     LoginService.SignUp(data, setLoggedInCallback)
       .then((payload) => {
         // toast to user the success
-        setToastMessageCallback('' + payload);
-        setToastStateCallback('info');
+        toast.info(payload);
       })
-      .catch((error) => {
-        console.log(JSON.stringify(error));
-        setToastMessageCallback('' + error);
-        setToastStateCallback('error');
+      .catch((err) => {
+        toast.error(err + '');
       });
   }
 

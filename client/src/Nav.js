@@ -10,19 +10,15 @@ import LoginModal from './components/LoginModal';
 import SignupModal from './components/SignupModal';
 import { LoginService } from './services/LoginService';
 import { CredentialsContext } from './App';
+import { toast } from 'react-toastify';
 
 function NavBar(props) {
     const { credentials } = useContext(CredentialsContext);
     const setLoggedInCallback = props.setLoggedInCallback;
-    const setToastMessageCallback = props.setToastMessageCallback;
-    const setToastStateCallback = props.setToastStateCallback;
 
     const handleLogOut = async () => {
         LoginService.LogOut(setLoggedInCallback)
-            .then((payload) => {
-                setToastMessageCallback('' + payload);
-                setToastStateCallback('info');
-            });
+            .then((payload) => toast.info(payload));    // Notify user of the successful logout
     }
 
     return (
@@ -46,16 +42,12 @@ function NavBar(props) {
                                 ?   <div className="login-container">
                                         <div className="login-button">
                                             <LoginModal
-                                                setLoggedInCallback={setLoggedInCallback} 
-                                                setToastMessageCallback={setToastMessageCallback}
-                                                setToastStateCallback={setToastStateCallback}
+                                                setLoggedInCallback={setLoggedInCallback}
                                             />
                                         </div>
                                         <div className="login-button">
                                             <SignupModal
                                                 setLoggedInCallback={setLoggedInCallback}
-                                                setToastMessageCallback={setToastMessageCallback}
-                                                setToastStateCallback={setToastStateCallback}
                                             />
                                         </div>
                                     </div>

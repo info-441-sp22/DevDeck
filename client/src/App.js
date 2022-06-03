@@ -24,8 +24,6 @@ function App() {
     const value = useMemo(() => ({ credentials, setCredentials }), [credentials]);
 
     const [isLoggedIn, setLoggedIn] = useState(false);
-    const [toastMessage, setToastMessage] = useState();
-    const [toastState, setToastState] = useState('');
 
     const navigate = useNavigate();
 
@@ -45,28 +43,7 @@ function App() {
                 setLoggedIn(false);
                 setCredentials();
             });
-
-        // if (isLoggedIn) {   // Send authentication heartbeat
-        //     // console.log('setting credentials...');
-        //     setCredentials(LoginService.getUserCredentials());
-        // } else {
-        //     // console.log('clearing credentials...');
-        //     setCredentials();
-        // }
     }, [isLoggedIn]);
-
-    useEffect(() => {
-        if (toastMessage) {
-            switch (toastState) {
-                case 'error':
-                    toast.error(toastMessage);
-                    return;
-                case 'info':
-                    toast.info(toastMessage);
-                    return;
-            }
-        }
-    }, [toastMessage]);
 
     return (
         <div className="appContainer">
@@ -74,8 +51,6 @@ function App() {
                 <NavBar
                     isLoggedIn={isLoggedIn}
                     setLoggedInCallback={setLoggedIn}
-                    setToastMessageCallback={setToastMessage}
-                    setToastStateCallback={setToastState}
                 />
                 <Outlet context={
                     { isLoggedIn, setLoggedIn, credentials, setCredentials }

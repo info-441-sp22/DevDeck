@@ -8,6 +8,7 @@ import { Card } from './Card.js';
 import { BASEPOINT, CredentialsContext } from '../App.js';
 import { PostService } from '../services/PostService.js';
 import { ImageService } from '../services/ImageService.js';
+import { toast } from 'react-toastify';
 
 function HomeDeck(props) {
     const { credentials } = useContext(CredentialsContext);
@@ -50,6 +51,9 @@ function HomeDeck(props) {
                     setPopularPosts(createTopCards(allPosts.sort((post_a, post_b) => post_b.likes.length - post_a.likes.length).slice(0, max_posts_to_display)));
                     setRecentPosts(createTopCards(allPosts.sort((post_a, post_b) => new Date(post_b.created_date).getTime() - new Date(post_a.created_date).getTime()).slice(0, max_posts_to_display)));
                     setLoading(false);  // <-- Remember to change loading to no load no more!
+                })
+                .catch(err => {
+                    toast.error(err + '');
                 });
         }
     }, [isLoading, credentials])

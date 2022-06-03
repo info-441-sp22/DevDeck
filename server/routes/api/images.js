@@ -5,6 +5,7 @@ import GridFsBucket from 'gridfs-stream';
 import path from 'path';
 import { __dirname } from '../../app.js';
 import { unlinkSync } from 'fs';
+import { authorizationRequired } from '../../middleware/auth.js';
 
 var id_queue = [];
 var router = express.Router();
@@ -31,7 +32,7 @@ const upload = multer({
   }
 });
 
-router.post('/profile', upload.single('file'), async (req, res) => {
+router.post('/profile', authorizationRequired, upload.single('file'), async (req, res) => {
   // Error guard for no file provided
   if (!req.file) {
     // Status error
@@ -71,7 +72,7 @@ router.post('/profile', upload.single('file'), async (req, res) => {
   }
 });
 
-router.post('/post/metadata', async (req, res) => {
+router.post('/post/metadata', authorizationRequired, async (req, res) => {
   const username = req.session.username;
   const post_id = req.body.post_id;
 
@@ -83,7 +84,6 @@ router.post('/post/metadata', async (req, res) => {
 
   // Add to the queue
   id_queue.push(queueTicket);
-  console.log('startidqueue', id_queue);
   
   // Send the ticket to the client
   return res.json({
@@ -92,7 +92,7 @@ router.post('/post/metadata', async (req, res) => {
   });
 });
 
-router.post('/post', upload.single('file'), async (req, res) => {
+router.post('/post', authorizationRequired, upload.single('file'), async (req, res) => {
   // Error guard for no file provided
   if (!req.file) {
     // Status error

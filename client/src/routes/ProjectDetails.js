@@ -43,7 +43,7 @@ export default function ProjectDetails() {
                     setLoading(false);
                 })
                 .catch(err => {
-                    toast.error(err)
+                    toast.error(err + '')
                 });    
         }
     }, [isLoading]);

@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
+import { toast } from "react-toastify";
 import { LoginService } from "../services/LoginService";
 
 function LoginModal(props) {
   const setLoggedInCallback = props.setLoggedInCallback;
-  const setToastMessageCallback = props.setToastMessageCallback;
-  const setToastStateCallback = props.setToastStateCallback;
 
   const [show, setShow] = useState(false);
 
@@ -22,20 +21,13 @@ function LoginModal(props) {
     LoginService.LogIn(loginRequest, setLoggedInCallback)
       .then((payload) => {
         // toast to user the success
-        setToastMessageCallback('' + payload);
-        setToastStateCallback('info');
+        toast.info(payload);
       })
-      .catch((error) => {
-        console.log(error);
-        setToastMessageCallback('' + error);
-        setToastStateCallback('error');
+      .catch((err) => {
+        toast.error(err + '');
         setLoggedInCallback(false);
       });
   }
-
-  useEffect(() => {
-
-  }, []);
 
   return (
     <>

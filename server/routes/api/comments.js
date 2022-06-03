@@ -1,8 +1,9 @@
 import express from 'express';
+import { authorizationRequired } from '../../middleware/auth.js';
 
 var router = express.Router();
 
-router.post('/', async function(req, res, next) {
+router.post('/', authorizationRequired, async function(req, res, next) {
     if (req.session.isAuthenticated) {
         try {
             const newComment = new req.models.Comment({

@@ -42,9 +42,6 @@ export class PostService {
         );
         const responsePayload = await response.json();
 
-        // Get post images
-        // const imagePayload = await ImageService.getPostImages(responsePayload.payload);
-
         if (!responsePayload.error) {
             return responsePayload.payload;
         } else {

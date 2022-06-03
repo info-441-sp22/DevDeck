@@ -4,7 +4,7 @@ import { authorizationRequired } from '../../middleware/auth.js';
 var router = express.Router();
 
 /* POST posts. */
-router.post('/', async function (req, res, next) {
+router.post('/', authorizationRequired, async function (req, res, next) {
   let session = req.session;
 
   try {
@@ -98,7 +98,7 @@ router.get('/', async function (req, res) {
 });
 
 /* POST likes. */
-router.post('/like', async function (req, res, next) {
+router.post('/like', authorizationRequired, async function (req, res, next) {
   let session = req.session
   try {
     let currPostID = req.body.postID;
@@ -125,7 +125,7 @@ router.post('/like', async function (req, res, next) {
 
 
 /* POST unlikes. */
-router.post('/unlike', async function (req, res, next) {
+router.post('/unlike', authorizationRequired, async function (req, res, next) {
   try {
     let currPostID = req.body.postID;
     let currUser = req.body.username;
