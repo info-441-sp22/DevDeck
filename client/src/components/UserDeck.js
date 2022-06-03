@@ -4,7 +4,6 @@ import { BASEPOINT } from "../App";
 import { PostService } from "../services/PostService.js";
 import CreateProjectModal from "./CreateProjectModal.js";
 import { ImageService } from "../services/ImageService.js";
-import { toast } from "react-toastify";
 
 function UserDeck(props) {
     const username = props.username ? props.username : "";
@@ -29,8 +28,7 @@ function UserDeck(props) {
                             setLoadingCallback={setLoading}
                         />}));
                     setLoading(false);  // <-- Remember to change loading to no load no more!
-                })
-                .catch((err) => toast.error(err + ''));
+                });
         }
     }, [isLoading]) // <-- runs every time isLoading changes
 

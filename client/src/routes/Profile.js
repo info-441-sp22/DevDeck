@@ -45,7 +45,9 @@ export default function ProfilePage() {
                     setProfileImage(payload.profile_img);
                     setLoading(false);
                 })
-                .catch((err) => toast.error(err + ''));
+                .catch(err => { 
+                    toast.error(err + '');
+                });
         }
     }, [isLoading, credentials]);    // change `isLoading` to refresh the data loading
 

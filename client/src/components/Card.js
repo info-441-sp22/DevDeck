@@ -24,8 +24,7 @@ export function Card(props) {
         PostService.likePost(postID, username)
             .then(() => {
                 setLoadingCallback(true);
-            })
-            .catch((err) => toast.error(err + ''));
+            });
     
     }
     const unlikePost = async (postID, username) => {
@@ -33,8 +32,7 @@ export function Card(props) {
         PostService.unlikePost(postID, username)
             .then(() => {
                 setLoadingCallback(true);
-            })
-            .catch((err) => toast.error(err + ''));
+            });
     }
 
     const onClickView = () => {
@@ -47,8 +45,7 @@ export function Card(props) {
 
     useEffect(() => {
         ImageService.getPostImage({ post_id: cardData.id })
-            .then((url) => setImageUrl(url))
-            .catch((err) => toast.error(err + ''));
+            .then((url) => setImageUrl(url));
     }, []);
 
     return (
