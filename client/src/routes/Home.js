@@ -1,9 +1,9 @@
-import React, { useState } from "react"; //import React Component
+import React from "react"; //import React Component
 import { useOutletContext } from "react-router-dom";
-import { Button } from "reactstrap";
-import { Card } from "../components/Card.js";
+// import { Button } from "reactstrap";
+// import { Card } from "../components/Card.js";
 import HomeDeck from "../components/HomeDeck.js";
-import { LoginService } from "../services/LoginService.js";
+// import { LoginService } from "../services/LoginService.js";
 
 export default function HomePage() {
     const { credentials } = useOutletContext();

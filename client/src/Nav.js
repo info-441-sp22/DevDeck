@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Route, Link, NavLink } from 'react-router-dom';
+import { BrowserRouter as Link, NavLink } from 'react-router-dom';
 import {
     Navbar,
     Nav,
@@ -9,7 +9,7 @@ import {
 import LoginModal from './components/LoginModal';
 import SignupModal from './components/SignupModal';
 import { LoginService } from './services/LoginService';
-import { BASEPOINT } from "./App";
+// import { BASEPOINT } from "./App";
 
 function NavBar(props) {
     const isLoggedIn = props.isLoggedIn;

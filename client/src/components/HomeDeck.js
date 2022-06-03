@@ -1,13 +1,12 @@
 // HomeDeck should contain the top project cards in 3 categories
 // Need to create Cards based on post fields (created in CreateProjectModal): 
 // title, blurb, longer_description, url_link, collaborators
-import { fetchJSON } from '../utils/utils.js';
+// import { fetchJSON } from '../utils/utils.js';
 import React, { useState, useEffect } from "react"; //import React Component
-import { Button } from "reactstrap";
 import { Card } from './Card.js';
-import { BASEPOINT } from '../App.js';
+// import { BASEPOINT } from '../App.js';
 import { PostService } from '../services/PostService.js';
-import { ImageService } from '../services/ImageService.js';
+// import { ImageService } from '../services/ImageService.js';
 
 function HomeDeck(props) {
     const [featuredPosts, setFeaturedPosts] = useState(null);
