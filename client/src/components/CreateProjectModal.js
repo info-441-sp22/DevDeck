@@ -89,7 +89,7 @@ function CreateProjectModal(props) {
 
     return (
         <div>
-            <Button color="secondary" onClick={toggle}>Add project</Button>
+            <Button color="danger" onClick={toggle}>Add project</Button>
             <Modal isOpen={modal} toggle={toggle}>
                 <ModalHeader toggle={toggle}>♠ Add a new project card to your deck ♠</ModalHeader>
                 <ModalBody>

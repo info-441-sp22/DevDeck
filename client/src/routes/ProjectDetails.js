@@ -85,21 +85,16 @@ export default function ProjectDetails() {
                 ? <LoadingComponent />
                 : <main>
                     <div className="project container-fluid">
-
-                        {/* <h5><em>{
-                            postData.blurb
-                        }</em></h5> */}
-                        
                         <div classname="row">
                             <div className="col">
                                 <h2>{
                                     postData.title + " "
                                 } 
-                                <Button color="primary" onClick={goToUrl}>
+                                <Button color="danger" onClick={goToUrl}>
                                     Link to project
                                 </Button></h2>
                             </div>
-                            <h5>Posted by: <a href="" onClick={viewUser}>{postData.username}</a></h5>
+                            <h5>Posted by: <a href="" style={{color: "#BA1800"}} onClick={viewUser}>{postData.username}</a></h5>
                             <h5><em>{
                                 postData.blurb
                             }</em></h5>
@@ -123,8 +118,7 @@ export default function ProjectDetails() {
                                             const tokens = tech.split(', ');
                                             tokens.forEach((token) => {
                                                 return <li>{token}</li>;
-                                            })
-                                            
+                                            })                                            
                                         })
                                     }
                                     </ul>
@@ -136,6 +130,11 @@ export default function ProjectDetails() {
                                     {/* {displayCollab} */}
                                     {postData.collaborators}
                                 </div>
+                            </div>
+                            <div className="col">
+                                <h3>Likes info:</h3>
+                                <p>{postData.likes.length} likes</p>
+                                {postData.likes}
                             </div>
                         </div>
                         <hr style={{height: '0'}} />

@@ -106,6 +106,7 @@ export default function ProfilePage() {
                                         />
                                         <Button
                                             type="button"
+                                            color="dark"
                                             onClick={() => onClickImageSubmitHandler()}>
                                             Change Image
                                         </Button>
@@ -129,7 +130,7 @@ export default function ProfilePage() {
                                             name="userBio"
                                             placeholder="A little bit about you..."
                                         />
-                                        <Button size="sm" onClick={() => {updateUserBio()}}>Update bio</Button>
+                                        <Button color="dark" size="sm" onClick={() => {updateUserBio()}}>Update bio</Button>
                                     </div>
                                     : <></>
                             }
@@ -142,7 +143,7 @@ export default function ProfilePage() {
                                 {
                                     profileInfo.urls.map((url) => {
                                         const tokens = url.split('+');
-                                        return <li><a href={tokens[1]}>{tokens[0]}</a></li>
+                                        return <li><a style={{color: "#BA1800"}} href={tokens[1]}>{tokens[0]}</a></li>
                                     })
                                 }
                             </ul>
@@ -161,7 +162,7 @@ export default function ProfilePage() {
                                             name="LinkURL"
                                             placeholder="Website link"
                                         />
-                                        <Button size="sm" onClick={() => {updateUserLinks()}}>Add link</Button>
+                                        <Button color="dark" size="sm" onClick={() => {updateUserLinks()}}>Add link</Button>
                                     </div>
                                     : <></>
                             }
@@ -186,7 +187,7 @@ export default function ProfilePage() {
                                             name="userSkill"
                                             placeholder="Skill name"
                                         />
-                                        <Button size="sm" onClick={() => {updateUserSkills()}}>Add skill</Button>
+                                        <Button color="dark" size="sm" onClick={() => {updateUserSkills()}}>Add skill</Button>
                                     </div>
                                     : <></>
                             }
