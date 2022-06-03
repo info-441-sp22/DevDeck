@@ -85,20 +85,30 @@ export default function ProjectDetails() {
                 ? <LoadingComponent />
                 : <main>
                     <div className="project container-fluid">
-                        <h2>{
-                            postData.title
-                        }</h2>
-                        <h5><em>{
+
+                        {/* <h5><em>{
                             postData.blurb
-                        }</em></h5>
-                        <h5>Posted by: <a href="" onClick={viewUser}>{postData.username}</a></h5>
-                        <Button color="primary" onClick={goToUrl}>
-                            Link to project
-                        </Button>
+                        }</em></h5> */}
+                        
+                        <div classname="row">
+                            <div className="col">
+                                <h2>{
+                                    postData.title + " "
+                                } 
+                                <Button color="primary" onClick={goToUrl}>
+                                    Link to project
+                                </Button></h2>
+                            </div>
+                            <h5>Posted by: <a href="" onClick={viewUser}>{postData.username}</a></h5>
+                            <h5><em>{
+                                postData.blurb
+                            }</em></h5>
+                        </div>
+                        <br></br>
                         <div className="row">
                             <div className="col">
                                 <div>
-                                    <img className="thumbnail" src={imageUrl} alt="project thumbnail"></img>
+                                    <img className="thumbnail" src={imageUrl} onClick={goToUrl} alt="project thumbnail"></img>
                                 </div>                                
                             </div>
                             <div className="col">
