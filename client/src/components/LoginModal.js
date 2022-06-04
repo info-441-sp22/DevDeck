@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { CredentialsContext } from "../App";
 import { LoginService } from "../services/LoginService";
 
-function LoginModal(props) {
+function LoginModal() {
   const { setCredentials } = useContext(CredentialsContext);
 
   const [show, setShow] = useState(false);
@@ -38,7 +38,7 @@ function LoginModal(props) {
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Log into Your DevDeck Account</Modal.Title>
+          <Modal.Title>♠ Log into Your DevDeck Account ♠</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>

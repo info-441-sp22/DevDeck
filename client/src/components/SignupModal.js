@@ -7,8 +7,7 @@ import * as Yup from 'yup';
 import { toast } from "react-toastify";
 import { CredentialsContext } from "../App";
 
-function SignupModal(props) {
-  // const setLoggedInCallback = props.setLoggedInCallback;
+function SignupModal() {
   const { setCredentials } = useContext(CredentialsContext);
   const formSchema = Yup.object().shape({
     first_name: Yup.string()
@@ -55,7 +54,7 @@ function SignupModal(props) {
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Sign Up For a DevDeck Account</Modal.Title>
+          <Modal.Title>♠ Sign Up For a DevDeck Account ♠</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleSubmit(onClickSubmit)}>

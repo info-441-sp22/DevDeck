@@ -4,7 +4,7 @@ import NavBar from './Nav';
 import Footer from './Footer';
 import React, { createContext, useEffect, useMemo, useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import 'react-toastify/dist/ReactToastify.css';
 import './styles/index.css';
 import { LoginService } from './services/LoginService';
@@ -28,7 +28,6 @@ function App() {
     const [credentials, setCredentials] = useState();
     const [refreshRoot, setRefresh] = useState();
     const value = useMemo(() => ({ credentials, setCredentials }), [credentials]);
-    // const refresh = useMemo(() => ({ refresh, setRefresh }), [refresh])
 
     const navigate = useNavigate();
 
@@ -56,10 +55,7 @@ function App() {
     return (
         <div className="appContainer">
             <CredentialsContext.Provider value={value}>
-                <NavBar
-                    // isLoggedIn={isLoggedIn}
-                    // setLoggedInCallback={setLoggedIn}
-                />
+                <NavBar />
                 <Outlet />
                 <Footer />
                 <ToastContainer />

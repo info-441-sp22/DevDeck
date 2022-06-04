@@ -1,13 +1,8 @@
-// HomeDeck should contain the top project cards in 3 categories
-// Need to create Cards based on post fields (created in CreateProjectModal): 
-// title, blurb, longer_description, url_link, collaborators
-import { fetchJSON } from '../utils/utils.js';
+// HomeDeck contains the top project cards in each category
 import React, { useState, useEffect, useContext } from "react"; //import React Component
-import { Button } from "reactstrap";
 import { Card } from './Card.js';
-import { BASEPOINT, CredentialsContext } from '../App.js';
+import { CredentialsContext } from '../App.js';
 import { PostService } from '../services/PostService.js';
-import { ImageService } from '../services/ImageService.js';
 import { toast } from 'react-toastify';
 
 function HomeDeck(props) {
@@ -17,9 +12,8 @@ function HomeDeck(props) {
     const [recentPosts, setRecentPosts] = useState(null);
     const [isLoading, setLoading] = useState(true);
     const [refreshImageToggle, setRefreshImageToggleCallback] = useState(true);
-    // const credentialsUsername = props.credentials ? props.credentials.username : ""
 
-    const max_posts_to_display = 5;
+    const max_posts_to_display = 6;
 
     // Card Factory Handler
     const createTopCards = function (data) {
@@ -59,21 +53,17 @@ function HomeDeck(props) {
                     setRefreshImageToggleCallback(false);
                     setLoading(false);  // <-- Remember to change loading to no load no more!
                 })
-                .catch((err) => toast.error(err + ''));
+                .catch(err => {
+                    toast.error(err + '');
+                });
         }
     }, [isLoading, credentials, refreshImageToggle])
 
     return (
         <div>
-            {/* <div>
-                <h2>Featured projects:</h2>
-                <div className="row">
-                    {featuredPosts}
-                </div>
-            </div> */}
             <hr style={{height: '0'}}/>
             <div>
-                <h2>Popular projects:</h2>
+                <h2>♠ Popular projects ♠</h2>
                 <div className="row">
                     {popularPosts}
                 </div>
@@ -81,7 +71,7 @@ function HomeDeck(props) {
             <hr />
             <hr style={{height: '0'}}/>
             <div>
-                <h2>Recently added projects:</h2>
+                <h2>♠ Recently added projects ♠</h2>
                 <div className="row">
                     {recentPosts}
                 </div>
@@ -89,11 +79,5 @@ function HomeDeck(props) {
         </div>
     )
 }
-
-// async function findPosts() {
-//     let postsJSON = await fetchJSON(BASEPOINT + `/api/posts`)
-//     return postsJSON;
-// }
-
 
 export default HomeDeck;

@@ -1,10 +1,9 @@
 import React, { createRef, useContext, useEffect, useState } from "react"; 
 import { Button } from "reactstrap";
-import CreateProjectModal from "../components/CreateProjectModal";
 import UserDeck from "../components/UserDeck";
 import { LoginService } from "../services/LoginService.js";
 import { ProfileService } from "../services/ProfileService.js";
-import { useLocation, useOutletContext, useParams, useSearchParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import LoadingComponent from "../components/LoadingComponent.js";
 import { ImageService } from "../services/ImageService.js";
 import { toast } from "react-toastify";
@@ -45,27 +44,26 @@ export default function ProfilePage() {
                     setProfileImage(payload.profile_img);
                     setLoading(false);
                 })
-                .catch((err) => toast.error(err + ''));
+                .catch(err => { 
+                    toast.error(err + '');
+                });
         }
-    }, [isLoading, credentials]);    // change `isLoading` to refresh the data loading
+    }, [isLoading, credentials]); // change `isLoading` to refresh the data loading
 
-    async function updateUserBio(e) {
-        // e.preventDefault();
+    async function updateUserBio() {
         let bio = document.getElementById(`userBio`).value;
         await ProfileService.putProfileBio(LoginService.getUserCredentials().username, bio)
         setLoading(true); // Just need to refresh page
     }
 
-    async function updateUserLinks(e) {
-        // e.preventDefault();
+    async function updateUserLinks() {
         let name = document.getElementById(`LinkName`).value;
         let url = document.getElementById(`LinkURL`).value;
         await ProfileService.putProfileLinks(LoginService.getUserCredentials().username, name, url)
         setLoading(true); // Just need to refresh page
     }
 
-    async function updateUserSkills(e) {
-        // e.preventDefault();
+    async function updateUserSkills() {
         let skill = document.getElementById(`userSkill`).value;
         await ProfileService.putProfileSkills(LoginService.getUserCredentials().username, skill)
         setLoading(true); // Just need to refresh page
@@ -115,7 +113,7 @@ export default function ProfilePage() {
                     </div>
                     <div className="col">
                         <div className="bio">
-                            <h2>Bio:</h2>
+                            <h2>Bio</h2>
                             <p>{profileInfo.bio}</p>
                             {
                                 (isClientUser)
@@ -134,7 +132,7 @@ export default function ProfilePage() {
                     </div>
                     <div className="col">
                         <div className="links">
-                            <h2>Links:</h2>
+                            <h2>Links</h2>
                             <ul>
                                 {
                                     profileInfo.urls.map((url, i) => {
@@ -166,7 +164,7 @@ export default function ProfilePage() {
                     </div>
                     <div className="col">
                         <div className="skills">
-                            <h2>Skills:</h2>
+                            <h2>Skills</h2>
                             <ul>
                                 {
                                     profileInfo.skillset.map((skill, i) => {
@@ -198,13 +196,6 @@ export default function ProfilePage() {
                     username={username}
                 />
             </div>
-
-            {/* <div className="projects container-fluid">
-                <div className="row">
-                    <Card />
-                    <Card />
-                </div>
-            </div> */}
         </main>
     }
     </div>)
