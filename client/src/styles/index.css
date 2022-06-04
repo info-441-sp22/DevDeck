@@ -65,7 +65,7 @@ code {
 }
 
 .footer .contact-info {
-  color: #cccdcf;
+  color: #E6E7E9;
 }
 
 .github-icon {
@@ -73,7 +73,7 @@ code {
 }
 
 .github-icon:hover {
-  color: gray;
+  color: #E6E7E9;
 }
 
 /* login section */
