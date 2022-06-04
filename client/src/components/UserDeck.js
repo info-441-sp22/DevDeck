@@ -8,6 +8,7 @@ function UserDeck(props) {
     const isClientUser = props.isClientUser;
     const [userPosts, setUserPosts] = useState([]);
     const [isLoading, setLoading] = useState(true); // <-- I want to load!
+    const [refreshImageToggle, setRefreshImageToggleCallback] = useState(true);
 
     useEffect(() => {
         if (isLoading) {    // <-- load when I want you to load
@@ -24,11 +25,14 @@ function UserDeck(props) {
                             cardData={postCard} 
                             username={username} 
                             setLoadingCallback={setLoading}
+                            refreshImageToggle={refreshImageToggle}
+                            setRefreshImageToggleCallback={setRefreshImageToggleCallback}
                         />}));
+                    setRefreshImageToggleCallback(false);
                     setLoading(false);  // <-- Remember to change loading to no load no more!
                 });
         }
-    }, [isLoading]) // <-- runs every time isLoading changes
+    }, [isLoading, refreshImageToggle]) // <-- runs every time isLoading changes
 
     return (
         <>
