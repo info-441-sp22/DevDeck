@@ -7,8 +7,7 @@ import * as Yup from 'yup';
 import { toast } from "react-toastify";
 import { CredentialsContext } from "../App";
 
-function SignupModal(props) {
-  // const setLoggedInCallback = props.setLoggedInCallback;
+function SignupModal() {
   const { setCredentials } = useContext(CredentialsContext);
   const formSchema = Yup.object().shape({
     first_name: Yup.string()

@@ -1,6 +1,4 @@
 import { BASEPOINT } from "../App";
-import { fetchJSON } from "../utils/utils";
-import { ImageService } from "./ImageService";
 
 export class PostService {
     static POST_BASEPOINT = () => BASEPOINT + '/api/posts';

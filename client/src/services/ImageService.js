@@ -4,7 +4,6 @@ export class ImageService {
     static IMAGE_BASEPOINT = () => BASEPOINT + '/api/images';
 
     static uploadProfileImage = async (request) => {
-        // console.log(request);
         const response = await fetch(
             ImageService.IMAGE_BASEPOINT() + '/profile',
             {
@@ -19,7 +18,6 @@ export class ImageService {
     }
 
     static uploadProjectImage = async (request) => {
-        // console.log(request);
         const response = await fetch(
             ImageService.IMAGE_BASEPOINT() + '/post',
             {
@@ -101,7 +99,6 @@ export class ImageService {
 
     static getPostImages = async (data) => {
         data.forEach(async (post) => post.image_url = await ImageService.getPostImage({ post_id: post.id }));
-
         return data;
     }
 }

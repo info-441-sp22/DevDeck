@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react"; //import React Component
 import { Card } from "./Card.js";
-import { BASEPOINT } from "../App";
 import { PostService } from "../services/PostService.js";
 import CreateProjectModal from "./CreateProjectModal.js";
-import { ImageService } from "../services/ImageService.js";
 
 function UserDeck(props) {
     const username = props.username ? props.username : "";
@@ -12,7 +10,7 @@ function UserDeck(props) {
     const [isLoading, setLoading] = useState(true); // <-- I want to load!
 
     useEffect(() => {
-        if (isLoading) {    // <-- load when I want u to load
+        if (isLoading) {    // <-- load when I want you to load
             // Build request object
             const request = {
                 username: username
@@ -37,12 +35,12 @@ function UserDeck(props) {
             <div>
                 {
                     (isClientUser)
-                        ? <div><h2>Your Deck:</h2>
+                        ? <div><h2>♠ Your Deck ♠</h2>
                         <CreateProjectModal
                             setLoadingCallback={setLoading}
                         />
                         </div>
-                        : <div><h2>DevDeck:</h2></div>
+                        : <div><h2>♠ DevDeck ♠</h2></div>
                 }
 
             </div>

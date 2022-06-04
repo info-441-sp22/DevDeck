@@ -1,9 +1,8 @@
 import React, { useContext, useEffect, useState } from "react"; //import React Component
-import { useOutletContext, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Button } from "reactstrap";
 import LoadingComponent from "../components/LoadingComponent";
-import { LoginService } from "../services/LoginService";
 import { PostService } from "../services/PostService";
 import { useNavigate } from "react-router-dom";
 import { ImageService } from "../services/ImageService";
@@ -39,7 +38,6 @@ export default function ProjectDetails() {
             // Get the post comments
             CommentService.getComments(id)
                 .then(data => {
-                    console.log("comment data:", data)
                     setCommentData(data);
                     setLoading(false);
                 })
@@ -58,15 +56,12 @@ export default function ProjectDetails() {
     }
 
     async function refreshComments() {
-        // e.preventDefault();
         await CommentService.getComments(postData._id)
         setLoading(true); // Just need to refresh page
     }
 
     async function postComment() {
-        // e.preventDefault();
         let comment = document.getElementById(`new-comment-${postData._id}`).value;
-        console.log(credentials)
         await CommentService.postComment(postData._id, comment, credentials.username)
         setLoading(true); // Just need to refresh page
     }
@@ -74,15 +69,6 @@ export default function ProjectDetails() {
     function viewUser(username) {
         navigate('/profile/' + username);
     }
-
-    // const displayCollab = () => { // function to display project collaborators
-    //     let collabs = postData.collaborators;
-    //     let toReturn = collabs.forEach(collab => {
-    //         console.log(collab)
-    //         return <div>{collab}</div>
-    //     })
-    //     return toReturn;
-    // }
 
     return (
         <>
@@ -93,9 +79,9 @@ export default function ProjectDetails() {
                     <div className="project container-fluid">
                         <div classname="row">
                             <div className="col">
-                                <h2>{
+                                <h2>♠ {
                                     postData.title + " "
-                                } 
+                                } ♠ &nbsp;
                                 <Button color="danger" onClick={goToUrl}>
                                     Link to project
                                 </Button></h2>
@@ -114,31 +100,18 @@ export default function ProjectDetails() {
                             </div>
                             <div className="col">
                                 <div className="techStack">
-                                    <h3>Tech stack:</h3>
-                                    {
-                                        postData.techStack
-                                    }
-                                    <ul>
-                                    {
-                                        postData.techStack.map((tech) => {
-                                            const tokens = tech.split(', ');
-                                            tokens.forEach((token, i) => {
-                                                return <li key={i}>{token}</li>;
-                                            })                                            
-                                        })
-                                    }
-                                    </ul>
+                                    <h3>Tech stack</h3>
+                                    {postData.techStack}
                                 </div>
                             </div>
                             <div className="col">                        
                                 <div className="collaborators">
-                                    <h3>Collaborators:</h3>
-                                    {/* {displayCollab} */}
+                                    <h3>Collaborators</h3>
                                     {postData.collaborators}
                                 </div>
                             </div>
                             <div className="col">
-                                <h3>Likes info:</h3>
+                                <h3>Likes info</h3>
                                 <p>{postData.likes.length} likes</p>
                                 {
                                     postData.likes.map((user, i) => {
@@ -152,7 +125,7 @@ export default function ProjectDetails() {
                         <hr style={{height: '0'}} />
                         <div className="row">
                             <div className="col">
-                                <h3>Description:</h3>
+                                <h3>Description</h3>
                                 {
                                     postData.longer_description
                                 }
@@ -160,7 +133,7 @@ export default function ProjectDetails() {
                             <div className="col">
                                 <div className="row">
                                     <div className="col" style={{flexBasis: '50%'}}>
-                                        <h3>Comments:</h3>
+                                        <h3>Comments</h3>
                                     </div>
                                     <div className="col" style={{flexBasis: '50%'}}>
                                         <Button onClick={refreshComments} color="light">
@@ -203,12 +176,6 @@ export default function ProjectDetails() {
                         </div>
                         <br></br>
                         <Button color="light" onClick={returnHome}>Return to homepage</Button>
-                        {/* <br></br>
-                        <br></br>
-                        <br></br>
-                        <br></br>
-                        <br></br>
-                        <br></br> */}
                         <hr style={{height: '0'}}/>
                     </div>
                 </main>
