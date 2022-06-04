@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './styles/index.css';
 import HomePage from './routes/Home.js';
 import ProfilePage from './routes/Profile.js';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import App from './App';
 import ProjectDetails from './routes/ProjectDetails';
 
@@ -16,6 +16,8 @@ root.render(
         <Route path='profile/:username' element={<ProfilePage />} />
         <Route path='project/:id' element={<ProjectDetails />} />
       </Route>
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
+    
   </BrowserRouter>
 );

@@ -52,6 +52,7 @@ router.get('/single', async (req, res, next) => {
   });
 });
 
+/* GET posts */
 router.get('/', async function (req, res) {
   try {
     var username = req.query.username;

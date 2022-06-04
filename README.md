@@ -10,7 +10,7 @@ In the collegiate sense, we want to help college students to show off their deve
 
 As college students and developers ourselves, we noticed that there were not any mainstream platforms to show off projects and portfolios other than Reddit subreddits. With our application, we want to build interest into development projects around the world in the same fashion that social media does and give our users the ability to attract collaborators and potential sponsors through their project posts. Every day, a new development project is created and _does not get the exposure it deserves_. 
 
-**So play your cards right with DevDeck, and show the world your winning hand.**
+**♠ So play your cards right with DevDeck, and show the world your winning hand. ♠**
 
 
 # Technical Description
@@ -26,15 +26,15 @@ As college students and developers ourselves, we noticed that there were not any
 |---|---|---|---| ---|
 | P0 | As a developer | I want to showcase existing development projects I’ve completed on my DevDeck profile. | Pull project documents from __MongoDB__, process them in the server, and send the HTML to display to the browser using the __express__ library. | Yes ✅ |
 | P0 | As a developer | I want to create an account and log into the site. | Users will input their personal information to make an account using our __own login service__ (which hashes and salts stored passwords). | Yes ✅ |
-| P0 | As a recruiter | I want to view projects of developers on the site without being logged into an account. | Project cards, likes, and details are all viewable without logging in. To make changes to posts one must be logged in. | Yes ✅ |
+| P0 | As a recruiter | I want to view projects of developers on the site without being logged into an account. | Project cards, likes, comments, and details are all viewable without logging in. To make changes to posts one must be logged in. | Yes ✅ |
 | P0 | As a recruiter | I want to view the profile of developers on the site and contact them about job and sponsorship opportunities. | Profiles are viewable without logging in. If a developer wishes, they can link their Linkedin, GitHub, or other websites on their profile. | Yes ✅ |
-| P0 | As a developer | I want to like and comment other developers’ projects. Each post will have likes and comments associated with it. | Each project document in __MongoDB__ will be stored with the number of likes/comments. Comments will also be stored in a separate table that will have an identifier linking each to its respective post. The server will pull this information along with the post when loading the page. | Partially (didn't implement comments) |
+| P0 | As a developer | I want to like and comment other developers’ projects. Each post will have likes and comments associated with it. | Each project document in __MongoDB__ will be stored with the number of likes/comments. Comments will also be stored in a separate table that will have an identifier linking each to its respective post. The server will pull this information along with the post when loading the page. | Yes ✅ |
 | P0 | As a developer | I want to view and explore the projects of other developers I follow. | DevDeck will have a feed of current popular posts, recently added projects, and posts from accounts you follow. The global feed will display all posts from the last 24 hours in descending order of likes, while the following feed will be the same but filtered to only followed accounts. This will all be done through queries to the database and server-side processing. | Partially (didn't implement following feed) |
 | P1 | As a developer | I want to explore the most popular or recent projects on the site. | DevDeck will have a feed of both current popular posts, recently added projects, and posts from accounts you follow. The global feed will display all recently created posts in descending order of likes, while the following feed will be the same but filtered to only followed accounts. This will all be done through queries to the database and server-side processing. | Partially (didn't implement following feed) |
 | P1 | As a developer | I want to navigate to specific developers' profiles on the site. | Development project cards will include a hyperlink navigating to the creator's profile page, and developer profiles can also be manually inputted in the browser bar. | Yes ✅ |
-| P1 | As a developer | I want to view metrics about my projects and portfolio (number of likes, comments, views, etc.). | Each project document in __MongoDB__ will be stored with the number of likes. Comments will also be stored in a separate table that will have an identifier linking each to its respective post. The server will pull this information along with the post when loading the page. Views on each page can also be stored as another field in the project document in __MongoDB__. | Partially (didn't implement comments or views) |
+| P1 | As a developer | I want to view metrics about my projects and portfolio (number of likes, comments, views, etc.). | Each project document in __MongoDB__ will be stored with the number of likes. Comments will also be stored in a separate table that will have an identifier linking each to its respective post. The server will pull this information along with the post when loading the page. Views on each page can also be stored as another field in the project document in __MongoDB__. | Partially (didn't implement views) |
 | P1 | As a developer | I want to tag collaborators and fellow developers on my projects. | Each project document in __MongoDB__ can be associated with other profiles/developers in the database through tagging collaborators. If applicable, the server will pull this information along with the post when loading the page. | Partially (collaborators are listed but not linked to other user accounts) |
-| P2 | As a site viewer | I want to view, search for, and learn about projects on the site without being logged into an account. | Project cards, likes, and details are all viewable without logging in. To make changes to posts one must be logged in. | Yes ✅ |
+| P2 | As a site viewer | I want to view, search for, and learn about projects on the site without being logged into an account. | Project cards, likes, comments, and details are all viewable without logging in. To make changes to posts one must be logged in. | Yes ✅ |
 
 
 ## API Endpoints
@@ -69,3 +69,19 @@ As college students and developers ourselves, we noticed that there were not any
 		-   Change the welcome message to the user based on whether the user is signed in.
 	-   GET	-	‘/heartbeat’
 		-   Check whether the user session has expired based on the session cookie.
+-   ‘/comments’
+  -   POST	-	‘ /’
+      -   Post a comment when logged into a user account.
+    -   GET	-	‘ /’
+        -   Get all comments for a given post.
+-   ‘/images’
+  -   POST	-	‘ /profile’
+      -   Post
+  -   POST	-	‘ /post’
+      -   Post
+  -   GET	-	‘ /’
+      -   Get
+    -   GET	-	‘ /profile’
+        -   Get
+  -   GET	-	‘ /post’
+      -   Get
