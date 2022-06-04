@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { BrowserRouter as Route, Link, NavLink } from 'react-router-dom';
 import {
     Navbar,
@@ -9,17 +9,22 @@ import {
 import LoginModal from './components/LoginModal';
 import SignupModal from './components/SignupModal';
 import { LoginService } from './services/LoginService';
-import { CredentialsContext } from './App';
+import { CredentialsContext, RefreshRootContext } from './App';
 import { toast } from 'react-toastify';
 
 function NavBar(props) {
-    const { credentials } = useContext(CredentialsContext);
-    const setLoggedInCallback = props.setLoggedInCallback;
+    const { setCredentials, credentials } = useContext(CredentialsContext);
+    const { setRefresh } = useContext(RefreshRootContext);
+    // const setLoggedInCallback = props.setLoggedInCallback;
 
     const handleLogOut = async () => {
-        LoginService.LogOut(setLoggedInCallback)
+        LoginService.LogOut(setCredentials)
             .then((payload) => toast.info(payload));    // Notify user of the successful logout
     }
+
+    useEffect(() => {
+        setRefresh(true);
+    }, [])
 
     return (
         <Navbar bg="custom" variant="dark" expand="sm" sticky="top" className="navbar">
@@ -42,12 +47,12 @@ function NavBar(props) {
                                 ?   <div className="login-container">
                                         <div className="login-button">
                                             <LoginModal
-                                                setLoggedInCallback={setLoggedInCallback}
+                                                // setLoggedInCallback={setLoggedInCallback}
                                             />
                                         </div>
                                         <div className="login-button">
                                             <SignupModal
-                                                setLoggedInCallback={setLoggedInCallback}
+                                                // setLoggedInCallback={setLoggedInCallback}
                                             />
                                         </div>
                                     </div>

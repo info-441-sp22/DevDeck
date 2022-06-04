@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"; //import React Component
+import React, { useContext, useEffect, useState } from "react"; //import React Component
 import { useOutletContext, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Button } from "reactstrap";
@@ -10,10 +10,11 @@ import { ImageService } from "../services/ImageService";
 import { CommentService } from "../services/CommentService.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { CredentialsContext } from "../App";
 
 export default function ProjectDetails() {
     const { id } = useParams();
-    const { setLoggedIn, credentials } = useOutletContext();
+    const { credentials } = useContext(CredentialsContext);
     const [isLoading, setLoading] = useState(true);
     const [postData, setPostData] = useState();
     const [commentData, setCommentData] = useState();
@@ -170,7 +171,9 @@ export default function ProjectDetails() {
                                     <div id={`comments-box-${postData._id}`} className="comments-box">
                                         <div id={`comments-${postData._id}`}>
                                         {
-                                            commentData.map((comment, i) => {
+                                            (!commentData)
+                                                ?   <></>
+                                                :   commentData.map((comment, i) => {
                                                 return <div style={{border: "1px solid black", padding: "5px"}} key={i}>
                                                     <h4>{comment.comment}</h4>
                                                     <h5><i>{comment.username}</i></h5>

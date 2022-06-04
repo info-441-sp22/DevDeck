@@ -18,12 +18,17 @@ export const CredentialsContext = createContext({
     setCredentials: () => {}
 });
 
+export const RefreshRootContext = createContext({
+    refresh: true,
+    setRefresh: () => {}
+});
+
 function App() {
     // Context
     const [credentials, setCredentials] = useState();
+    const [refreshRoot, setRefresh] = useState();
     const value = useMemo(() => ({ credentials, setCredentials }), [credentials]);
-
-    const [isLoggedIn, setLoggedIn] = useState(false);
+    // const refresh = useMemo(() => ({ refresh, setRefresh }), [refresh])
 
     const navigate = useNavigate();
 
@@ -35,26 +40,27 @@ function App() {
         LoginService.authenticationHeartbeat()
             .then(loggedIn => {
                 if (loggedIn) {
-                    setLoggedIn(true);
+                    // setLoggedIn(true);
                     setCredentials(LoginService.getUserCredentials());
+                    setRefresh(false);
                 }
             })
             .catch((err) => {
-                setLoggedIn(false);
-                setCredentials();
+                // setLoggedIn(false);
+                // setCredentials();
+                LoginService.removeUserCredentials();
+                setRefresh(false);
             });
-    }, [isLoggedIn]);
+    }, [refreshRoot]);
 
     return (
         <div className="appContainer">
             <CredentialsContext.Provider value={value}>
                 <NavBar
-                    isLoggedIn={isLoggedIn}
-                    setLoggedInCallback={setLoggedIn}
+                    // isLoggedIn={isLoggedIn}
+                    // setLoggedInCallback={setLoggedIn}
                 />
-                <Outlet context={
-                    { isLoggedIn, setLoggedIn, credentials, setCredentials }
-                } />
+                <Outlet />
                 <Footer />
                 <ToastContainer />
             </CredentialsContext.Provider>

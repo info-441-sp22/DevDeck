@@ -1,13 +1,15 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useForm } from 'react-hook-form';
 import { Button, Form, Modal } from "react-bootstrap";
 import { LoginService } from "../services/LoginService";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { toast } from "react-toastify";
+import { CredentialsContext } from "../App";
 
 function SignupModal(props) {
-  const setLoggedInCallback = props.setLoggedInCallback;
+  // const setLoggedInCallback = props.setLoggedInCallback;
+  const { setCredentials } = useContext(CredentialsContext);
   const formSchema = Yup.object().shape({
     first_name: Yup.string()
       .required('First name is required.'),
@@ -35,7 +37,7 @@ function SignupModal(props) {
   const handleShow = () => setShow(true);
 
   const onClickSubmit = async (data) => {
-    LoginService.SignUp(data, setLoggedInCallback)
+    LoginService.SignUp(data, setCredentials)
       .then((payload) => {
         // toast to user the success
         toast.info(payload);

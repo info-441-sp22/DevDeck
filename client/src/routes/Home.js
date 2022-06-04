@@ -1,12 +1,13 @@
-import React, { useState } from "react"; //import React Component
+import React, { useContext, useState } from "react"; //import React Component
 import { useOutletContext } from "react-router-dom";
 import { Button } from "reactstrap";
+import { CredentialsContext } from "../App.js";
 import { Card } from "../components/Card.js";
 import HomeDeck from "../components/HomeDeck.js";
 import { LoginService } from "../services/LoginService.js";
 
 export default function HomePage() {
-    const { credentials } = useOutletContext();
+    const { credentials } = useContext(CredentialsContext);
     console.log('Home credentials', credentials)
     // console.log('Home setLoggedIn', setLoggedIn)
 
