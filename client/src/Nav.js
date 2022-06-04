@@ -15,11 +15,10 @@ import { toast } from 'react-toastify';
 function NavBar(props) {
     const { setCredentials, credentials } = useContext(CredentialsContext);
     const { setRefresh } = useContext(RefreshRootContext);
-    // const setLoggedInCallback = props.setLoggedInCallback;
 
     const handleLogOut = async () => {
         LoginService.LogOut(setCredentials)
-            .then((payload) => toast.info(payload));    // Notify user of the successful logout
+            .then((payload) => toast.info(payload)); // Notify user of the successful logout
     }
 
     useEffect(() => {
@@ -46,14 +45,10 @@ function NavBar(props) {
                             (!credentials)   
                                 ?   <div className="login-container">
                                         <div className="login-button">
-                                            <LoginModal
-                                                // setLoggedInCallback={setLoggedInCallback}
-                                            />
+                                            <LoginModal/>
                                         </div>
                                         <div className="login-button">
-                                            <SignupModal
-                                                // setLoggedInCallback={setLoggedInCallback}
-                                            />
+                                            <SignupModal/>
                                         </div>
                                     </div>
                                 :   <div className="login-text-container">

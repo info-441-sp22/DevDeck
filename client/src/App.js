@@ -55,10 +55,7 @@ function App() {
     return (
         <div className="appContainer">
             <CredentialsContext.Provider value={value}>
-                <NavBar
-                    // isLoggedIn={isLoggedIn}
-                    // setLoggedInCallback={setLoggedIn}
-                />
+                <NavBar />
                 <Outlet />
                 <Footer />
                 <ToastContainer />
