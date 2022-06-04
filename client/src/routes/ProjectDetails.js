@@ -77,7 +77,7 @@ export default function ProjectDetails() {
                 ? <LoadingComponent />
                 : <main>
                     <div className="project container-fluid">
-                        <div classname="row">
+                        <div className="row">
                             <div className="col">
                                 <h2>♠ {
                                     postData.title + " "

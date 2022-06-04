@@ -33,6 +33,7 @@ code {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
+  background-color: #3B3B3B;
 }
 
 /* navbar & footer */
@@ -64,7 +65,7 @@ code {
 }
 
 .footer .contact-info {
-  color:rgba(85, 85, 85, 0.9)
+  color: #cccdcf;
 }
 
 .github-icon {
