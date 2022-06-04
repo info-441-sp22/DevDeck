@@ -2,6 +2,8 @@
 
 __Authors:__ Melina Perraut, Max Bennett, Elbert Cheng, Susan Yang
 
+## Link to our deployed site: <a href="https://www.devdeck.me/" target="_blank">DevDeck.me</a>
+
 # Project Description
 
 When people think of social media, most of them will say: Facebook. When people think of networking, most of them will say: LinkedIn. How about places to share the cool front-end project you made for your client-side development class or the personal website you built over the summer? Our target audience will be _developers who want to showcase a portfolio containing their work_. Rather than creating a professional, formal application like LinkedIn, we aspire to create a social media platform similar to Instagram and DevPost where developers can post their development projects and share it to the world.
@@ -70,18 +72,20 @@ As college students and developers ourselves, we noticed that there were not any
 	-   GET	-	‘/heartbeat’
 		-   Check whether the user session has expired based on the session cookie.
 -   ‘/comments’
-  -   POST	-	‘ /’
-      -   Post a comment when logged into a user account.
-    -   GET	-	‘ /’
-        -   Get all comments for a given post.
+	-   POST	-	‘ /’
+		-   Post a comment when logged into a user account.
+		-   GET	-	‘ /’
+			-   Get all comments for a given post.
 -   ‘/images’
-  -   POST	-	‘ /profile’
-      -   Post
-  -   POST	-	‘ /post’
-      -   Post
-  -   GET	-	‘ /’
-      -   Get
-    -   GET	-	‘ /profile’
-        -   Get
-  -   GET	-	‘ /post’
-      -   Get
+	-   POST	-	‘ /profile’
+		-   Post uploaded image to the given user's profile.
+	-   POST	-	‘ /post’
+		-   Post uploaded image to the given project post.
+		-   POST	-	‘ /post/metadata’
+			-   Post queue ticket metadata about the given project post.
+	-   GET	-	‘ /’
+		-   Get the path and send the file of the queried image.
+	-   GET	-	‘ /profile’
+		-   Get the uploaded image associated with the given user's profile.
+	-   GET	-	‘ /post’
+		-   Get the uploaded image associated with the given project post.

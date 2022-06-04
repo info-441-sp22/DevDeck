@@ -1,7 +1,5 @@
 import express from 'express';
-import mongoose from "mongoose";
 import multer from 'multer';
-import GridFsBucket from 'gridfs-stream';
 import path from 'path';
 import { __dirname } from '../../app.js';
 import { unlinkSync } from 'fs';

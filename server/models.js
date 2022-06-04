@@ -6,10 +6,6 @@ let models = {};
 
 async function connectDB() {
   console.log("connecting to mongodb");
-  // Put your MongoDB Atlas connection string in, or
-  // Run mongo db locally with a command like:
-  // Windows: mongod.exe --dbpath="c:\code\mongodbData\testdb"
-  // Mac: brew services start mongodb-community@5.0
   console.log(process.env.DB);
 
   await mongoose.connect('mongodb+srv://password12345:password12345@cluster0.0yecb.mongodb.net/devdeck');
@@ -24,9 +20,6 @@ async function connectDB() {
     bio: String,
     description: String,
     created_date: Date,
-    // followers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-    // following: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-    // posts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }], 
     urls: [String],
     skillset: [String]
   });
@@ -39,7 +32,6 @@ async function connectDB() {
     longer_description: String,
     url_link: String,
     collaborators: [String],
-    // collaborators: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
     techStack: [String],
     likes: [String]    
   })
