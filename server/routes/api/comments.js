@@ -33,7 +33,7 @@ router.get('/', async function(req, res, next) {
             return {
                 "username": comment.username,
                 "comment": comment.comment,
-                "date_created": comment.date_created,
+                "created_date": comment.created_date,
                 "post": comment.post
             }
         }))

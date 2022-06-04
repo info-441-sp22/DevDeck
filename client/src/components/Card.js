@@ -10,10 +10,11 @@ import { CredentialsContext } from "../App.js";
 export function Card(props) {
     // const cardData = props.cardData
     const setLoadingCallback = props.setLoadingCallback;
+    const setRefreshImageToggleCallback = props.setRefreshImageToggleCallback;
+    const refreshImageToggle = props.refreshImageToggle;
     const cardData = props.cardData;
     const id = props.id;
     const { credentials } = useContext(CredentialsContext);
-    const [val, setVal] = useState("");
     const [imageUrl, setImageUrl] = useState('');
 
     const navigate = useNavigate();
@@ -24,6 +25,7 @@ export function Card(props) {
         PostService.likePost(postID, username)
             .then(() => {
                 setLoadingCallback(true);
+                setRefreshImageToggleCallback(!refreshImageToggle);
             })
             .catch((err) => toast.error(err + ''));
     
@@ -33,6 +35,7 @@ export function Card(props) {
         PostService.unlikePost(postID, username)
             .then(() => {
                 setLoadingCallback(true);
+                setRefreshImageToggleCallback(!refreshImageToggle);
             })
             .catch((err) => toast.error(err + ''));
     }
@@ -47,9 +50,11 @@ export function Card(props) {
 
     useEffect(() => {
         ImageService.getPostImage({ post_id: cardData.id })
-            .then((url) => setImageUrl(url))
+            .then((url) => {
+                setImageUrl(url);
+            })
             .catch((err) => toast.error(err + ''));
-    }, []);
+    }, [refreshImageToggle]);
 
     return (
         <>

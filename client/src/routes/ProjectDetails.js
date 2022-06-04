@@ -177,18 +177,24 @@ export default function ProjectDetails() {
                                                 return <div style={{border: "1px solid black", padding: "5px"}} key={i}>
                                                     <h4>{comment.comment}</h4>
                                                     <h5><i>{comment.username}</i></h5>
-                                                    <p><i>{Date(comment.created_date)}</i></p>
+                                                    <p><i>{comment.created_date}</i></p>
                                                 </div>
                                                 // @TODO fix the styling
                                             })
                                         }
                                         </div>
-                                        <div className={`new-comment-box ${true ? '': 'd-none'}`}>
-                                            New Comment:
-                                            <input type="text" id={`new-comment-${postData._id}`} style={{color: 'black'}}/>
-                                            <Button onClick={postComment}>
-                                                Post comment
-                                            </Button>
+                                        <div>
+                                            {
+                                                (!credentials)
+                                                    ? <></>
+                                                    : <div className={`new-comment-box ${true ? '': 'd-none'}`}>
+                                                        New Comment:
+                                                        <input type="text" id={`new-comment-${postData._id}`} style={{color: 'black'}}/>
+                                                        <Button onClick={postComment}>
+                                                            Post comment
+                                                        </Button>
+                                                    </div>
+                                            }
                                         </div>
                                     </div>
                                 </div> 
