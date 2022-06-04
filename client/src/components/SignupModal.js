@@ -55,7 +55,7 @@ function SignupModal(props) {
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Sign Up For a DevDeck Account</Modal.Title>
+          <Modal.Title>♠ Sign Up For a DevDeck Account ♠</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleSubmit(onClickSubmit)}>

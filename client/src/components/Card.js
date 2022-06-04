@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useContext } from "react"; //import React Component
 import { useNavigate } from "react-router-dom";
 import { Button } from "reactstrap";
-import { fetchJSON, escapeHTML } from './../utils/utils.js'
+import { escapeHTML } from './../utils/utils.js'
 import { PostService } from '../services/PostService.js';
 import { toast } from "react-toastify";
 import { ImageService } from "../services/ImageService.js";
 import { CredentialsContext } from "../App.js";
+import { CommentService } from "../services/CommentService.js";
 
 export function Card(props) {
-    // const cardData = props.cardData
     const setLoadingCallback = props.setLoadingCallback;
     const setRefreshImageToggleCallback = props.setRefreshImageToggleCallback;
     const refreshImageToggle = props.refreshImageToggle;
@@ -16,6 +16,7 @@ export function Card(props) {
     const id = props.id;
     const { credentials } = useContext(CredentialsContext);
     const [imageUrl, setImageUrl] = useState('');
+    const [commentNum, setCommentNum] = useState(0);
 
     const navigate = useNavigate();
 
@@ -47,6 +48,13 @@ export function Card(props) {
     const viewUser = () => {
         navigate('/profile/' + cardData.username);
     }
+
+    async function getComments() {
+        let comments = await CommentService.getComments(cardData.id);
+        setCommentNum(comments.length); // set number of comments (to display in project card)
+    }
+
+    getComments();
 
     useEffect(() => {
         ImageService.getPostImage({ post_id: cardData.id })
@@ -81,12 +89,14 @@ export function Card(props) {
                                                 likePost(cardData.id, credentials.username); 
                                             }}> &#x2661;</button>}
                                     </span>
+                                    <br></br>
+                                    {/* displaying number of comments */}
+                                    <span>{commentNum} comments</span>
                                 </div>
                                 <Button color="dark" onClick={onClickView} style={{flexBasis: '50%'}}>
                                     View details
                                 </Button>
                             </div>
-                            {/* need to create new page for each card's project details */}
                         </div>
                     </div>
             }

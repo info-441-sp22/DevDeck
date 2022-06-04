@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, Input } from 'reactstrap';
 import { fetchJSON } from '../utils/utils.js';
 import { BASEPOINT } from "../App";
@@ -25,13 +25,12 @@ function CreateProjectModal(props) {
     }
 
     let saveChanges = async () => { // based on postUrl() function from websharer (index.js)
-        // saving changes to project (need to connect to server/db)
+        // saving changes to project
         let title = document.getElementById("titleInput").value;
         let blurb = document.getElementById("blurbInput").value;
         let longer_description = document.getElementById("longerDescrInput").value;
         let url_link = document.getElementById("urlInput").value;
         let tech_stack = document.getElementById("techStackInput").value;
-
         let collaborators = document.getElementById("collabInput").value;
 
         const response = await fetchJSON(BASEPOINT + '/api/posts', {
@@ -81,10 +80,6 @@ function CreateProjectModal(props) {
 
     const handleSubmit = event => { // handle submission of modal form
         event.preventDefault()
-        // if (props.val.length > 0) { //props
-        //     props.setList((old) => [...old, props.val]); //props
-        // }
-        // props.setVal(''); //props
     }
 
     return (
@@ -111,7 +106,6 @@ function CreateProjectModal(props) {
                         </Input>
                         <Input type="text" id="collabInput"
                             placeholder="Project collaborators (enter as a, b...)">
-                            {/* TO EDIT: if users have a devdeck account, ask them to put in their username instead of full name */}
                         </Input>
                         <div>
                             {

@@ -38,7 +38,7 @@ function LoginModal(props) {
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Log into Your DevDeck Account</Modal.Title>
+          <Modal.Title>♠ Log into Your DevDeck Account ♠</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
