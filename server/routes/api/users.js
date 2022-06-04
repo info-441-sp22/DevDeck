@@ -49,7 +49,8 @@ router.get('/', async (req, res, next) => {
 /* Signup/Login Stuff */
 router.post('/login', async function(req, res, next) {
   const body = req.body;
-  let session = req.session;
+
+  console.log(req.session);
 
   const user = await req.models.User.findOne({ username: body.username });
 
