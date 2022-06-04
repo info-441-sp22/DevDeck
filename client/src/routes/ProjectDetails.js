@@ -70,9 +70,9 @@ export default function ProjectDetails() {
         await CommentService.postComment(postData._id, comment, credentials.username)
         setLoading(true); // Just need to refresh page
     }
-    
-    const viewUser = () => {
-        navigate('/profile/' + postData.username);
+
+    function viewUser(username) {
+        navigate('/profile/' + username);
     }
 
     // const displayCollab = () => { // function to display project collaborators
@@ -100,7 +100,7 @@ export default function ProjectDetails() {
                                     Link to project
                                 </Button></h2>
                             </div>
-                            <h5>Posted by: <a href="" style={{color: "#BA1800"}} onClick={viewUser}>{postData.username}</a></h5>
+                            <h5>Posted by: <a href="" style={{color: "#BA1800"}} onClick={() => viewUser(postData.username)}>{postData.username}</a></h5>
                             <h5><em>{
                                 postData.blurb
                             }</em></h5>
@@ -160,10 +160,10 @@ export default function ProjectDetails() {
                             <div className="col">
                                 <div className="row">
                                     <div className="col" style={{flexBasis: '50%'}}>
-                                        <h5>Comments:</h5>
+                                        <h3>Comments:</h3>
                                     </div>
                                     <div className="col" style={{flexBasis: '50%'}}>
-                                        <Button onClick={refreshComments}>
+                                        <Button onClick={refreshComments} color="light">
                                             Refresh comments
                                         </Button>
                                     </div>
@@ -176,27 +176,33 @@ export default function ProjectDetails() {
                                                 ?   <></>
                                                 :   commentData.map((comment, i) => {
                                                 return <div style={{border: "1px solid black", padding: "5px"}} key={i}>
-                                                    <h4>{comment.comment}</h4>
-                                                    <h5><i>{comment.username}</i></h5>
-                                                    <p><i>{Date(comment.created_date)}</i></p>
+                                                    <h6>{comment.comment}</h6>
+                                                    <p><em>Commented by: <a href="" style={{color: "#BA1800"}} onClick={() => viewUser(comment.username)}>{comment.username}</a></em></p>
+                                                    <p style={{opacity: 0.8}}>Posted on: {comment.created_date}</p>
                                                 </div>
-                                                // @TODO fix the styling
                                             })
                                         }
                                         </div>
-                                        <div className={`new-comment-box ${true ? '': 'd-none'}`}>
-                                            New Comment:
-                                            <input type="text" id={`new-comment-${postData._id}`} style={{color: 'black'}}/>
-                                            <Button onClick={postComment}>
-                                                Post comment
-                                            </Button>
+                                        <div>
+                                            {
+                                                (!credentials)
+                                                    ? <></>
+                                                    : <div className={`new-comment-box ${true ? '': 'd-none'}`}>
+                                                        New Comment:&nbsp;
+                                                        <input type="text" id={`new-comment-${postData._id}`} style={{color: 'black'}}/>
+                                                        &nbsp; &nbsp;
+                                                        <Button onClick={postComment} color="dark">
+                                                            Post comment
+                                                        </Button>
+                                                    </div>
+                                            }
                                         </div>
                                     </div>
                                 </div> 
                             </div> 
                         </div>
                         <br></br>
-                        <Button className="btn btn-primary" onClick={returnHome}>Return to homepage</Button>
+                        <Button color="light" onClick={returnHome}>Return to homepage</Button>
                         {/* <br></br>
                         <br></br>
                         <br></br>
