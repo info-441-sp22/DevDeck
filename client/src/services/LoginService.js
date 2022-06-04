@@ -15,8 +15,6 @@ export class LoginService {
         const responseHeartbeat = await response.json();
 
         if (responseHeartbeat.error) {
-            // Remove the session
-            LoginService.removeUserCredentials('user');
             throw new Error('User is logged out.');
         }
 
@@ -24,7 +22,7 @@ export class LoginService {
         return true;
     }
 
-    static LogIn = async (loginRequest, setLoggedInCallback) => {
+    static LogIn = async (loginRequest, setCredentials) => {
         // Send the request
         const response = await fetch(
             LoginService.LOGIN_BASEPOINT() + '/login',
@@ -40,9 +38,10 @@ export class LoginService {
         const responsePayload = await response.json();
 
         if (!responsePayload.error) {   // If no error is encountered
+            const data = responsePayload.payload;
             // Store the user information that is grabbed
-            sessionStorage.setItem('user', JSON.stringify(responsePayload.payload));
-            setLoggedInCallback(true);
+            setCredentials(data);
+            this.storeUserCredentials(data);
             return responsePayload.message;
         } else {    // If an error is encountered
             // Return error payload with message
@@ -50,7 +49,7 @@ export class LoginService {
         }
     }
 
-    static SignUp = async (signupRequest, setLoggedInCallback) => {
+    static SignUp = async (signupRequest, setCredentials) => {
         // Send the signup request
         const signupResponse = await fetch(
             LoginService.LOGIN_BASEPOINT() + '/signup',
@@ -74,10 +73,10 @@ export class LoginService {
             password: signupRequest.password
         }
 
-        return LoginService.LogIn(loginRequest, setLoggedInCallback);
+        return LoginService.LogIn(loginRequest, setCredentials);
     }
 
-    static LogOut = async (setLoggedInCallback) => {
+    static LogOut = async (setCredentials) => {
         const response = await fetch(
             LoginService.LOGIN_BASEPOINT() + '/logout',
             {
@@ -89,14 +88,14 @@ export class LoginService {
         const responsePayload = await response.text();
 
         // Delete the user info in the storage
-        // document.cookie[0]
-        LoginService.removeUserCredentials();
-        setLoggedInCallback(false);
+        setCredentials();
+        this.removeUserCredentials();
 
         return responsePayload;
     }
 
     /** Session Storage functions */
+    static storeUserCredentials = (data) => sessionStorage.setItem('user', JSON.stringify(data));
     static getUserCredentials = () => JSON.parse(sessionStorage.getItem('user'));
     static removeUserCredentials = () => sessionStorage.removeItem('user');
 }

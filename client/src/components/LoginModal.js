@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { toast } from "react-toastify";
+import { CredentialsContext } from "../App";
 import { LoginService } from "../services/LoginService";
 
 function LoginModal(props) {
-  const setLoggedInCallback = props.setLoggedInCallback;
+  const { setCredentials } = useContext(CredentialsContext);
 
   const [show, setShow] = useState(false);
 
@@ -18,14 +19,14 @@ function LoginModal(props) {
 
   const onClickSubmit = async () => {
     // Await login process
-    LoginService.LogIn(loginRequest, setLoggedInCallback)
+    LoginService.LogIn(loginRequest, setCredentials)
       .then((payload) => {
         // toast to user the success
         toast.info(payload);
       })
       .catch((err) => {
         toast.error(err + '');
-        setLoggedInCallback(false);
+        setCredentials();
       });
   }
 

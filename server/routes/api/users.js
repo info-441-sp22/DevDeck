@@ -51,10 +51,6 @@ router.post('/login', async function(req, res, next) {
   const body = req.body;
   let session = req.session;
 
-  if (session.isAuthenticated) { // already logged in
-    return res.send('Error: you are already logged in as ' + session.username);
-  }
-
   const user = await req.models.User.findOne({ username: body.username });
 
   // Error guard for unfound users

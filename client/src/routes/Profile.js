@@ -1,4 +1,4 @@
-import React, { createRef, useEffect, useState } from "react"; 
+import React, { createRef, useContext, useEffect, useState } from "react"; 
 import { Button } from "reactstrap";
 import CreateProjectModal from "../components/CreateProjectModal";
 import UserDeck from "../components/UserDeck";
@@ -8,11 +8,11 @@ import { useLocation, useOutletContext, useParams, useSearchParams } from "react
 import LoadingComponent from "../components/LoadingComponent.js";
 import { ImageService } from "../services/ImageService.js";
 import { toast } from "react-toastify";
+import { CredentialsContext } from "../App";
 
 export default function ProfilePage() {
     const { username } = useParams();
-    const [searchParams] = useSearchParams();
-    const { setLoggedIn, credentials } = useOutletContext();
+    const { credentials } = useContext(CredentialsContext);
     const [profileInfo, setProfileInfo] = useState(null);
     const [profileImage, setProfileImage] = useState(null);
     const [isLoading, setLoading] = useState(true);
