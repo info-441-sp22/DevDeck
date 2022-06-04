@@ -1,7 +1,7 @@
 {
   "name": "devdeck",
-  "homepage": "http://localhost:3000",
-  "proxy": "http://localhost:3000",
+  "homepage": "https://www.devdeck.me",
+  "proxy": "https://www.devdeck.me",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
