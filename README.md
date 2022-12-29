@@ -3,7 +3,7 @@
 __Authors:__ Melina Perraut, Max Bennett, Elbert Cheng, Susan Yang
 
 ## Link to our deployed site: 
-<a href="https://www.devdeck.me/" target="_blank">DevDeck.me</a>
+<a href="https://www.devdeck.me/" target="_blank">DevDeck.me</a> (link is connected to student Azure accounts and may be outdated)
 
 # Project Description
 
